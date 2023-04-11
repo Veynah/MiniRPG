@@ -4,6 +4,8 @@ from sys import exit #importe le module exit de sys pour pouvoir fermer le progr
 pygame.init()
 #On va faire notre interface de jeu
 screen = pygame.display.set_mode((800,400))
+pygame.display.set_caption('MiniRPG') #Titre du jeu
+clock = pygame.time.Clock() #clock pour limiter le framerate
 
 while True:#dans cette boucle on va update le jeu
     for event in pygame.event.get(): #une boucle qui va check pour n'importe quel input des joueurs
@@ -11,4 +13,5 @@ while True:#dans cette boucle on va update le jeu
             pygame.quit() #pygame.quit est l'opposé de pygame.init
             exit()
     pygame.display.update()
+    clock.tick(60) #max fps 60
     
