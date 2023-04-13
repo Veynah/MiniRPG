@@ -1,0 +1,14 @@
+SMART stands for Specific, Measurable, Achievable, Relevant, and Time-bound. Here's a set of objectives following the SMART method:
+
+Specific: Develop an RPG with classes for characters, inventory management, combat implementation, non-linear quests, leveling and XP, game saves, and a graphical user interface.
+Measurable:
+a. Create at least 5 distinct character classes with unique attributes and abilities.
+b. Implement an inventory system that can store and manage items for each character.
+c. Develop a combat system with at least 2 levels of complexity (simple and complex).
+d. Design a minimum of 10 non-linear quests with branching dialogues.
+e. Implement a leveling system with experience points and attribute/skill progression.
+f. Create a game save system that records player progress, including levels and scores.
+g. Develop a user-friendly graphical interface for navigating the game world and interacting with game elements.
+Achievable: Assemble a team with expertise in programming, game design, and user experience design to complete the project within the given timeframe.
+Relevant: The project aligns with the goal of learning and showcasing skills in game development, project management, and software engineering.
+Time-bound: Complete the project within 2 months, starting from the project's initiation date.
