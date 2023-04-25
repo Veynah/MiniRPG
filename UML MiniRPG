@@ -1,14 +1,14 @@
-<mxfile host="app.diagrams.net" modified="2023-04-25T13:23:06.601Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.58" etag="18z1tKJTkdHcrar87RQf" version="21.1.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-04-25T13:31:01.877Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.58" etag="02YG84x9NQe9fQjnXGJF" version="21.1.8" type="github">
   <diagram name="Page-1" id="TAnVpsoPZ_HXfjoN1Uhz">
-    <mxGraphModel dx="1327" dy="1018" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="9520" dy="7767" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="Tf2TuN10iMzJLlAzgayn-1" value="MiniRPG" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="80" y="90" width="1840" height="1790" as="geometry" />
+          <mxGeometry x="-1990" y="-2000" width="5980" height="5990" as="geometry" />
         </mxCell>
         <mxCell id="Tf2TuN10iMzJLlAzgayn-5" value="Player" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="Tf2TuN10iMzJLlAzgayn-1" vertex="1">
-          <mxGeometry x="840" y="852" width="160" height="310" as="geometry" />
+          <mxGeometry x="2910" y="2840" width="160" height="310" as="geometry" />
         </mxCell>
         <mxCell id="Tf2TuN10iMzJLlAzgayn-6" value="-health: int&lt;br&gt;-mana: int&lt;br&gt;-experience: int&lt;br&gt;-level: int&lt;br&gt;-physical_armor: int&lt;br&gt;-magical_armor: int&lt;br&gt;-inventory: Inventory" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="Tf2TuN10iMzJLlAzgayn-5" vertex="1">
           <mxGeometry y="26" width="160" height="114" as="geometry" />
