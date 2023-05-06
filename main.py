@@ -1,9 +1,10 @@
 import pygame
+from pygame.locals import *
 from sys import exit #importe le module exit de sys pour pouvoir fermer le programme sans créer d'erreur
 
 pygame.init()
 #On va faire notre interface de jeu
-screen = pygame.display.set_mode((800,400))
+screen = pygame.display.set_mode((1920,1080))
 pygame.display.set_caption('MiniRPG') #Titre du jeu
 clock = pygame.time.Clock() #clock pour limiter le framerate
 
