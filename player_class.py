@@ -3,27 +3,38 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.health = 100
-        self.mana = 50
-        self.defense = 5
+        self.mana = 100
+        self.physical_armor = 20
+        self.magic_armor = 20
         self.attack_power = 10
         self.level = 1
         self.experience = 0
 
     def sword_attack(self, enemy):
         damage = self.attack_power
-        enemy.take_damage(damage)
+        enemy.take_physical_damage(damage)
+
 
     def magic_bolt(self, enemy):
         if self.mana >= 20:
             damage = self.attack_power * 1.5
-            enemy.take_damage(damage)
+            enemy.take_magic_damage(damage)
             self.mana -= 20
         else:
             print("Not enough mana to cast the spell.")
 
-    def take_damage(self, damage):
-        actual_damage = max(0, damage - self.defense)
-        self.health -= actual_damage
+    def take_physical_damage(self, damage):
+        damage_after_armor = max(0, damage - self.physical_armor)
+        self.physical_armor = max(0, self.physical_armor - damage)
+        self.health -= damage_after_armor
+        if self.health <= 0:
+            return True
+        return False
+
+    def take_magic_damage(self, damage):
+        damage_after_armor = max(0, damage - self.magic_armor)
+        self.magic_armor = max(0, self.magic_armor - damage)
+        self.health -= damage_after_armor
         if self.health <= 0:
             return True
         return False
