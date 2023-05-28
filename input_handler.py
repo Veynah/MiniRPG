@@ -2,23 +2,30 @@
 import pygame
 
 class InputHandler:
-    def __init__(self):
-        self.actions = {
-            pygame.K_a: 'move_left',
-            pygame.K_d: 'move_right',
-            pygame.K_s: 'move_down',
-            pygame.K_SPACE: 'jump',
-            pygame.K_LSHIFT: 'dash',
-            pygame.K_1: 'sword_attack',
-            pygame.K_2: 'hammer_attack',
-            pygame.K_3: 'magic_spell',
-            pygame.K_4: 'battle_shout',
-        }
-        self.current_action = None
+    def __init__(self, player):
+        self.player = player
 
-    def handle_input(self, event):
-        self.current_action = self.actions.get(event.key)
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                self.player.move_left()
+            elif event.key == pygame.K_d:
+                self.player.move_right()
+            elif event.key == pygame.K_w:
+                self.player.jump()
+            elif event.key == pygame.K_SPACE:
+                self.player.dash()
+            elif event.key == pygame.K_1:
+                self.player.sword_attack()
+            elif event.key == pygame.K_2:
+                self.player.hammer_attack()
+            elif event.key == pygame.K_3:
+                self.player.magic_spell()
+            elif event.key == pygame.K_4:
+                self.player.battle_shout()
 
-    def get_current_action(self):
-        return self.current_action
+        elif event.type == pygame.KEYUP:
+            if event.key in [pygame.K_a, pygame.K_d]:
+                self.player.stop_moving()
+
     

@@ -3,6 +3,8 @@ from pygame.locals import *
 from sys import exit #importe le module exit de sys pour pouvoir fermer le programme sans créer d'erreur
 from input_handler import InputHandler
 from player_class import Player
+from background import Background
+from ground import Ground
 
 class Game:
     def __init__(self):
@@ -12,9 +14,14 @@ class Game:
         self.clock = pygame.time.Clock()
         self.input_handler = InputHandler()
         self.player = Player("Player1")  # Added a name to the player
+        self.background = Background(1)
+        
 
     def run(self):
         while True:
+            self.background.render()
+            self.ground.render()
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
