@@ -1,3 +1,6 @@
+import pygame
+import time
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, name):
         super().__init__()
@@ -17,6 +20,21 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.speed = 5
+        
+        self.direction = 'right'  # default direction of the player
+        self.last_dash_time = 0  
+        self.dash_cooldown = 5
+        self.dash_distance = 50
+        
+    def dash(self): # dash in the direction you're facing / Didn't add collisions detection
+        current_time = time.time()
+        if current_time - self.last_dash_time >= self.dash_cooldown:
+            if self.direction == 'right':
+                self.rect.x += self.dash_distance
+            elif self.direction == 'left':
+                self.rect.x -= self.dash_distance
+            
+            self.last_dash_time = current_time
         
     def move_left(self):
         self.speed.x = -5
