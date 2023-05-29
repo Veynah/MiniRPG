@@ -1,10 +1,11 @@
 import pygame
 from pygame.locals import *
-from sys import exit #importe le module exit de sys pour pouvoir fermer le programme sans créer d'erreur
+from sys import exit
 from input_handler import InputHandler
-from player_class import Player
+from player import Player
 from background import Background
 from ground import Ground
+from level import Level  
 
 class Game:
     def __init__(self):
@@ -12,22 +13,18 @@ class Game:
         self.screen = pygame.display.set_mode((800,600))
         pygame.display.set_caption('MiniRPG')
         self.clock = pygame.time.Clock()
-        self.input_handler = InputHandler()
+
         self.player = Player("Player1", "player.png", 100, 100)  # Added a name to the player
         self.input_handler = InputHandler(self.player)
-        self.background = Background(1)
-        self.ground = Ground()
-        self.level = Level(1, self.player, self.screen)
-        
+
+        self.level = Level(1, self.player, self.screen)  # Init the Level
+
         self.all_sprites = pygame.sprite.Group()
         self.all_sprites.add(self.player)
 
     def run(self):
         while True:
-            self.level.render()
-            self.background.render(self.screen)
-            self.ground.render(self.screen)
-            
+            self.level.render()  # Render the level (which includes background and ground)
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

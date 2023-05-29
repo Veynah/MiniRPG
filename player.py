@@ -1,9 +1,10 @@
 class Player(pygame.sprite.Sprite):
     def __init__(self, name):
         super().__init__()
-        self.image = pygame.image.load("Player.png")
-        self.rect = self.image.get_rect()
         self.name = name
+        self.image = pygame.image.load("Player.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        self.speed = pygame.Vector2(0, 0)
         self.health = 100
         self.mana = 100
         self.defense = 5
@@ -16,6 +17,21 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.speed = 5
+        
+    def move_left(self):
+        self.speed.x = -5
+
+    def move_right(self):
+        self.speed.x = 5
+
+    def stop_moving(self):
+        self.speed.x = 0
+
+    def update(self):   # Update the player's position
+        self.rect.move_ip(self.speed)  
+
+    def render(self, screen):
+        screen.blit(self.image, self.rect)   
 
     def sword_attack(self, enemy):
         damage = self.attack_power
@@ -60,7 +76,3 @@ class Player(pygame.sprite.Sprite):
         self.physical_armor += 5
         self.magic_armor += 5
 
-
-# Main game loop
-player_name = input("Enter name for Player: ")
-player = Player(player_name)
