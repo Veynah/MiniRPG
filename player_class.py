@@ -1,5 +1,8 @@
-class Player:
+class Player(pygame.sprite.Sprite):
     def __init__(self, name):
+        super().__init__()
+        self.image = pygame.image.load("Player.png")
+        self.rect = self.image.get_rect()
         self.name = name
         self.health = 100
         self.mana = 100
@@ -9,6 +12,10 @@ class Player:
         self.attack_power = 10
         self.level = 1
         self.experience = 0
+        
+        self.rect.x = x
+        self.rect.y = y
+        self.speed = 5
 
     def sword_attack(self, enemy):
         damage = self.attack_power

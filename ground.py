@@ -7,8 +7,8 @@ class Ground(pygame.sprite.Sprite):
             3: "Ground3.png",
             4: "Ground4.png"
         }
-        self.image = pygame.image.load(self.level_grounds.get(level, "DefaultGround.png"))
+        self.image = pygame.image.load(self.level_grounds.get(level, "DefaultGround.png")).convert_alpha()
         self.rect = self.image.get_rect(center=(350, 350))
 
-    def render(self):
-        displaysurface.blit(self.image, (self.rect.x, self.rect.y))
+    def render(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y))

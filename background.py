@@ -18,8 +18,8 @@ class Background(pygame.sprite.Sprite):
         self.bgY = 0
         self.bgX = 0
  
-    def render(self):
-        displaysurface.blit(self.bgimage, (self.bgX, self.bgY))
+    def render(self, screen):  
+        screen.blit(self.bgimage, (self.bgX, self.bgY))
 
     def change_level(self, new_level):
-        self.bgimage = pygame.image.load(self.level_backgrounds.get(new_level, "DefaultBackground.png"))
+        self.bgimage = pygame.image.load(self.level_backgrounds.get(new_level, "DefaultBackground.png")).convert_alpha()
