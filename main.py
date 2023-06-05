@@ -1,4 +1,5 @@
 import pygame
+import time
 from pygame.locals import *
 from sys import exit
 from input_handler import InputHandler
