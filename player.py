@@ -10,8 +10,6 @@ class Player(pygame.sprite.Sprite):
         self.speed = pygame.Vector2(0, 0)
         self.health = 10
         self.defense = 5
-        self.physical_armor = 20
-        self.magic_armor = 20
         self.attack_power = 10
         self.level = 1
         self.experience = 0
@@ -62,22 +60,17 @@ class Player(pygame.sprite.Sprite):
         else:
             print("Not enough mana to cast the spell.")
 
-    def take_physical_damage(self, damage):
-        damage_after_armor = max(0, damage - self.physical_armor)
-        self.physical_armor = max(0, self.physical_armor - damage)
-        self.health -= damage_after_armor
+    def take_damage(self, damage):
+        # chaque point de défense de 0.5% les dégats reçu
+        reduction = self.defense / 200
+        net_damage = damage * (1 - reduction)
+        self.health -= net_damage
+
         if self.health <= 0:
             return True
         return False
 
-    def take_magic_damage(self, damage):
-        damage_after_armor = max(0, damage - self.magic_armor)
-        self.magic_armor = max(0, self.magic_armor - damage)
-        self.health -= damage_after_armor
-        if self.health <= 0:
-            return True
-        return False
-
+ 
     def gain_experience(self, experience):
         self.experience += experience
         if self.experience >= 100:
