@@ -2,12 +2,12 @@ import pygame
 import time
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, name):
+    def __init__(self, name, image_file, x, y):
         super().__init__()
         self.name = name
-        self.image = pygame.image.load("Player.png").convert_alpha()
+        self.image = pygame.image.load("C:/Users/dark-/VSC/MiniRPG/img/player/test.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.speed = pygame.Vector2(0, 0)
+        self.speed = pygame.Vector2(5, 5)
         self.health = 10
         self.defense = 5
         self.attack_power = 10
@@ -43,7 +43,7 @@ class Player(pygame.sprite.Sprite):
         self.speed.x = 0
 
     def update(self):   # Update the player's position
-        self.rect.move_ip(self.speed)  
+        self.rect.move_ip(self.speed.x, self.speed.y) 
 
     def render(self, screen):
         screen.blit(self.image, self.rect)   
