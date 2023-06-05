@@ -108,6 +108,7 @@
     ],
     "project": "sans titre.tiled-project",
     "recentFiles": [
+        "data/tsx/village.tsx",
         "data/village.tmx",
         "data/tmx/village.tmx",
         "data/tsx/blacksmith.tsx",
@@ -118,8 +119,7 @@
         "data/tsx/background.tsx",
         "data/tsx/trees.tsx",
         "data/tsx/village_obj.tsx",
-        "data/tsx/village_tree.tsx",
-        "data/tsx/village.tsx"
+        "data/tsx/village_tree.tsx"
     ],
     "tileset.lastUsedFilter": "Tous les Fichiers (*)",
     "tileset.lastUsedFormat": "tsx",
