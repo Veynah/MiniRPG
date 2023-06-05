@@ -8,8 +8,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load("Player.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.speed = pygame.Vector2(0, 0)
-        self.health = 100
-        self.mana = 100
+        self.health = 10
         self.defense = 5
         self.physical_armor = 20
         self.magic_armor = 20
