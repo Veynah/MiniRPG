@@ -1,22 +1,28 @@
 import pygame
+from pygame import Vector2 as vec
 import time
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, name, image_file, x, y):
+    def __init__(self, name, image_path, pos_x, pos_y):
         super().__init__()
         self.name = name
         self.image = pygame.image.load("C:/Users/dark-/VSC/MiniRPG/img/player/test.png").convert_alpha()
         self.rect = self.image.get_rect()
+        self.rect.x = pos_x
+        self.rect.y = pos_y
         self.speed = pygame.Vector2(5, 5)
-        self.health = 10
+        self.health = 100
         self.defense = 5
         self.attack_power = 10
         self.level = 1
         self.experience = 0
         
-        self.rect.x = x
-        self.rect.y = y
-        self.speed = 5
+        self.vx = 0
+        self.pos = vec((340, 240))
+        self.vel = vec(0,0)
+        self.acc = vec(0,0)
+        self.direction = "RIGHT"
+
         
         self.direction = 'right'  # default direction of the player
         self.last_dash_time = 0  
@@ -34,13 +40,13 @@ class Player(pygame.sprite.Sprite):
             self.last_dash_time = current_time
         
     def move_left(self):
-        self.speed.x = -5
+        self.speed = pygame.Vector2(-5, self.speed.y)
 
     def move_right(self):
-        self.speed.x = 5
+        self.speed = pygame.Vector2(5, self.speed.y)
 
     def stop_moving(self):
-        self.speed.x = 0
+        self.speed = pygame.Vector2(0, self.speed.y)
 
     def update(self):   # Update the player's position
         self.rect.move_ip(self.speed.x, self.speed.y) 
