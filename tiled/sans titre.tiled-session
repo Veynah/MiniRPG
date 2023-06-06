@@ -1,0 +1,142 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "data/tmx/village.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "data/tmx/tsx/blacksmith.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tmx/tsx/smoke.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tmx/tsx/village.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tmx/tsx/village_obj.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tmx/tsx/village_props.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tmx/tsx/village_tree.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tmx/village..tmx": {
+            "expandedObjectLayers": [
+                13
+            ],
+            "scale": 4,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 325.375,
+                "y": -134
+            }
+        },
+        "data/tmx/village.tmx": {
+            "scale": 1.6647265625,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 4040.6035150292137,
+                "y": 278.72445268320155
+            }
+        },
+        "data/tsx/Fire.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "data/tsx/background.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/blacksmith.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/playertest.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "data/tsx/smoke.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/trees.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/village 2.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 2
+        },
+        "data/tsx/village.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.5,
+            "scaleInEditor": 2
+        },
+        "data/tsx/village_obj.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "data/tsx/village_props.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "data/tsx/village_tree.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "data/village.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 1151.6666666666665,
+                "y": 0.33333333333337123
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Users/dark-/VSC/MiniRPG/tiled/data/tmx",
+    "last.externalTilesetPath": "C:/Users/dark-/VSC/MiniRPG/tiled/data/tsx",
+    "last.imagePath": "C:/Users/dark-/3D Objects/Tiles/lpc-blacksmith/lpc-blacksmith",
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "Tous les Fichiers (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "data/tmx/village.tmx"
+    ],
+    "project": "sans titre.tiled-project",
+    "recentFiles": [
+        "data/tmx/village.tmx",
+        "data/tmx/village..tmx",
+        "data/village.tmx",
+        "data/tsx/village.tsx",
+        "data/tsx/blacksmith.tsx",
+        "data/tsx/village_props.tsx",
+        "data/tsx/Fire.tsx",
+        "data/tsx/smoke.tsx",
+        "data/tsx/playertest.tsx",
+        "data/tsx/background.tsx",
+        "data/tsx/trees.tsx",
+        "data/tsx/village_obj.tsx"
+    ],
+    "tileset.lastUsedFilter": "Tous les Fichiers (*)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.type": 0
+}

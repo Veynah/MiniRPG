@@ -2,21 +2,33 @@
 import pygame
 
 class InputHandler:
-    def __init__(self):
-        self.action = {
-            pygame.K_q: self.move_left,
-            pygame.K_d: self.move_right,
-            pygame.K_s: self.move_down,
-            pygame.K_SPACE: self.jump,
-            pygame.K_LSHIFT: self.dash,
-            pygame.K_1: self.sword_attack,
-            pygame.K_2: self.hammer_attack,
-            pygame.K_3: self.magic_spell,
-            pygame.K_4: self.battle_shout,
-        }
-    def handle_input(self, event):
-        action = self.actions.get(event.key)
-        if action:
-            action()
+    def __init__(self, player):
+        self.player = player
+
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a and hasattr(self.player, 'move_left'):
+                self.player.move_left()
+            
+            elif event.key == pygame.K_d and hasattr(self.player, 'move_right'):
+                self.player.move_right()
+            
+            elif event.key == pygame.K_w and hasattr(self.player, 'jump'):
+                self.player.jump()
+            
+            elif event.key == pygame.K_SPACE and hasattr(self.player, 'dash'):
+                self.player.dash()
+            
+            elif event.key == pygame.K_1 and hasattr(self.player, 'sword_attack'):
+                self.player.sword_attack()
+
+            elif event.key == pygame.K_2 and hasattr(self.player, 'magic_spell'):
+                self.player.magic_spell()
+
+
+        elif event.type == pygame.KEYUP:
+            if event.key in [pygame.K_a, pygame.K_d] and hasattr(self.player, 'stop_moving'):
+                self.player.stop_moving()
+
 
     
