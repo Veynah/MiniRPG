@@ -19,7 +19,7 @@ class Game:
         
         self.clock = pygame.time.Clock()
 
-        self.player = Player("Player1", "C:/Users/dark-/VSC/MiniRPG/img/player/test.png", -36, 19)  # Added a name to the player
+        self.player = Player("Player1", "img/player/test.png", -36, 19)  # Added a name to the player
         
         self.input_handler = InputHandler(self.player)
 
@@ -38,7 +38,7 @@ class Game:
 
 
     def run(self):
-        self.load_level("C:/Users/dark-/VSC/MiniRPG/tiled/data/tmx/village.tmx")
+        self.load_level("tiled/data/tmx/village.tmx")
         
         while True:
             self.current_level.render()  # Render the level (which includes background and ground)
@@ -58,6 +58,6 @@ class Game:
             self.clock.tick(60)
 
             if self.current_level.player_has_reached_end_of_level():
-                self.load_level("C:/Users/dark-/VSC/MiniRPG/tiled/data/tmx/village.tmx")
+                self.load_level("tiled/data/tmx/village.tmx")
 if __name__ == "__main__":
     Game().run()

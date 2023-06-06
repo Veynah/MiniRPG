@@ -6,7 +6,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, name, image_path, pos_x, pos_y):
         super().__init__()
         self.name = name
-        self.image = pygame.image.load("C:/Users/dark-/VSC/MiniRPG/img/player/test.png").convert_alpha()
+        self.image = pygame.image.load("img/player/test.png").convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
