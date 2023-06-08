@@ -67,10 +67,10 @@
         },
         "data/tmx/village.tmx": {
             "scale": 2,
-            "selectedLayer": -1,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 3455.25,
-                "y": 225.5
+                "x": 399.75,
+                "y": 224
             }
         },
         "data/tsx/Fire.tsx": {
