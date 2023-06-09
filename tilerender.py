@@ -27,14 +27,17 @@ class Renderer(object):
 
             # Render image layers first.
             if isinstance(layer, pytmx.TiledImageLayer):
-                # Load image from the source property
-                image_path = os.path.join('tiled/data/tmx', layer.source)
-                image = pg.image.load('tiled/data/tmx/village.tmx').convert_alpha()
+                # On veut charger les images de fond d'abord
+                tmx_dir = os.path.dirname('tiled/data/tmx/village.tmx')
+                image_path = os.path.join(tmx_dir, layer.source)
+                image_path = os.path.normpath(image_path)
+                image = pg.image.load(image_path).convert_alpha()
                 if image:
                     surface.blit(image, (0, 0))
 
-            # Render tile layers.
-            elif isinstance(layer, pytmx.TiledTileLayer):
+        for layer in self.tmx_data.visible_layers:
+            # Then render tile layers.
+            if isinstance(layer, pytmx.TiledTileLayer):
                 for x, y, gid in layer:
                     tile = gt(gid)
                     if tile:

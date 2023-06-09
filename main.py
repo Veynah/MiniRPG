@@ -10,7 +10,7 @@ from pygame.locals import QUIT, KEYDOWN
 from tilerender import Renderer
 from pygame.locals import *
 
-# Place the Renderer class here
+
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
