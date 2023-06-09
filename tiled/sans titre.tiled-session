@@ -38,10 +38,10 @@
         },
         "data/tmx/village.tmx": {
             "scale": 1.6647265625,
-            "selectedLayer": 7,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 4040.6035150292137,
-                "y": 278.72445268320155
+                "x": 1010.3761409766056,
+                "y": 269.1132646596429
             }
         },
         "data/tsx/Fire.tsx": {
@@ -120,17 +120,17 @@
     "project": "sans titre.tiled-project",
     "recentFiles": [
         "data/tmx/village.tmx",
+        "data/tsx/village_tree.tsx",
+        "data/tsx/village_props.tsx",
+        "data/tsx/village_obj.tsx",
+        "data/tsx/village.tsx",
+        "data/tsx/playertest.tsx",
+        "data/tsx/smoke.tsx",
+        "data/tsx/blacksmith.tsx",
         "data/tmx/village..tmx",
         "data/village.tmx",
-        "data/tsx/village.tsx",
-        "data/tsx/blacksmith.tsx",
-        "data/tsx/village_props.tsx",
         "data/tsx/Fire.tsx",
-        "data/tsx/smoke.tsx",
-        "data/tsx/playertest.tsx",
-        "data/tsx/background.tsx",
-        "data/tsx/trees.tsx",
-        "data/tsx/village_obj.tsx"
+        "data/tsx/background.tsx"
     ],
     "tileset.lastUsedFilter": "Tous les Fichiers (*)",
     "tileset.lastUsedFormat": "tsx",
