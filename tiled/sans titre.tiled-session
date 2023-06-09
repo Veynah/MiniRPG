@@ -7,35 +7,6 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tmx/village.tmx": {
-            "scale": 0.5366015624999999,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 1453.5924874426732,
-                "y": 353.1484312440855
-            }
-        },
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tsx/blacksmith.tsx": {
-            "scaleInDock": 1
-        },
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tsx/playertest.tsx": {
-            "scaleInDock": 1
-        },
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tsx/smoke.tsx": {
-            "scaleInDock": 1
-        },
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tsx/village.tsx": {
-            "scaleInDock": 1
-        },
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tsx/village_obj.tsx": {
-            "scaleInDock": 1
-        },
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tsx/village_props.tsx": {
-            "scaleInDock": 1
-        },
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tsx/village_tree.tsx": {
-            "scaleInDock": 1
-        },
         "data/tmx/tsx/blacksmith.tsx": {
             "scaleInDock": 1
         },
@@ -66,11 +37,11 @@
             }
         },
         "data/tmx/village.tmx": {
-            "scale": 2,
+            "scale": 1.6647265625,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 264.75,
-                "y": 223
+                "x": 416.2845812703851,
+                "y": 267.911866156698
             }
         },
         "data/tsx/Fire.tsx": {
@@ -149,17 +120,17 @@
     "project": "sans titre.tiled-project",
     "recentFiles": [
         "data/tmx/village.tmx",
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tmx/village.tmx",
+        "data/tsx/village.tsx",
+        "data/tsx/village_tree.tsx",
+        "data/tsx/village_props.tsx",
+        "data/tsx/village_obj.tsx",
+        "data/tsx/playertest.tsx",
+        "data/tsx/smoke.tsx",
+        "data/tsx/blacksmith.tsx",
         "data/tmx/village..tmx",
         "data/village.tmx",
-        "data/tsx/village.tsx",
-        "data/tsx/blacksmith.tsx",
-        "data/tsx/village_props.tsx",
         "data/tsx/Fire.tsx",
-        "data/tsx/smoke.tsx",
-        "data/tsx/playertest.tsx",
-        "data/tsx/background.tsx",
-        "data/tsx/trees.tsx"
+        "data/tsx/background.tsx"
     ],
     "tileset.lastUsedFilter": "Tous les Fichiers (*)",
     "tileset.lastUsedFormat": "tsx",
