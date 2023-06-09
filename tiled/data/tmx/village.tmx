@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="left-down" width="240" height="44" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="8">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="left-down" width="240" height="44" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="8">
  <tileset firstgid="1" source="../tsx/village.tsx"/>
  <tileset firstgid="118" source="../tsx/village_obj.tsx"/>
  <tileset firstgid="438" source="../tsx/village_tree.tsx"/>
  <tileset firstgid="1488" source="../tsx/village_props.tsx"/>
  <tileset firstgid="5584" source="../tsx/smoke.tsx"/>
  <tileset firstgid="5648" source="../tsx/blacksmith.tsx"/>
- <tileset firstgid="9744" source="../tsx/playertest.tsx"/>
+ <imagelayer id="19" name="sky" offsetx="0" offsety="32" repeatx="1">
+  <image source="../../assets/Legacy Fantasy - Kingdom Fortress - Update/Legacy Fantasy - Kingdom Fortress - Update/Background/02.png" width="336" height="272"/>
+ </imagelayer>
+ <imagelayer id="18" name="mountains" offsetx="0" offsety="176" repeatx="1">
+  <image source="../../assets/Legacy Fantasy - Kingdom Fortress - Update/Legacy Fantasy - Kingdom Fortress - Update/Background/Background.2-export.png" width="336" height="192"/>
+ </imagelayer>
  <layer id="3" name="Trees" width="240" height="44">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,963,964,965,966,967,968,969,970,971,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

@@ -1,9 +1,7 @@
-"""
-Module used to render tmx maps
-"""
 
 import pygame as pg
 import pytmx
+import os
 
 
 class Renderer(object):
@@ -26,19 +24,25 @@ class Renderer(object):
             surface.fill(self.tmx_data.background_color)
 
         for layer in self.tmx_data.visible_layers:
-            if isinstance(layer, pytmx.TiledTileLayer):
+
+            # Render image layers first.
+            if isinstance(layer, pytmx.TiledImageLayer):
+                # Load image from the source property
+                image_path = os.path.join('tiled/data/tmx', layer.source)
+                image = pg.image.load('tiled/data/tmx/village.tmx').convert_alpha()
+                if image:
+                    surface.blit(image, (0, 0))
+
+            # Render tile layers.
+            elif isinstance(layer, pytmx.TiledTileLayer):
                 for x, y, gid in layer:
                     tile = gt(gid)
                     if tile:
                         surface.blit(tile, (x * tw, y * th))
 
+            # Handle object groups if needed.
             elif isinstance(layer, pytmx.TiledObjectGroup):
                 pass
-
-            elif isinstance(layer, pytmx.TiledImageLayer):
-                image = gt(layer.gid)
-                if image:
-                    surface.blit(image, (0, 0))
 
     def make_map(self):
         temp_surface = pg.Surface(self.size)

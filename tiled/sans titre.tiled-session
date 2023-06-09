@@ -38,10 +38,10 @@
         },
         "data/tmx/village.tmx": {
             "scale": 1.6647265625,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 217.453129033015,
-                "y": 264.3076706478636
+                "x": 1312.5278644672314,
+                "y": 260.10277588755656
             }
         },
         "data/tsx/Fire.tsx": {
@@ -120,11 +120,11 @@
     "project": "sans titre.tiled-project",
     "recentFiles": [
         "data/tmx/village.tmx",
+        "data/tsx/playertest.tsx",
         "data/tsx/village.tsx",
         "data/tsx/village_tree.tsx",
         "data/tsx/village_props.tsx",
         "data/tsx/village_obj.tsx",
-        "data/tsx/playertest.tsx",
         "data/tsx/smoke.tsx",
         "data/tsx/blacksmith.tsx",
         "data/tmx/village..tmx",
