@@ -12,7 +12,7 @@ class Renderer(object):
     """
 
     def __init__(self, filename):
-        tm = pytmx.load_pygame('tiled/data/tmx/village.tmx', pixelalpha=True)
+        tm = pytmx.load_pygame('tiled/data/tmx/village.tmx', invert_y=True)
         self.size = tm.width * tm.tilewidth, tm.height * tm.tileheight
         self.tmx_data = tm
 
@@ -21,7 +21,6 @@ class Renderer(object):
         tw = self.tmx_data.tilewidth
         th = self.tmx_data.tileheight
         gt = self.tmx_data.get_tile_image_by_gid
-
 
         if self.tmx_data.background_color:
             surface.fill(self.tmx_data.background_color)

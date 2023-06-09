@@ -7,10 +7,10 @@
  <tileset firstgid="5584" source="../tsx/smoke.tsx"/>
  <tileset firstgid="5648" source="../tsx/blacksmith.tsx"/>
  <tileset firstgid="9744" source="../tsx/playertest.tsx"/>
- <imagelayer id="6" name="Sky" offsetx="1056" offsety="29" repeatx="1">
+ <imagelayer id="6" name="Sky" offsetx="0" offsety="32" repeatx="1">
   <image source="../../../../../3D Objects/Tiles/Legacy Fantasy - Kingdom Fortress - Update/Legacy Fantasy - Kingdom Fortress - Update/Background/02.png" width="336" height="272"/>
  </imagelayer>
- <imagelayer id="5" name="Background" locked="1" offsetx="191" offsety="172" repeatx="1">
+ <imagelayer id="5" name="Background" offsetx="0" offsety="176" repeatx="1">
   <image source="../../../../../3D Objects/Tiles/Legacy Fantasy - Kingdom Fortress - Update/Legacy Fantasy - Kingdom Fortress - Update/Background/Background.2-export.png" width="336" height="192"/>
  </imagelayer>
  <layer id="3" name="Trees" width="240" height="44">

@@ -69,8 +69,8 @@
             "scale": 2,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 399.75,
-                "y": 224
+                "x": 264.75,
+                "y": 223
             }
         },
         "data/tsx/Fire.tsx": {
@@ -144,13 +144,12 @@
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "openFiles": [
-        "data/tmx/village.tmx",
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tmx/village.tmx"
+        "data/tmx/village.tmx"
     ],
     "project": "sans titre.tiled-project",
     "recentFiles": [
-        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tmx/village.tmx",
         "data/tmx/village.tmx",
+        "C:/Users/dark-/Desktop/MiniRPG Save/tiled/data/tmx/village.tmx",
         "data/tmx/village..tmx",
         "data/village.tmx",
         "data/tsx/village.tsx",

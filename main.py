@@ -32,7 +32,7 @@ for layer in tiled_map.visible_tile_layers:
         for x, y, gid in layer:
             tile = tiled_map(gid)
             if tile:
-                pos = (x * 29, y * 21)
+                pos = (x * 16, y * 16)
                 Tile(pos=pos, surf=tile, groups=sprite_group)
 
 
