@@ -33,7 +33,12 @@ class Renderer(object):
                 image_path = os.path.normpath(image_path)
                 image = pg.image.load(image_path).convert_alpha()
                 if image:
-                    surface.blit(image, (0, 0))
+                # Calculate how many times the image needs to be repeated horizontally
+                    repeats_x = int(self.size[0] / image.get_width()) + 1
+                
+                # Blit the image repeatedly in the X direction to fill the screen
+                for x in range(repeats_x):
+                    surface.blit(image, (x * image.get_width(), 0))
 
         for layer in self.tmx_data.visible_layers:
             # Then render tile layers.
