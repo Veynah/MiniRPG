@@ -1,13 +1,12 @@
 
+import os
 import pygame as pg
 import pytmx
-import os
 
+# Cette classe permet de charger et afficher les fichiers tmx qui sont les maps
 
 class Renderer(object):
-    """
-    This object renders tile maps (tmx) from Tiled.
-    """
+
 
     def __init__(self, filename):
         tm = pytmx.load_pygame('tiled/data/tmx/village.tmx', invert_y=True)
