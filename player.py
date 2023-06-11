@@ -3,7 +3,8 @@ from pygame.locals import K_q, K_d, K_z
 from pygame.math import Vector2 as vec
 import keyboard
 import time
-
+from animated_sprite import AnimatedSprite
+from spritesheet import SpriteSheet, Animation
 
 # Les variables pour bouger
 # On ajoute de la friction pour que les mouvements soient plus agréables
@@ -14,13 +15,24 @@ FRIC = -0.6
 HEIGHT = 720
 WIDTH = 1280
 
+# Pour le moment je n'arrive pas à comprendre comment implémenter les sprites sheets donc je vais couper 
+# les frames et les charger dans un dictionnaire pour faire les animations
+player_run_anim_R = [pygame.image.load("img/player/Player_Run_R/Player_Run_R0.png"), pygame.image.load("img/player/Player_Run_R/Player_Run_R1.png"),
+                     pygame.image.load("img/player/Player_Run_R/Player_Run_R2.png"), pygame.image.load("img/player/Player_Run_R/Player_Run_R3.png"),
+                     pygame.image.load("img/player/Player_Run_R/Player_Run_R4.png"), pygame.image.load("img/player/Player_Run_R/Player_Run_R5.png"), 
+                     pygame.image.load("img/player/Player_Run_R/Player_Run_R6.png"), pygame.image.load("img/player/Player_Run_R/Player_Run_R7.png"),]
+
+player_run_anim_L = [pygame.image.load("img/player/Player_Run_L/Player_Run_L0.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L1.png"),
+                     pygame.image.load("img/player/Player_Run_L/Player_Run_L2.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L3.png"),
+                     pygame.image.load("img/player/Player_Run_L/Player_Run_L4.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L5.png"), 
+                     pygame.image.load("img/player/Player_Run_L/Player_Run_L6.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L7.png"),]
 
 class Player(pygame.sprite.Sprite):
       def __init__(self, blockers):
             super().__init__()
-            self.image = pygame.image.load("img/player/test.png")
+            self.image = pygame.image.load("img/player/test.png").convert_alpha()
             self.rect = self.image.get_rect()
-
+            
             # Position and direction
             self.vx = 0
             self.pos = vec((340, 240))
@@ -28,10 +40,11 @@ class Player(pygame.sprite.Sprite):
             self.acc = vec(0, 0)
             self.direction = "RIGHT"
             self.jumping = False
+            self.running = False
             self.blockers = blockers
 
             # Time counter for animation
-            self.time = 0
+            self.frame_index = 0
 
       def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
@@ -44,8 +57,12 @@ class Player(pygame.sprite.Sprite):
             # Accélère dans une direction ou une autre suivant la touche utilisée
             if pressed_keys[K_q]:  # Q pour aller à gauche
                   self.acc.x = -ACC
+                  self.running = True
+                  
             if pressed_keys[K_d]:  # D pour aller à droite
                   self.acc.x = ACC
+                  self.running = True
+                  
             if pressed_keys[K_z]: #Z pour sauter
                   self.jump()
 
@@ -106,7 +123,28 @@ class Player(pygame.sprite.Sprite):
                   self.vel.y = -7
       
       def update(self):
-            pass
+            if self.frame_index > 7: # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0 apres la 8eme frame
+                  self.frame_index = 0
+                  return
+            
+            if self.jumping == False and self.running == True:
+                  if self.vel.x > 0:
+                        self.image = player_run_anim_R[self.frame_index]
+                        self.direction = "RIGHT"
+                  elif self.vel.x < 0:
+                        self.image = player_run_anim_L[self.frame_index]
+                        self.direction = "LEFT"
+                  self.frame_index += 1
+                  
+            # Returns to base frame if standing still and incorrect frame is showing
+            if abs(self.vel.x) < 0.2 and self.frame_index != 0:
+                  self.frame_index = 0
+                  if self.direction == "RIGHT":
+                        self.image = player_run_anim_R[self.frame_index]
+                  elif self.direction == "LEFT":
+                        self.image = player_run_anim_L[self.frame_index]
+            
+            
 
       def attack(self):
             pass
