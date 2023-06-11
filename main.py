@@ -56,7 +56,7 @@ all_sprites.add(player)
 
 def main():
     while True:
-        
+        player.gravity_check()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -66,9 +66,10 @@ def main():
                 if event.key == pygame.K_z:
                     player.jump()
 
+        all_sprites.update()
         # On appelle la fonction move() de la classe player pour pouvoir le faire bouger
         player.move()
-        player.gravity_check()
+        
         #on clear d'abord l'écran avant de blit dessus les tiles utilisées par la carte
         screen.fill((0, 0, 0))
         
@@ -76,12 +77,11 @@ def main():
         screen.blit(map_surface, (0, 0))
 
         # Update sprites
-        all_sprites.update()
         
 
         # Draw all sprites
         all_sprites.draw(screen)
-
+        
         pygame.display.update()
         clock.tick(60)
 

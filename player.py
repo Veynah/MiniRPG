@@ -33,13 +33,16 @@ class Player(pygame.sprite.Sprite):
             
             # Position and direction
             self.vx = 0
-            self.pos = vec((340, 240))
+            self.pos = vec(340, 240)
             self.vel = vec(0, 0)
             self.acc = vec(0, 0)
             self.direction = "RIGHT"
             self.jumping = False
             self.running = False
             self.blockers = blockers
+            
+            self.time_since_last_frame = 0
+            self.frame_duration = 60
             
             # Time counter for animation
             self.frame_index = 0
@@ -82,6 +85,7 @@ class Player(pygame.sprite.Sprite):
       def gravity_check(self):
             hits = [blocker for blocker in self.blockers if self.rect.colliderect(blocker)]
             if self.vel.y > 0:
+                  #print("Collision Detected")
                   if hits:
                         lowest = hits[0]
                         for hit in hits:
@@ -106,18 +110,22 @@ class Player(pygame.sprite.Sprite):
             
       
       def update(self):
-            if self.frame_index > 7: # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0 apres la 8eme frame
+            time_passed = pygame.time.get_ticks() - self.time_since_last_frame
+            if time_passed > self.frame_duration:
+                  self.time_since_last_frame = pygame.time.get_ticks()
+            
+                  if self.frame_index > 7: # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0 apres la 8eme frame
                         self.frame_index = 0
                         return
             
-            if self.jumping == False and self.running == True:
-                  if self.vel.x > 0:
-                        self.image = player_run_anim_R[self.frame_index]
-                        self.direction = "RIGHT"
-                  else:
-                        self.image = player_run_anim_L[self.frame_index]
-                        self.direction = "LEFT"
-                  self.frame_index += 1
+                  if self.jumping == False and self.running == True:
+                        if self.vel.x > 0:
+                              self.image = player_run_anim_R[self.frame_index]
+                              self.direction = "RIGHT"
+                        elif self.vel.x < 0:
+                              self.image = player_run_anim_L[self.frame_index]
+                              self.direction = "LEFT"
+                        self.frame_index += 1
                   
                   # Returns to base frame if standing still and incorrect frame is showing
                   if abs(self.vel.x) < 0.2 and self.frame_index != 0:
