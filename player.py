@@ -84,9 +84,13 @@ class Player(pygame.sprite.Sprite):
                               if hit.top > lowest.top:
                                     lowest = hit
                         if self.pos.y < lowest.bottom:
-                              self.pos.y = lowest.top + 1 
+                              self.pos.y = lowest.top + 1
                               self.vel.y = 0
                               self.jumping = False
+                              
+            self.pos.x = int(self.pos.x)
+            self.pos.y = int(self.pos.y)
+            self.rect.midbottom = self.pos
                               
       def jump(self):
             self.rect.x += 1
