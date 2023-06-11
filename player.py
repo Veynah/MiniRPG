@@ -6,6 +6,7 @@ import time
 
 
 # Les variables pour bouger
+# On ajoute de la friction pour que les mouvements soient plus agréables
 ACC = 0.3
 FRIC = -0.10
 
@@ -26,35 +27,36 @@ class Player(pygame.sprite.Sprite):
             self.vel = vec(0, 0)
             self.acc = vec(0, 0)
             self.direction = "RIGHT"
+            self.jumping = False
 
             # Time counter for animation
             self.time = 0
 
       def move(self):
-        # Keep a constant acceleration of 0.5 in the downwards direction (gravity)
-        #self.acc = vec(0,0.5)
+        # Constante qui va accélérer vers le bas ce qui va simuler la gravité
+            self.acc = vec(0,0.5)
 
-        # Will set running to False if the player has slowed down to a certain extent
+        # Va nous slow
             if abs(self.vel.x) > 0.3:
                   self.running = True
             else:
                   self.running = False
 
-            # Returns the current key presses
+            # Cela va renvoyer les touches pressées 
             pressed_keys = pygame.key.get_pressed()
 
-            # Accelerates the player in the direction of the key press
-            if pressed_keys[K_q]:  # 'q' for going left
+            # Accélère dans une direction ou une autre suivant la touche utilisée
+            if pressed_keys[K_q]:  # Q pour aller à gauche
                   self.acc.x = -ACC
-            if pressed_keys[K_d]:  # 'd' for going right
+            if pressed_keys[K_d]:  # D pour aller à droite
                   self.acc.x = ACC
 
-        # Formulas to calculate velocity while accounting for friction
+        # Détermine la vélocité en prenant en compte la friciton
             self.acc.x += self.vel.x * FRIC
             self.vel += self.acc
-            self.pos += self.vel + 0.5 * self.acc  # Updates Position with new values
+            self.pos += self.vel + 0.5 * self.acc  # Update la position
 
-        # This causes character warping from one point of the screen to the other
+        # Ce sera le blink
             if self.pos.x > WIDTH:
                   self.pos.x = 0
             if self.pos.x < 0:

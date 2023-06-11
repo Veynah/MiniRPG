@@ -1,6 +1,8 @@
 import pygame as pg
 from enum import Enum
 
+# Classe utilisée pour extraire les sprites des spritesheets comme celle du personnage
+
 class SpriteSheet:
 	def __init__(self, filename, bg=None):
 		self.spritesheet = pg.image.load(filename).convert()

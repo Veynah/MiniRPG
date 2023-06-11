@@ -1,3 +1,6 @@
+# Utilisé pour faire des tests sur le code
+
+
 import pygame
 import sys
 import time
