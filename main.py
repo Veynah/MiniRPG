@@ -56,6 +56,7 @@ all_sprites.add(player)
 
 def main():
     while True:
+        player.gravity_check()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
