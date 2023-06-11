@@ -14,10 +14,6 @@ from player import Player
 
 pygame.init()
 
-# Les variables pour bouger
-ACC = 0.3
-FRIC = -0.10
-
 # Les variables de l'écran
 HEIGHT = 720
 WIDTH = 1280
