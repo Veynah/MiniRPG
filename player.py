@@ -1,10 +1,8 @@
 import pygame
-from pygame.locals import K_q, K_d, K_z
+from pygame.locals import K_q, K_d
 from pygame.math import Vector2 as vec
 import keyboard
 import time
-from animated_sprite import AnimatedSprite
-from spritesheet import SpriteSheet, Animation
 
 # Les variables pour bouger
 # On ajoute de la friction pour que les mouvements soient plus agréables
@@ -43,9 +41,6 @@ class Player(pygame.sprite.Sprite):
             self.running = False
             self.blockers = blockers
             
-            self.time_since_last_frame = 0
-            self.frame_duration = 100
-
             # Time counter for animation
             self.frame_index = 0
 
@@ -53,53 +48,36 @@ class Player(pygame.sprite.Sprite):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
             self.acc = vec(0,0.5)
             
-            self.running = False
-
-
+            # Running = faux si on est trop slow
+            if abs(self.vel.x) > 0.3:
+                  self.running = True
+            else:
+                  self.running = False
+                  
+            
             # Cela va renvoyer les touches pressées 
             pressed_keys = pygame.key.get_pressed()
 
             # Accélère dans une direction ou une autre suivant la touche utilisée
             if pressed_keys[K_q]:  # Q pour aller à gauche
                   self.acc.x = -ACC
-                  self.jumping = False
-                  self.running = True
+                  
                   
             if pressed_keys[K_d]:  # D pour aller à droite
                   self.acc.x = ACC
-                  self.jumping = False
-                  self.running = True
                   
-            if pressed_keys[K_z]: #Z pour sauter
-                  self.jump()
-                  self.running = False
-                  self.jumping = True
+                  
+                  
+                  
 
         # Détermine la vélocité en prenant en compte la friciton
             self.acc.x += self.vel.x * FRIC
             self.vel += self.acc
-            self.pos += self.vel + 0.5 * self.acc  # Update la position
-
-        # Ce sera le blink
-            if self.pos.x > WIDTH:
-                  self.pos.x = 0
-            if self.pos.x < 0:
-                  self.pos.x = WIDTH
-
+            self.pos += self.vel + 0.5 * self.acc
             
             
-            self.pos.x += self.vel.x 
-            for blocker in self.blockers:
-                  if self.rect.colliderect(blocker):
-                        self.pos.x -= self.vel.x
-                        self.vel.x = 0
-
-            
-            
-                        
-            self.gravity_check()
-                        
-            self.rect.midbottom = self.pos  # Update rect with new pos
+            # Outil de debug
+            print(f"Acceleration: {self.acc}, Velocity: {self.vel}, Position: {self.pos}")
 
       def gravity_check(self):
             hits = [blocker for blocker in self.blockers if self.rect.colliderect(blocker)]
@@ -113,42 +91,33 @@ class Player(pygame.sprite.Sprite):
                               self.pos.y = lowest.top + 1
                               self.vel.y = 0
                               self.jumping = False
-                              
-            self.pos.x = int(self.pos.x)
-            self.pos.y = int(self.pos.y)
-            self.rect.midbottom = self.pos
+                               
                               
       def jump(self):
             self.rect.x += 1
- 
-    
             hits = [blocker for blocker in self.blockers if self.rect.colliderect(blocker)]
-     
             self.rect.x -= 1
- 
-    # If touching the ground, and not currently jumping, cause the player to jump.
+            
             if hits and not self.jumping:
                   self.jumping = True
-                  self.vel.y = -7
+                  self.vel.y = -12
+                  
+ 
+            
       
       def update(self):
-            
-            time_passed = pygame.time.get_ticks() - self.time_since_last_frame
-            
-            if time_passed > self.frame_duration:
-                  self.time_since_last_frame = pygame.time.get_ticks()
-                  if self.frame_index > 7: # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0 apres la 8eme frame
+            if self.frame_index > 7: # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0 apres la 8eme frame
                         self.frame_index = 0
                         return
             
-                  if self.jumping == False and self.running == True:
-                        if self.vel.x > 0:
-                              self.image = player_run_anim_R[self.frame_index]
-                              self.direction = "RIGHT"
-                        elif self.vel.x < 0:
-                              self.image = player_run_anim_L[self.frame_index]
-                              self.direction = "LEFT"
-                        self.frame_index += 1
+            if self.jumping == False and self.running == True:
+                  if self.vel.x > 0:
+                        self.image = player_run_anim_R[self.frame_index]
+                        self.direction = "RIGHT"
+                  else:
+                        self.image = player_run_anim_L[self.frame_index]
+                        self.direction = "LEFT"
+                  self.frame_index += 1
                   
                   # Returns to base frame if standing still and incorrect frame is showing
                   if abs(self.vel.x) < 0.2 and self.frame_index != 0:

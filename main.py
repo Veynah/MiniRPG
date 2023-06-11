@@ -63,11 +63,12 @@ def main():
                 sys.exit()
                 
             if event.type == pygame.KEYDOWN:
-              pass
+                if event.key == pygame.K_z:
+                    player.jump()
 
         # On appelle la fonction move() de la classe player pour pouvoir le faire bouger
         player.move()
-        
+        player.gravity_check()
         #on clear d'abord l'écran avant de blit dessus les tiles utilisées par la carte
         screen.fill((0, 0, 0))
         
