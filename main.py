@@ -13,7 +13,16 @@ from player import Player
 
 
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+
+# Les variables pour bouger
+ACC = 0.3
+FRIC = -0.10
+
+# Les variables de l'écran
+HEIGHT = 720
+WIDTH = 1280
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('MiniRPG')
 clock = pygame.time.Clock()
 
@@ -38,7 +47,13 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+                
+            if event.type == pygame.KEYDOWN:
+              pass
 
+        # On appelle la fonction move() de la classe player pour pouvoir le faire bouger
+        player.move()
+        
         #on clear d'abord l'écran avant de blit dessus les tiles utilisées par la carte
         screen.fill((0, 0, 0))
         
