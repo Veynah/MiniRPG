@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
 
       def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
-            self.acc = vec(0,0.5)
+            #self.acc = vec(0,0.5)
 
         # Va nous slow
             if abs(self.vel.x) > 0.3:
