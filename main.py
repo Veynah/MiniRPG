@@ -56,7 +56,7 @@ all_sprites.add(player)
 
 def main():
     while True:
-        player.gravity_check()
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -65,7 +65,8 @@ def main():
             if event.type == pygame.KEYDOWN:
               pass
 
-        
+        # On appelle la fonction move() de la classe player pour pouvoir le faire bouger
+        player.move()
         
         #on clear d'abord l'écran avant de blit dessus les tiles utilisées par la carte
         screen.fill((0, 0, 0))
@@ -76,8 +77,6 @@ def main():
         # Update sprites
         all_sprites.update()
         
-        # On appelle la fonction move() de la classe player pour pouvoir le faire bouger
-        player.move()
 
         # Draw all sprites
         all_sprites.draw(screen)

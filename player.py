@@ -42,6 +42,9 @@ class Player(pygame.sprite.Sprite):
             self.jumping = False
             self.running = False
             self.blockers = blockers
+            
+            self.time_since_last_frame = 0
+            self.frame_duration = 100
 
             # Time counter for animation
             self.frame_index = 0
@@ -49,6 +52,8 @@ class Player(pygame.sprite.Sprite):
       def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
             self.acc = vec(0,0.5)
+            
+            self.running = False
 
 
             # Cela va renvoyer les touches pressées 
@@ -57,14 +62,18 @@ class Player(pygame.sprite.Sprite):
             # Accélère dans une direction ou une autre suivant la touche utilisée
             if pressed_keys[K_q]:  # Q pour aller à gauche
                   self.acc.x = -ACC
+                  self.jumping = False
                   self.running = True
                   
             if pressed_keys[K_d]:  # D pour aller à droite
                   self.acc.x = ACC
+                  self.jumping = False
                   self.running = True
                   
             if pressed_keys[K_z]: #Z pour sauter
                   self.jump()
+                  self.running = False
+                  self.jumping = True
 
         # Détermine la vélocité en prenant en compte la friciton
             self.acc.x += self.vel.x * FRIC
@@ -123,26 +132,31 @@ class Player(pygame.sprite.Sprite):
                   self.vel.y = -7
       
       def update(self):
-            if self.frame_index > 7: # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0 apres la 8eme frame
-                  self.frame_index = 0
-                  return
             
-            if self.jumping == False and self.running == True:
-                  if self.vel.x > 0:
-                        self.image = player_run_anim_R[self.frame_index]
-                        self.direction = "RIGHT"
-                  elif self.vel.x < 0:
-                        self.image = player_run_anim_L[self.frame_index]
-                        self.direction = "LEFT"
-                  self.frame_index += 1
+            time_passed = pygame.time.get_ticks() - self.time_since_last_frame
+            
+            if time_passed > self.frame_duration:
+                  self.time_since_last_frame = pygame.time.get_ticks()
+                  if self.frame_index > 7: # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0 apres la 8eme frame
+                        self.frame_index = 0
+                        return
+            
+                  if self.jumping == False and self.running == True:
+                        if self.vel.x > 0:
+                              self.image = player_run_anim_R[self.frame_index]
+                              self.direction = "RIGHT"
+                        elif self.vel.x < 0:
+                              self.image = player_run_anim_L[self.frame_index]
+                              self.direction = "LEFT"
+                        self.frame_index += 1
                   
-            # Returns to base frame if standing still and incorrect frame is showing
-            if abs(self.vel.x) < 0.2 and self.frame_index != 0:
-                  self.frame_index = 0
-                  if self.direction == "RIGHT":
-                        self.image = player_run_anim_R[self.frame_index]
-                  elif self.direction == "LEFT":
-                        self.image = player_run_anim_L[self.frame_index]
+                  # Returns to base frame if standing still and incorrect frame is showing
+                  if abs(self.vel.x) < 0.2 and self.frame_index != 0:
+                        self.frame_index = 0
+                        if self.direction == "RIGHT":
+                              self.image = player_run_anim_R[self.frame_index]
+                        elif self.direction == "LEFT":
+                              self.image = player_run_anim_L[self.frame_index]
             
             
 
