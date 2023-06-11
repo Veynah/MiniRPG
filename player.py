@@ -1,5 +1,5 @@
 import pygame
-from pygame.locals import K_q, K_d
+from pygame.locals import K_q, K_d, K_z
 from pygame.math import Vector2 as vec
 import keyboard
 import time
@@ -7,8 +7,8 @@ import time
 
 # Les variables pour bouger
 # On ajoute de la friction pour que les mouvements soient plus agréables
-ACC = 0.3
-FRIC = -0.10
+ACC = 2
+FRIC = -0.6
 
 # Les variables de l'écran
 HEIGHT = 720
@@ -16,7 +16,7 @@ WIDTH = 1280
 
 
 class Player(pygame.sprite.Sprite):
-      def __init__(self):
+      def __init__(self, blockers):
             super().__init__()
             self.image = pygame.image.load("img/player/test.png")
             self.rect = self.image.get_rect()
@@ -28,19 +28,15 @@ class Player(pygame.sprite.Sprite):
             self.acc = vec(0, 0)
             self.direction = "RIGHT"
             self.jumping = False
+            self.blockers = blockers
 
             # Time counter for animation
             self.time = 0
 
       def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
-            #self.acc = vec(0,0.5)
+            self.acc = vec(0,0.5)
 
-        # Va nous slow
-            if abs(self.vel.x) > 0.3:
-                  self.running = True
-            else:
-                  self.running = False
 
             # Cela va renvoyer les touches pressées 
             pressed_keys = pygame.key.get_pressed()
@@ -50,6 +46,8 @@ class Player(pygame.sprite.Sprite):
                   self.acc.x = -ACC
             if pressed_keys[K_d]:  # D pour aller à droite
                   self.acc.x = ACC
+            if pressed_keys[K_z]: #Z pour sauter
+                  self.jump()
 
         # Détermine la vélocité en prenant en compte la friciton
             self.acc.x += self.vel.x * FRIC
@@ -62,14 +60,52 @@ class Player(pygame.sprite.Sprite):
             if self.pos.x < 0:
                   self.pos.x = WIDTH
 
+            
+            
+            self.pos.x += self.vel.x 
+            for blocker in self.blockers:
+                  if self.rect.colliderect(blocker):
+                        self.pos.x -= self.vel.x
+                        self.vel.x = 0
+
+            
+            
+                        
+            self.gravity_check()
+                        
             self.rect.midbottom = self.pos  # Update rect with new pos
 
+      def gravity_check(self):
+            hits = [blocker for blocker in self.blockers if self.rect.colliderect(blocker)]
+            if self.vel.y > 0:
+                  if hits:
+                        lowest = hits[0]
+                        for hit in hits:
+                              if hit.top > lowest.top:
+                                    lowest = hit
+                        if self.pos.y < lowest.bottom:
+                              self.pos.y = lowest.top + 1 
+                              self.vel.y = 0
+                              self.jumping = False
+                              
+      def jump(self):
+            self.rect.x += 1
+ 
+    
+            hits = [blocker for blocker in self.blockers if self.rect.colliderect(blocker)]
+     
+            self.rect.x -= 1
+ 
+    # If touching the ground, and not currently jumping, cause the player to jump.
+            if hits and not self.jumping:
+                  self.jumping = True
+                  self.vel.y = -7
+      
       def update(self):
             pass
 
       def attack(self):
             pass
 
-      def jump(self):
-            pass
+      
 
