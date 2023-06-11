@@ -16,7 +16,7 @@ WIDTH = 1280
 
 
 class Player(pygame.sprite.Sprite):
-      def __init__(self):
+      def __init__(self, blockers):
             super().__init__()
             self.image = pygame.image.load("img/player/test.png")
             self.rect = self.image.get_rect()
@@ -28,19 +28,15 @@ class Player(pygame.sprite.Sprite):
             self.acc = vec(0, 0)
             self.direction = "RIGHT"
             self.jumping = False
+            self.blockers = blockers
 
             # Time counter for animation
             self.time = 0
 
       def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
-            #self.acc = vec(0,0.5)
+            self.acc = vec(0,0.5)
 
-        # Va nous slow
-            if abs(self.vel.x) > 0.3:
-                  self.running = True
-            else:
-                  self.running = False
 
             # Cela va renvoyer les touches pressées 
             pressed_keys = pygame.key.get_pressed()
@@ -63,6 +59,19 @@ class Player(pygame.sprite.Sprite):
                   self.pos.x = WIDTH
 
             self.rect.midbottom = self.pos  # Update rect with new pos
+            
+            self.pos.x += self.vel.x
+            for blocker in self.blockers:
+                  if self.rect.colliderect(blocker):
+                        self.pos.x -= self.vel.x
+                        self.vel.x = 0
+
+            
+            self.pos.y += self.vel.y
+            for blocker in self.blockers:
+                  if self.rect.colliderect(blocker):
+                        self.pos.y -= self.vel.y
+                        self.vel.y = 0
 
       def update(self):
             pass

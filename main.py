@@ -30,8 +30,25 @@ map_surface = renderer.make_map()
 
 all_sprites = pygame.sprite.Group()
 
+blockers = []
+tilewidth = renderer.tmx_data.tilewidth
+tileheight = renderer.tmx_data.tileheight
+
+ground_layer = None
+for layer in renderer.tmx_data.visible_layers:
+    if isinstance(layer, pytmx.TiledTileLayer) and layer.name == "Ground":
+        ground_layer = layer
+        break
+    
+if ground_layer:
+    for x, y, gid in ground_layer:
+        if gid:  # Check if there is a tile here
+            new_rect = pygame.Rect(x * tilewidth, y * tileheight, tilewidth, tileheight)
+            blockers.append(new_rect)
+
+
 # Create player
-player = Player()
+player = Player(blockers)
 
 # Add player to all_sprites group
 all_sprites.add(player)
