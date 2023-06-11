@@ -37,11 +37,11 @@
             }
         },
         "data/tmx/village.tmx": {
-            "scale": 1.6647265625,
-            "selectedLayer": 0,
+            "scale": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 622.3244245254241,
-                "y": 264.3076706478636
+                "x": 231,
+                "y": 380.5
             }
         },
         "data/tsx/Fire.tsx": {
@@ -80,7 +80,7 @@
         },
         "data/tsx/village.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1.5,
+            "scaleInDock": 1,
             "scaleInEditor": 2
         },
         "data/tsx/village_obj.tsx": {
@@ -120,11 +120,11 @@
     "project": "sans titre.tiled-project",
     "recentFiles": [
         "data/tmx/village.tmx",
+        "data/tsx/playertest.tsx",
         "data/tsx/village.tsx",
         "data/tsx/village_tree.tsx",
         "data/tsx/village_props.tsx",
         "data/tsx/village_obj.tsx",
-        "data/tsx/playertest.tsx",
         "data/tsx/smoke.tsx",
         "data/tsx/blacksmith.tsx",
         "data/tmx/village..tmx",
@@ -132,6 +132,7 @@
         "data/tsx/Fire.tsx",
         "data/tsx/background.tsx"
     ],
+    "resizeMap.removeObjects": true,
     "tileset.lastUsedFilter": "Tous les Fichiers (*)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

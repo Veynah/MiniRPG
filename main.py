@@ -1,63 +1,70 @@
-import pygame, sys
-import time
-from pygame.locals import *
+import sys
 from sys import exit
-from input_handler import InputHandler
-from player import Player
-from level import Level  
-import pytmx #pytmx permet de charger les fichiers tmx, ce sont les fichiers maps
+import pygame
+from pygame.locals import *
+import pytmx  # pytmx permet de charger les fichiers tmx, ce sont les fichiers maps
 from pytmx.util_pygame import load_pygame
+from tkinter import filedialog
+from tkinter import *
+from tilerender import Renderer
+from pygame.locals import *
+from player import Player
 
 
-class Game:
-    def __init__(self):
-        pygame.init()
+
+pygame.init()
+
+# Les variables de l'écran
+HEIGHT = 720
+WIDTH = 1280
+
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('MiniRPG')
+clock = pygame.time.Clock()
+
+# Create a Renderer object with the path to your tmx file
+renderer = Renderer('tiled/data/tmx/village.tmx')
+
+# Create the map surface
+map_surface = renderer.make_map()
+
+all_sprites = pygame.sprite.Group()
+
+# Create player
+player = Player()
+
+# Add player to all_sprites group
+all_sprites.add(player)
+
+
+def main():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+                
+            if event.type == pygame.KEYDOWN:
+              pass
+
+        # On appelle la fonction move() de la classe player pour pouvoir le faire bouger
+        player.move()
         
-        self.screen = pygame.display.set_mode((800,600))
+        #on clear d'abord l'écran avant de blit dessus les tiles utilisées par la carte
+        screen.fill((0, 0, 0))
         
-        pygame.display.set_caption('MiniRPG')
-        
-        self.clock = pygame.time.Clock()
+        # Blit the map_surface onto the screen
+        screen.blit(map_surface, (0, 0))
 
-        self.player = Player("Player1", "img/player/test.png", -36, 19)  # Added a name to the player
-        
-        self.input_handler = InputHandler(self.player)
+        # Update sprites
+        all_sprites.update()
 
-        self.all_sprites = pygame.sprite.Group()
-        
-        self.all_sprites.add(self.player)
-        
-        self.current_level = None
+        # Draw all sprites
+        all_sprites.draw(screen)
 
-    def load_level(self, tmx_file):
-        if self.current_level is not None:
-            # Clean up the current level if necessary
-            pass
-        self.current_level = Level(tmx_file, self.player, self.screen)
+        pygame.display.update()
+        clock.tick(60)
 
 
-
-    def run(self):
-        self.load_level("tiled/data/tmx/village.tmx")
-        
-        while True:
-            self.current_level.render()  # Render the level (which includes background and ground)
-            
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    exit()
-                else:
-                    self.input_handler.handle_event(event)
-
-            
-
-            self.all_sprites.update()
-            self.all_sprites.draw(self.screen)
-            pygame.display.update()
-            self.clock.tick(60)
-
-            if self.current_level.player_has_reached_end_of_level():
-                self.load_level("tiled/data/tmx/village.tmx")
 if __name__ == "__main__":
-    Game().run()
+    main()
