@@ -69,7 +69,13 @@ class Player(pygame.sprite.Sprite):
             if pressed_keys[K_d]:  # D pour aller à droite
                   self.acc.x = ACC
                   
-                  
+            self.pos.x += self.vel.x 
+            for blocker in self.blockers:
+                  if self.rect.colliderect(blocker):
+                        self.pos.x -= self.vel.x
+                        self.vel.x = 0
+
+            self.rect.midbottom = self.pos  # Update rect with new pos     
                   
                   
 
