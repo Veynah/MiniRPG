@@ -25,6 +25,8 @@ player_run_anim_L = [pygame.image.load("img/player/Player_Run_L/Player_Run_L0.pn
                      pygame.image.load("img/player/Player_Run_L/Player_Run_L4.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L5.png"), 
                      pygame.image.load("img/player/Player_Run_L/Player_Run_L6.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L7.png"),]
 
+player_idle_anim_R = []
+
 class Player(pygame.sprite.Sprite):
       def __init__(self, blockers):
             super().__init__()
@@ -39,10 +41,12 @@ class Player(pygame.sprite.Sprite):
             self.direction = "RIGHT"
             self.jumping = False
             self.running = False
+            self.attacking = False
+            self.attack_frame = 0
             self.blockers = blockers
             
             self.time_since_last_frame = 0
-            self.frame_duration = 60
+            self.frame_duration = 80
             
             # Time counter for animation
             self.frame_index = 0
@@ -116,7 +120,7 @@ class Player(pygame.sprite.Sprite):
             
       
       def update(self):
-            time_passed = pygame.time.get_ticks() - self.time_since_last_frame
+            time_passed = pygame.time.get_ticks() - self.time_since_last_frame #Pour que les animations soient plus smooth, elles vont charger moins vite
             if time_passed > self.frame_duration:
                   self.time_since_last_frame = pygame.time.get_ticks()
             
