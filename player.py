@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import K_q, K_d
 from pygame.math import Vector2 as vec
-import keyboard
 import time
 
 # Les variables pour bouger
@@ -25,7 +24,7 @@ player_run_anim_L = [pygame.image.load("img/player/Player_Run_L/Player_Run_L0.pn
                      pygame.image.load("img/player/Player_Run_L/Player_Run_L4.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L5.png"), 
                      pygame.image.load("img/player/Player_Run_L/Player_Run_L6.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L7.png"),]
 
-player_idle_anim_R = []
+player_idle_anim_R = [pygame.image.load("img/player/Player_Idle_R/Player_Idle_R0.png"), ]
 
 class Player(pygame.sprite.Sprite):
       def __init__(self, blockers):
