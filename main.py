@@ -3,6 +3,7 @@ from sys import exit
 import pygame
 from pygame.locals import *
 import pytmx  # pytmx permet de charger les fichiers tmx, ce sont les fichiers maps
+import pyscroll
 from pytmx.util_pygame import load_pygame
 from tkinter import filedialog
 from tkinter import *
