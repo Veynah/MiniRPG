@@ -5,4 +5,4 @@ Notre héro va sauver la princesse Rolandine en détresse des mains de son ravis
 Pour lancer main.py il faut installer :
 pygame : pip install pygame
 pytmx : pip install pytmx
-keyboard module : pip install keyboard
+pyscroll : pip install pyscroll

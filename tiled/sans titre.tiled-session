@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "data/tmx/village.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -37,16 +37,31 @@
             }
         },
         "data/tmx/village.tmx": {
-            "scale": 1,
-            "selectedLayer": 5,
+            "expandedObjectLayers": [
+                24
+            ],
+            "scale": 2,
+            "selectedLayer": 8,
             "viewCenter": {
-                "x": 230,
-                "y": 379.5
+                "x": 238,
+                "y": 222
+            }
+        },
+        "data/tmx/village2.tmx": {
+            "scale": 0.6466927083333334,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 1920.541215318326,
+                "y": 208.754479925905
             }
         },
         "data/tsx/Fire.tsx": {
             "dynamicWrapping": true,
             "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "data/tsx/Mountains.tsx": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "data/tsx/background.tsx": {
@@ -108,18 +123,21 @@
     },
     "last.exportedFilePath": "C:/Users/dark-/VSC/MiniRPG/tiled/data/tmx",
     "last.externalTilesetPath": "C:/Users/dark-/VSC/MiniRPG/tiled/data/tsx",
-    "last.imagePath": "C:/Users/dark-/3D Objects/Tiles/lpc-blacksmith/lpc-blacksmith",
+    "last.imagePath": "C:/Users/dark-/VSC/MiniRPG/tiled/assets/Legacy Fantasy - Kingdom Fortress - Update/Legacy Fantasy - Kingdom Fortress - Update/Background",
     "map.fixedSize": false,
-    "map.lastUsedExportFilter": "Tous les Fichiers (*)",
+    "map.lastUsedExportFilter": "All Files (*)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "openFiles": [
-        "data/tmx/village.tmx"
     ],
     "project": "sans titre.tiled-project",
+    "property.type": "object",
     "recentFiles": [
         "data/tmx/village.tmx",
+        "data/tsx/background.tsx",
+        "data/tsx/Mountains.tsx",
+        "data/tmx/village2.tmx",
         "data/tsx/playertest.tsx",
         "data/tsx/village.tsx",
         "data/tsx/village_tree.tsx",
@@ -127,10 +145,7 @@
         "data/tsx/village_obj.tsx",
         "data/tsx/smoke.tsx",
         "data/tsx/blacksmith.tsx",
-        "data/tmx/village..tmx",
-        "data/village.tmx",
-        "data/tsx/Fire.tsx",
-        "data/tsx/background.tsx"
+        "data/tmx/village..tmx"
     ],
     "resizeMap.removeObjects": true,
     "tileset.lastUsedFilter": "Tous les Fichiers (*)",

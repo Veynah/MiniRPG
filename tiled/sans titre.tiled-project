@@ -2,11 +2,20 @@
     "automappingRulesFile": "",
     "commands": [
     ],
-    "compatibilityVersion": 1100,
+    "compatibilityVersion": 1080,
     "extensionsPath": "extensions",
     "folders": [
         "."
     ],
     "propertyTypes": [
+        {
+            "id": 1,
+            "name": "Énumération0",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+            ],
+            "valuesAsFlags": false
+        }
     ]
 }

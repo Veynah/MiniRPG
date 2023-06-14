@@ -1,0 +1,65 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "data/tmx/village.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "data/tmx/forest.tmx": {
+            "scale": 2,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 459,
+                "y": 165.5
+            }
+        },
+        "data/tmx/village.tmx": {
+            "scale": 2,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 3614,
+                "y": 145.5
+            }
+        },
+        "data/tsx/Mountains.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tsx/background.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tsx/blacksmith.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tsx/smoke.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tsx/village.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tsx/village_obj.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tsx/village_props.tsx": {
+            "scaleInDock": 1
+        },
+        "data/tsx/village_tree.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "map.height": 26,
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": null,
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 400,
+    "openFiles": [
+        "data/tmx/village.tmx"
+    ],
+    "project": "test.tiled-project",
+    "recentFiles": [
+        "data/tmx/village.tmx"
+    ]
+}

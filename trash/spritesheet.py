@@ -1,15 +1,22 @@
+#animation de spritesheets tiré de ça https://github.com/HUCORP-admin/Sprite-Animations-in-Pygame/blob/main/spritesheet.py
+#code changé pour pouvoir charger plusieurs fichiers de spritesheets
 import pygame as pg
 from enum import Enum
 
-# Classe utilisée pour extraire les sprites des spritesheets comme celle du personnage
-
 class SpriteSheet:
 	def __init__(self, filename, bg=None):
-		self.spritesheet = pg.image.load(filename).convert()
+		self.spritesheet = {}
 		self.bg = bg
+		for key, filename in filename.items():
+			self.spritesheets[key] = pg.image.load(filename).convert()
+  
 
-	def get_image(self, frame, scale=None, flip=False):
-		image = self.spritesheet.subsurface(pg.Rect(frame))
+	def get_image(self, key, frame, scale=None, flip=False):
+		spritesheet = self.spritesheets.get(key)
+		if spritesheet is None:
+			return None
+
+		image = spritesheet.subsurface(pg.Rect(frame))
 		
 		if scale is not None:
 			image = pg.transform.scale(image, (frame[2]*scale, frame[3]*scale))
@@ -22,9 +29,9 @@ class SpriteSheet:
 
 		return image
 
-	def get_animation(self, coords, frame_duration, mode, resize=None, flip=None):
+	def get_animation(self, key, coords, frame_duration, mode, resize=None, flip=None):
 		# extract images & create animation
-		frames = [self.get_image(frame, resize, flip) for frame in coords]
+		frames = [self.get_image(key, frame, resize, flip) for frame in coords]
 		return Animation(frames, frame_duration, mode)
 
 
@@ -42,12 +49,12 @@ class Animation:
 		self.mode = mode
 
 	def get_frame(self, state_time):
-		frame_number = self.get_frame_index(state_time)
-		return self.frames[frame_number]
+		frame_number = self.get_frame_index(state_time);
+		return self.frames[frame_number];
 
 	def get_frame_index(self, state_time):
 		if len(self.frames) == 1:
-			return 0
+			return 0;
 
 		frame_number = int(state_time/self.frame_duration)
 

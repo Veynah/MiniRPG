@@ -3,6 +3,7 @@ from sys import exit
 import pygame
 from pygame.locals import *
 import pytmx  # pytmx permet de charger les fichiers tmx, ce sont les fichiers maps
+import pyscroll
 from pytmx.util_pygame import load_pygame
 from tkinter import filedialog
 from tkinter import *
@@ -63,8 +64,10 @@ def main():
                 sys.exit()
                 
             if event.type == pygame.KEYDOWN:
-              pass
+                if event.key == pygame.K_z:
+                    player.jump()
 
+        all_sprites.update()
         # On appelle la fonction move() de la classe player pour pouvoir le faire bouger
         player.move()
         
@@ -75,11 +78,11 @@ def main():
         screen.blit(map_surface, (0, 0))
 
         # Update sprites
-        all_sprites.update()
+        
 
         # Draw all sprites
         all_sprites.draw(screen)
-
+        
         pygame.display.update()
         clock.tick(60)
 
