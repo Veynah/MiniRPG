@@ -64,16 +64,27 @@ class NewPlayer(pygame.sprite.Sprite):
             self.vel.x = 0
         
     
-        self.position.x += self.vel.x
-        self.rect.x = self.position.x
-        collisions = pygame.sprite.spritecollide(self, self.walls, False)
-        for wall in collisions:
-            if self.vel.x > 0:
-                self.position.x = wall.rect.left - self.rect.width
-            elif self.vel.x < 0:
-                self.position.x = wall.rect.right
-            self.vel.x = 0
-        
+        move_by = int(self.vel.x)
+        for _ in range(abs(move_by)):
+            # Increment or decrement x position by 1 pixel
+            if move_by > 0:
+                self.position.x += 1
+            else:
+                self.position.x -= 1
+            # Update the rect
+            self.rect.x = self.position.x
+            # Check for collisions
+            collisions = pygame.sprite.spritecollide(self, self.walls, False)
+            if collisions:
+                # If moving right, place the player to the left of the wall
+                if move_by > 0:
+                    self.position.x = collisions[0].rect.left - self.rect.width
+                # If moving left, place the player to the right of the wall
+                elif move_by < 0:
+                    self.position.x = collisions[0].rect.right
+                # Stop any horizontal movement
+                self.vel.x = 0
+                break 
         # Vertical movement
         self.position.y += self.vel.y
         self.rect.y = self.position.y
