@@ -3,17 +3,17 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "data/tmx/village.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "data/tmx/village.tmx": {
-            "scale": 0.6466927083333334,
+            "scale": 2,
             "selectedLayer": 8,
             "viewCenter": {
-                "x": 1920.541215318326,
-                "y": 208.754479925905
+                "x": 475.5,
+                "y": 147
             }
         },
         "data/tsx/Mountains.tsx": {
@@ -42,6 +42,7 @@
         }
     },
     "openFiles": [
+        "data/tmx/village.tmx"
     ],
     "project": "test.tiled-project",
     "recentFiles": [
