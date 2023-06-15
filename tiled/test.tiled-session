@@ -3,32 +3,63 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "data/tmx/village.tmx",
+    "activeFile": "data/tmx/forest.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "data/tmx/forest.tmx": {
             "scale": 2,
-            "selectedLayer": 5,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 459,
-                "y": 165.5
+                "x": 1476,
+                "y": 223.5
             }
+        },
+        "data/tmx/forest.tmx#background": {
+            "scaleInDock": 1
         },
         "data/tmx/village.tmx": {
             "scale": 2,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 3614,
-                "y": 145.5
+                "x": 1920,
+                "y": 207.75
             }
+        },
+        "data/tsx/Dusk Woods tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/Duskwood Trees.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/Duskwood darktiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/Lost Glades Backtress.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/Lost Glades Tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "data/tsx/Lost Glades sky.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "data/tsx/Mountains.tsx": {
             "scaleInDock": 1
         },
         "data/tsx/background.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "data/tsx/blacksmith.tsx": {
             "scaleInDock": 1
@@ -49,6 +80,7 @@
             "scaleInDock": 1
         }
     },
+    "last.imagePath": "C:/Users/dark-/VSC/MiniRPG/tiled/assets/Legacy Fantasy - Dusk Woods/Assets",
     "map.height": 26,
     "map.lastUsedFormat": "tmx",
     "map.renderOrder": null,
@@ -56,10 +88,29 @@
     "map.tileWidth": 16,
     "map.width": 400,
     "openFiles": [
-        "data/tmx/village.tmx"
+        "data/tmx/forest.tmx",
+        "data/tsx/Dusk Woods tiles.tsx",
+        "data/tsx/Duskwood Trees.tsx",
+        "data/tsx/Lost Glades Tiles.tsx",
+        "data/tsx/Lost Glades sky.tsx",
+        "data/tsx/Lost Glades Backtress.tsx",
+        "data/tsx/Duskwood darktiles.tsx"
     ],
     "project": "test.tiled-project",
     "recentFiles": [
-        "data/tmx/village.tmx"
-    ]
+        "data/tsx/Duskwood darktiles.tsx",
+        "data/tsx/Lost Glades Backtress.tsx",
+        "data/tsx/Lost Glades sky.tsx",
+        "data/tsx/Lost Glades Tiles.tsx",
+        "data/tsx/Duskwood Trees.tsx",
+        "data/tsx/Dusk Woods tiles.tsx",
+        "data/tmx/forest.tmx",
+        "data/tmx/village.tmx",
+        "data/tsx/background.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
 }

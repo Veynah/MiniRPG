@@ -3,10 +3,40 @@
         "height": 4300,
         "width": 2
     },
+<<<<<<< Updated upstream
     "activeFile": "",
+=======
+    "activeFile": "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tmx/village.tmx",
+>>>>>>> Stashed changes
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tmx/village.tmx": {
+            "scale": 2,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 3749,
+                "y": 137.5
+            }
+        },
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tsx/blacksmith.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tsx/smoke.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tsx/village.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tsx/village_obj.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tsx/village_props.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tsx/village_tree.tsx": {
+            "scaleInDock": 1
+        },
         "data/tmx/tsx/blacksmith.tsx": {
             "scaleInDock": 1
         },
@@ -43,6 +73,7 @@
             "scale": 2,
             "selectedLayer": 8,
             "viewCenter": {
+<<<<<<< Updated upstream
                 "x": 238,
                 "y": 222
             }
@@ -53,6 +84,10 @@
             "viewCenter": {
                 "x": 1920.541215318326,
                 "y": 208.754479925905
+=======
+                "x": 1919.5,
+                "y": 207.5
+>>>>>>> Stashed changes
             }
         },
         "data/tsx/Fire.tsx": {
@@ -130,22 +165,37 @@
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "openFiles": [
+<<<<<<< Updated upstream
+=======
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tmx/village.tmx"
+>>>>>>> Stashed changes
     ],
     "project": "sans titre.tiled-project",
     "property.type": "object",
     "recentFiles": [
+        "C:/Users/dark-/Desktop/MiniRPG 2eme/tiled/data/tmx/village.tmx",
         "data/tmx/village.tmx",
+<<<<<<< Updated upstream
         "data/tsx/background.tsx",
         "data/tsx/Mountains.tsx",
         "data/tmx/village2.tmx",
         "data/tsx/playertest.tsx",
+=======
+>>>>>>> Stashed changes
         "data/tsx/village.tsx",
+        "data/tsx/playertest.tsx",
         "data/tsx/village_tree.tsx",
         "data/tsx/village_props.tsx",
         "data/tsx/village_obj.tsx",
         "data/tsx/smoke.tsx",
         "data/tsx/blacksmith.tsx",
+<<<<<<< Updated upstream
         "data/tmx/village..tmx"
+=======
+        "data/tmx/village..tmx",
+        "data/village.tmx",
+        "data/tsx/Fire.tsx"
+>>>>>>> Stashed changes
     ],
     "resizeMap.removeObjects": true,
     "tileset.lastUsedFilter": "Tous les Fichiers (*)",
