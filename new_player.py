@@ -1,6 +1,5 @@
 import pygame
 from pygame.math import Vector2 as vec
-from wall import Wall
 
 # Les variables pour bouger
 # On ajoute de la friction pour que les mouvements soient plus agréables
