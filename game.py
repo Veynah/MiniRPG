@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import pygame
 import pytmx
 import pyscroll
@@ -74,3 +75,46 @@ class Game:
 
             clock.tick(60)
         pygame.quit()
+=======
+from item import Sword
+from inventory import Inventory
+
+class Game:
+    def __init__(self):
+        self.inventory = Inventory()
+        self.player_action = None
+
+    def add_sword(self):
+        sword = Sword()
+        self.inventory.add_item(sword)
+
+    def remove_sword(self):
+        for item in self.inventory.items:
+            if isinstance(item, Sword):
+                self.inventory.remove_item(item)
+                break
+
+    def combat(self, enemy):
+        # Placeholder combat logic
+        self.inventory.decrease_health(enemy.strength)
+        if self.inventory.get_health() == 0:
+            print("Game Over")
+            return
+
+        self.inventory.increase_level()
+
+    def purchase_item(self, item, cost):
+        if self.inventory.get_money() >= cost:
+            self.inventory.decrease_money(cost)
+            self.inventory.add_item(item)
+        else:
+            print("Not enough money to purchase item")
+
+    def player_actions(self, action):
+        if action == "P":
+            self.add_sword()
+        elif action == "R":
+            self.remove_sword()
+        else:
+            print("Invalid action")
+>>>>>>> Stashed changes
