@@ -39,22 +39,16 @@ class Game:
         player_position = tmx_data.get_object_by_name("player_spawn1")
         self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
         
-        
-        
         # Dessiner le groupe de calque
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=10)
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=5)
         self.group.add(self.player)
         
-    #def handle_input(self):
-        #pressed = pygame.key.get_pressed()
+        # On va définir le rectangle de collision pour entrer dans la forêt
+        enter_forest = tmx_data.get_object_by_name('enter_forest')
+        self.enter_forest_rect = pygame.Rect(enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height)
         
-        #if pressed[pygame.K_UP] or pressed[pygame.K_z]:
-            #print("Haut")
-        #elif pressed[pygame.K_RIGHT] or pressed[pygame.K_d]:
-            #print("Droite")
-        #elif pressed[pygame.K_LEFT] or pressed[pygame.K_q]:
-            #print("Gauche")
         
+
     def run(self):
         
         clock = pygame.time.Clock()

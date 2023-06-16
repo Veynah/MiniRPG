@@ -12,22 +12,28 @@
             "scaleInDock": 1
         },
         "data/tmx/forest.tmx": {
+            "expandedObjectLayers": [
+                6
+            ],
             "scale": 2,
-            "selectedLayer": 7,
+            "selectedLayer": 10,
             "viewCenter": {
-                "x": 3447.5,
-                "y": 332.5
+                "x": -128.5,
+                "y": 179.5
             }
         },
         "data/tmx/forest.tmx#background": {
             "scaleInDock": 1
         },
         "data/tmx/village.tmx": {
+            "expandedObjectLayers": [
+                24
+            ],
             "scale": 2,
-            "selectedLayer": 8,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 3600,
-                "y": 207
+                "x": 3599,
+                "y": 206
             }
         },
         "data/tsx/Blood Mansion Background.tsx": {
