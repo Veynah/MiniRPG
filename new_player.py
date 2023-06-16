@@ -93,17 +93,17 @@ class NewPlayer(pygame.sprite.Sprite):
                 self.position.x += 1
             else:
                 self.position.x -= 1
-            # Update the rect
+            # Update le rectangle
             self.rect.x = self.position.x
-            # Check for collisions
+            # Check pour les collisions
             collisions = pygame.sprite.spritecollide(self, self.walls, False)
             if collisions:
-                # If moving right, place the player to the left of the wall
+                # Si je bouge vers la droite ajuste ma position à 1 pixel à gauche du mur 
                 if move_by > 0:
-                    self.position.x = collisions[0].rect.left - self.rect.width - 1
-                # If moving left, place the player to the right of the wall
+                    self.position.x = collisions[0].rect.left - self.rect.width - 3
+                # Si je bouge vers la gauche ajuste ma position à 1 pixel à droite du mur
                 elif move_by < 0:
-                    self.position.x = collisions[0].rect.right + 1 
+                    self.position.x = collisions[0].rect.right + 3 
                 # Stop any horizontal movement
                 self.vel.x = 0
                 break 
@@ -117,12 +117,12 @@ class NewPlayer(pygame.sprite.Sprite):
         
         self.rect.topleft = self.position
     def gravity_check(self):
-        hits = pygame.sprite.spritecollide(self, self.walls, False)
-        if hits:
+        collisions = pygame.sprite.spritecollide(self, self.walls, False)
+        if collisions:
             # Detect if the character is moving downward
             if self.vel.y > 0:
                 # Character is moving down
-                for wall in hits:
+                for wall in collisions:
                     # Place the character just above the wall
                     self.position.y = wall.rect.top - self.rect.height
                     # Stop any downward movement
@@ -131,7 +131,7 @@ class NewPlayer(pygame.sprite.Sprite):
             # Detect if character is moving upward
             elif self.vel.y < 0:
                 # Character is moving up
-                for wall in hits:
+                for wall in collisions:
                     # Place the character just below the wall
                     self.position.y = wall.rect.bottom
                     # Stop any upward movement
@@ -140,11 +140,11 @@ class NewPlayer(pygame.sprite.Sprite):
     def jump(self):
     # Check if the player is on the ground and not currently jumping
         self.rect.y += 1
-        hits = pygame.sprite.spritecollide(self, self.walls, False)
+        collisions = pygame.sprite.spritecollide(self, self.walls, False)
         self.rect.y -= 1
 
         # If on the ground and not jumping, initiate a jump
-        if hits and not self.jumping:
+        if collisions and not self.jumping:
             self.jumping = True
             self.vel.y = -8
         

@@ -255,6 +255,6 @@
   <object id="10" type="collision" x="143" y="130" width="33" height="174.716"/>
   <object id="11" type="collision" x="0.5" y="1" width="31" height="415"/>
   <object id="12" type="collision" x="33" y="305" width="3807.5" height="110"/>
-  <object id="13" type="collision" x="3761" y="-0.5" width="78.5" height="304.5"/>
+  <object id="13" type="collision" x="3761" y="160.5" width="78.5" height="143.5"/>
  </objectgroup>
 </map>

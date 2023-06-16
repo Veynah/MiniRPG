@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "data/tmx/forest.tmx",
+    "activeFile": "data/tmx/village.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -24,10 +24,10 @@
         },
         "data/tmx/village.tmx": {
             "scale": 2,
-            "selectedLayer": 5,
+            "selectedLayer": 8,
             "viewCenter": {
-                "x": 1920,
-                "y": 207.75
+                "x": 3600,
+                "y": 207
             }
         },
         "data/tsx/Blood Mansion Background.tsx": {
@@ -108,11 +108,13 @@
     "map.tileWidth": 16,
     "map.width": 400,
     "openFiles": [
-        "data/tmx/forest.tmx"
+        "data/tmx/forest.tmx",
+        "data/tmx/village.tmx"
     ],
     "project": "test.tiled-project",
     "recentFiles": [
         "data/tmx/forest.tmx",
+        "data/tmx/village.tmx",
         "data/tsx/Castle Prison Tiles.tsx",
         "data/tsx/Dusk Woods Background.tsx",
         "data/tsx/Blood Mansion Props.tsx",
@@ -122,8 +124,7 @@
         "data/tsx/Lost Glades Backtress.tsx",
         "data/tsx/Lost Glades sky.tsx",
         "data/tsx/Lost Glades Tiles.tsx",
-        "data/tsx/Duskwood Trees.tsx",
-        "data/tsx/Dusk Woods tiles.tsx"
+        "data/tsx/Duskwood Trees.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
