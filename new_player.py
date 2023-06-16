@@ -183,11 +183,11 @@ class NewPlayer(pygame.sprite.Sprite):
 
             if (
                 self.frame_index > 7
-            ):  # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0 apres la 8eme frame
+            ):  # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0
                 self.frame_index = 0
                 return
 
-            if self.jumping == False and self.running == True:
+            if self.jumping is False and self.running is True:
                 if self.vel.x > 0:
                     self.image = player_run_anim_R[self.frame_index]
                     self.direction = "RIGHT"
