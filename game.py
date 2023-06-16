@@ -49,6 +49,7 @@ class Game:
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
 
+    # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
         clock = pygame.time.Clock()
         # Boucle du jeu
