@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import pygame
 import pytmx
 import pyscroll
@@ -76,6 +77,8 @@ class Game:
             clock.tick(60)
         pygame.quit()
 =======
+=======
+>>>>>>> Stashed changes
 from item import Sword
 from inventory import Inventory
 
@@ -117,4 +120,7 @@ class Game:
             self.remove_sword()
         else:
             print("Invalid action")
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
