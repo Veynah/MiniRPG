@@ -141,34 +141,36 @@ class NewPlayer(pygame.sprite.Sprite):
 
         self.rect.topleft = self.position
 
+    # Fonction qui faire un check de la gravité pour voir si on peut sauter ou pas
+    # Et gère les collisions verticales
     def gravity_check(self):
         collisions = pygame.sprite.spritecollide(self, self.walls, False)
         if collisions:
-            # Detect if the character is moving downward
+            # Détecet si le joueur bouge vers le bas
             if self.vel.y > 0:
-                # Character is moving down
+                # Personnage bouge vers le bas
                 for wall in collisions:
-                    # Place the character just above the wall
+                    # Place le joueur sur le mur
                     self.position.y = wall.rect.top - self.rect.height
-                    # Stop any downward movement
+                    # Stoppe la chute verticale
                     self.vel.y = 0
                     self.jumping = False
-            # Detect if character is moving upward
+            # Détecte si le personnage saute
             elif self.vel.y < 0:
-                # Character is moving up
+                # Saut
                 for wall in collisions:
-                    # Place the character just below the wall
+                    # Place le joueur sous le mur
                     self.position.y = wall.rect.bottom
-                    # Stop any upward movement
+                    # Stop mouvement vers le haut
                     self.vel.y = 0
 
     def jump(self):
-        # Check if the player is on the ground and not currently jumping
+        # Check si le joueur est sur le sol et ne saute pas
         self.rect.y += 1
         collisions = pygame.sprite.spritecollide(self, self.walls, False)
         self.rect.y -= 1
 
-        # If on the ground and not jumping, initiate a jump
+        # Si on est sur le sol et qu'on ne saute pas, on saute
         if collisions and not self.jumping:
             self.jumping = True
             self.vel.y = -8
