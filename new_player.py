@@ -100,10 +100,10 @@ class NewPlayer(pygame.sprite.Sprite):
             if collisions:
                 # If moving right, place the player to the left of the wall
                 if move_by > 0:
-                    self.position.x = collisions[0].rect.left - self.rect.width
+                    self.position.x = collisions[0].rect.left - self.rect.width - 1
                 # If moving left, place the player to the right of the wall
                 elif move_by < 0:
-                    self.position.x = collisions[0].rect.right
+                    self.position.x = collisions[0].rect.right + 1 
                 # Stop any horizontal movement
                 self.vel.x = 0
                 break 
