@@ -11,27 +11,50 @@ FRIC = -0.2
 HEIGHT = 720
 WIDTH = 1280
 
-# Pour le moment je n'arrive pas à comprendre comment implémenter les sprites sheets donc je vais couper 
-# les frames et les charger dans un dictionnaire pour faire les animations
-player_run_anim_R = [pygame.image.load("img/player/Player_Run_R/Player_Run_R0.png"), pygame.image.load("img/player/Player_Run_R/Player_Run_R1.png"),
-                     pygame.image.load("img/player/Player_Run_R/Player_Run_R2.png"), pygame.image.load("img/player/Player_Run_R/Player_Run_R3.png"),
-                     pygame.image.load("img/player/Player_Run_R/Player_Run_R4.png"), pygame.image.load("img/player/Player_Run_R/Player_Run_R5.png"), 
-                     pygame.image.load("img/player/Player_Run_R/Player_Run_R6.png"), pygame.image.load("img/player/Player_Run_R/Player_Run_R7.png"),]
+# Dictionnaire avec les animations
+player_run_anim_R = [
+                    pygame.image.load("img/player/Player_Run_R/Player_Run_R0.png"),
+                    pygame.image.load("img/player/Player_Run_R/Player_Run_R1.png"),
+                    pygame.image.load("img/player/Player_Run_R/Player_Run_R2.png"),
+                    pygame.image.load("img/player/Player_Run_R/Player_Run_R3.png"),
+                    pygame.image.load("img/player/Player_Run_R/Player_Run_R4.png"),
+                    pygame.image.load("img/player/Player_Run_R/Player_Run_R5.png"),
+                    pygame.image.load("img/player/Player_Run_R/Player_Run_R6.png"),
+                    pygame.image.load("img/player/Player_Run_R/Player_Run_R7.png")
+                    ]
 
-player_run_anim_L = [pygame.image.load("img/player/Player_Run_L/Player_Run_L0.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L1.png"),
-                     pygame.image.load("img/player/Player_Run_L/Player_Run_L2.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L3.png"),
-                     pygame.image.load("img/player/Player_Run_L/Player_Run_L4.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L5.png"), 
-                     pygame.image.load("img/player/Player_Run_L/Player_Run_L6.png"), pygame.image.load("img/player/Player_Run_L/Player_Run_L7.png"),]
+player_run_anim_L = [
+                    pygame.image.load("img/player/Player_Run_L/Player_Run_L0.png"),
+                    pygame.image.load("img/player/Player_Run_L/Player_Run_L1.png"),
+                    pygame.image.load("img/player/Player_Run_L/Player_Run_L2.png"),
+                    pygame.image.load("img/player/Player_Run_L/Player_Run_L3.png"),
+                    pygame.image.load("img/player/Player_Run_L/Player_Run_L4.png"),
+                    pygame.image.load("img/player/Player_Run_L/Player_Run_L5.png"),
+                    pygame.image.load("img/player/Player_Run_L/Player_Run_L6.png"),
+                    pygame.image.load("img/player/Player_Run_L/Player_Run_L7.png")
+                    ]
 
-player_idle_anim_R = [pygame.image.load("img/player/Player_Idle_R/Player_Idle_R0.png"), pygame.image.load("img/player/Player_Idle_R/Player_Idle_R1.png"),
-                      pygame.image.load("img/player/Player_Idle_R/Player_Idle_R2.png"), pygame.image.load("img/player/Player_Idle_R/Player_Idle_R3.png"),
-                      pygame.image.load("img/player/Player_Idle_R/Player_Idle_R4.png"), pygame.image.load("img/player/Player_Idle_R/Player_Idle_R5.png"),
-                      pygame.image.load("img/player/Player_Idle_R/Player_Idle_R6.png"), pygame.image.load("img/player/Player_Idle_R/Player_Idle_R7.png")]
+player_idle_anim_R = [
+                    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R0.png"),
+                    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R1.png"),
+                    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R2.png"),
+                    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R3.png"),
+                    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R4.png"),
+                    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R5.png"),
+                    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R6.png"),
+                    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R7.png")
+                    ]
 
-player_idle_anim_L = [pygame.image.load("img/player/Player_Idle_L/Player_Idle_L0.png"), pygame.image.load("img/player/Player_Idle_L/Player_Idle_L1.png"),
-                      pygame.image.load("img/player/Player_Idle_L/Player_Idle_L2.png"), pygame.image.load("img/player/Player_Idle_L/Player_Idle_L3.png"),
-                      pygame.image.load("img/player/Player_Idle_L/Player_Idle_L4.png"), pygame.image.load("img/player/Player_Idle_L/Player_Idle_L5.png"),
-                      pygame.image.load("img/player/Player_Idle_L/Player_Idle_L6.png"), pygame.image.load("img/player/Player_Idle_L/Player_Idle_L7.png")]
+player_idle_anim_L = [
+                    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L0.png"),
+                    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L1.png"),
+                    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L2.png"),
+                    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L3.png"),
+                    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L4.png"),
+                    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L5.png"),
+                    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L6.png"),
+                    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L7.png")
+                    ]
 
 
 class NewPlayer(pygame.sprite.Sprite):
@@ -52,13 +75,10 @@ class NewPlayer(pygame.sprite.Sprite):
         self.running = False
         self.attacking = False
         self.attack_frame = 0
-        
         self.time_since_last_frame = 0
         self.frame_duration = 80
-        
         # Time counter for animation
         self.frame_index = 0
-        
     def move(self):
     # Constante qui va accélérer vers le bas ce qui va simuler la gravité
         self.acc = vec(0,0.5)
@@ -106,7 +126,7 @@ class NewPlayer(pygame.sprite.Sprite):
                     self.position.x = collisions[0].rect.right + 3 
                 # Stop any horizontal movement
                 self.vel.x = 0
-                break 
+                break
         # Vertical movement
         self.position.y += self.vel.y
         self.rect.y = self.position.y
