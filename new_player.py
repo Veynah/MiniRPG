@@ -162,8 +162,8 @@ class NewPlayer(pygame.sprite.Sprite):
                     self.position.y = wall.rect.bottom
                     # Stop mouvement vers le haut
                     self.vel.y = 0
-    
-    # Permet de sauter 
+
+    # Permet de sauter
     def jump(self):
         # Check si le joueur est sur le sol et ne saute pas
         self.rect.y += 1

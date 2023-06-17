@@ -81,7 +81,7 @@ class Game:
         self.enter_forest_rect = pygame.Rect(
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
-        
+
         # Au niveau de la forêt
         spawn_village_point = tmx_data.get_object_by_name("spawn_forest")
         self.player.position[0] = spawn_village_point.x + 50
@@ -118,21 +118,24 @@ class Game:
         self.enter_forest_rect = pygame.Rect(
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
-        
+
         spawn_village_point = tmx_data.get_object_by_name("enter_forest_exit")
         self.player.position[0] = spawn_village_point.x - 20
         self.player.position[1] = spawn_village_point.y
         self.player.update_walls(self.wall_group)
 
     def update(self):
-        if self.map == "village" and self.player.rect.colliderect(self.enter_forest_rect):
+        if self.map == "village" and self.player.rect.colliderect(
+            self.enter_forest_rect
+        ):
             self.switch_level()
             self.map = "forest"
-            
-        if self.map == "forest" and self.player.rect.colliderect(self.enter_forest_rect):
+
+        if self.map == "forest" and self.player.rect.colliderect(
+            self.enter_forest_rect
+        ):
             self.switch_back()
             self.map = "village"
-
 
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
