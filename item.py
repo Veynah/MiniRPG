@@ -1,4 +1,5 @@
 import pygame
+from inventory import Inventory
 
 class Item(pygame.sprite.Sprite):
     def __init__(self, image_path, position, item_type, extra_argument):

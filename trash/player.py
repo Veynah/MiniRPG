@@ -1,11 +1,7 @@
 import pygame
 from pygame.locals import K_q, K_d
 from pygame.math import Vector2 as vec
-<<<<<<< Updated upstream:trash/player.py
-import time
-=======
 from inventory import Inventory
->>>>>>> Stashed changes:player.py
 
 # Les variables pour bouger
 # On ajoute de la friction pour que les mouvements soient plus agréables
@@ -54,18 +50,6 @@ player_idle_anim_L = [pygame.image.load("img/player/Player_Idle_L/Player_Idle_L0
                       pygame.image.load("img/player/Player_Idle_L/Player_Idle_L6.png"),
                       pygame.image.load("img/player/Player_Idle_L/Player_Idle_L7.png")]
 
-<<<<<<< Updated upstream:trash/player.py
-player_idle_anim_R = [pygame.image.load("img/player/Player_Idle_R/Player_Idle_R0.png"), pygame.image.load("img/player/Player_Idle_R/Player_Idle_R1.png"),
-                      pygame.image.load("img/player/Player_Idle_R/Player_Idle_R2.png"), pygame.image.load("img/player/Player_Idle_R/Player_Idle_R3.png"),
-                      pygame.image.load("img/player/Player_Idle_R/Player_Idle_R4.png"), pygame.image.load("img/player/Player_Idle_R/Player_Idle_R5.png"),
-                      pygame.image.load("img/player/Player_Idle_R/Player_Idle_R6.png"), pygame.image.load("img/player/Player_Idle_R/Player_Idle_R7.png")]
-
-player_idle_anim_L = [pygame.image.load("img/player/Player_Idle_L/Player_Idle_L0.png"), pygame.image.load("img/player/Player_Idle_L/Player_Idle_L1.png"),
-                      pygame.image.load("img/player/Player_Idle_L/Player_Idle_L2.png"), pygame.image.load("img/player/Player_Idle_L/Player_Idle_L3.png"),
-                      pygame.image.load("img/player/Player_Idle_L/Player_Idle_L4.png"), pygame.image.load("img/player/Player_Idle_L/Player_Idle_L5.png"),
-                      pygame.image.load("img/player/Player_Idle_L/Player_Idle_L6.png"), pygame.image.load("img/player/Player_Idle_L/Player_Idle_L7.png")]
-=======
->>>>>>> Stashed changes:player.py
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, name, x, y, blockers):

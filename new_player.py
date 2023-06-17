@@ -1,5 +1,7 @@
 import pygame
 from pygame.math import Vector2 as vec
+from inventory import Inventory
+from item import Item  
 
 # Les variables pour bouger
 # On ajoute de la friction pour que les mouvements soient plus agréables
@@ -76,6 +78,7 @@ class NewPlayer(pygame.sprite.Sprite):
         self.attack_frame = 0
         self.time_since_last_frame = 0
         self.frame_duration = 80
+        self.inventory = Inventory()
         # Time counter for animation
         self.frame_index = 0
 
@@ -142,6 +145,7 @@ class NewPlayer(pygame.sprite.Sprite):
 
     # Fonction qui faire un check de la gravité pour voir si on peut sauter ou pas
     # Et gère les collisions verticales
+
     def gravity_check(self):
         collisions = pygame.sprite.spritecollide(self, self.walls, False)
         if collisions:
@@ -163,6 +167,7 @@ class NewPlayer(pygame.sprite.Sprite):
                     # Stop mouvement vers le haut
                     self.vel.y = 0
 
+    # Permet de sauter
     def jump(self):
         # Check si le joueur est sur le sol et ne saute pas
         self.rect.y += 1
@@ -173,6 +178,15 @@ class NewPlayer(pygame.sprite.Sprite):
         if collisions and not self.jumping:
             self.jumping = True
             self.vel.y = -8
+
+    # Update la liste des murs sinon on entre en collision avec les murs du premier niveau
+    
+    def pickup(self, item):
+        self.inventory.add_item(item)
+        item.kill()
+    
+    def update_walls(self, new_wall_group):
+        self.walls = new_wall_group
 
     def update(self):
         time_passed = (
