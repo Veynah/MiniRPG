@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "data/tmx/village.tmx",
+    "activeFile": "data/tmx/forest.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -16,10 +16,10 @@
                 6
             ],
             "scale": 2,
-            "selectedLayer": 10,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": -128.5,
-                "y": 179.5
+                "x": 3387.5,
+                "y": 222
             }
         },
         "data/tmx/forest.tmx#background": {
@@ -32,8 +32,8 @@
             "scale": 2,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 3599,
-                "y": 206
+                "x": 3598,
+                "y": 205
             }
         },
         "data/tsx/Blood Mansion Background.tsx": {
@@ -119,8 +119,8 @@
     ],
     "project": "test.tiled-project",
     "recentFiles": [
-        "data/tmx/forest.tmx",
         "data/tmx/village.tmx",
+        "data/tmx/forest.tmx",
         "data/tsx/Castle Prison Tiles.tsx",
         "data/tsx/Dusk Woods Background.tsx",
         "data/tsx/Blood Mansion Props.tsx",

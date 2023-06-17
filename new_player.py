@@ -162,7 +162,8 @@ class NewPlayer(pygame.sprite.Sprite):
                     self.position.y = wall.rect.bottom
                     # Stop mouvement vers le haut
                     self.vel.y = 0
-
+    
+    # Permet de sauter 
     def jump(self):
         # Check si le joueur est sur le sol et ne saute pas
         self.rect.y += 1
@@ -173,6 +174,10 @@ class NewPlayer(pygame.sprite.Sprite):
         if collisions and not self.jumping:
             self.jumping = True
             self.vel.y = -8
+
+    # Update la liste des murs sinon on entre en collision avec les murs du premier niveau
+    def update_walls(self, new_wall_group):
+        self.walls = new_wall_group
 
     def update(self):
         time_passed = (

@@ -322,10 +322,10 @@
   <object id="5" type="collision" x="3955" y="305" width="555" height="110"/>
   <object id="7" type="collision" x="4545.5" y="305" width="2334" height="110"/>
   <object id="8" name="exit_forest_to_village" x="76" y="249.5" width="26" height="49"/>
-  <object id="10" name="spawn_forest" x="151.5" y="262.5">
+  <object id="10" name="spawn_forest" x="155.5" y="270.5">
    <point/>
   </object>
   <object id="11" type="collision" x="6833.5" y="137" width="46.5" height="166.5"/>
-  <object id="13" type="collision" x="0" y="159" width="33" height="144"/>
+  <object id="13" type="collision" x="0" y="159" width="5.5" height="144"/>
  </objectgroup>
 </map>
