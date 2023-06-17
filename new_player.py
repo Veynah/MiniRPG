@@ -18,7 +18,7 @@ class NewPlayer(pygame.sprite.Sprite):
         self.image = pygame.image.load("img/player/test.png")
         # self.image = self.get_image(0, 0)
         # Enlève la couleur noire du fond de l'image du joueur
-        # self.image.set_colorkey([0, 0, 0])
+        self.image.convert_alpha()
         self.rect = self.image.get_rect()
         self.vx = 0
         self.walls = walls
