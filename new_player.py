@@ -43,7 +43,7 @@ class NewPlayer(pygame.sprite.Sprite):
         self.frame_index = 0
         self.attack_counter = 0
         self.time_since_last_frame = 0
-        self.frame_duration = 80
+        self.frame_duration = 60
 
     def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
@@ -196,14 +196,14 @@ class NewPlayer(pygame.sprite.Sprite):
             if self.attack_frame > end_frame:
                 self.attack_frame = 0
                 self.attacking = False
-                
+
             if self.direction == "RIGHT":
                 self.image = player_attack_anim_R[self.attack_frame]
             elif self.direction == "LEFT":
                 self.image = player_attack_anim_L[self.attack_frame]
-                
+
             self.attack_frame += 1
-        
+
     # def get_image(self, x, y):
     # image = pygame.Surface([27, 47])
     # image.blit(self.sprite_sheet, (0, 0), (x, y, 27, 47))

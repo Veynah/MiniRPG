@@ -148,7 +148,7 @@ class Game:
 
         while self.running:
             self.update()
-            if self.player.attacking == True:
+            if self.player.attacking:
                 self.player.attack()
             self.player.move()
             self.group.update()
@@ -169,11 +169,10 @@ class Game:
                         if not self.player.attacking:
                             self.player.attacking = True
                             self.player.attack()
-                            self.player.attack_counter = 1 # Premiere attaque
+                            self.player.attack_counter = 1  # Premiere attaque
                         else:
                             if self.player.attack_counter < 4:
                                 self.player.attack_counter += 1
-                            
 
             clock.tick(60)
         pygame.quit()
