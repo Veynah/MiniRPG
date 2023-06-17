@@ -11,6 +11,7 @@ HEIGHT = 720
 WIDTH = 1280
 
 
+# Classe du jeu avec ses variables
 class Game:
     def __init__(self):
         self.running = True
@@ -51,6 +52,7 @@ class Game:
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
 
+    # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
         self.map = "forest"
         # Charger la carte (tmx)
@@ -88,6 +90,7 @@ class Game:
         self.player.position[1] = spawn_village_point.y
         self.player.update_walls(self.wall_group)
 
+    # Fonction qui permet de passer de la forêt au village
     def switch_back(self):
         self.map = "village"
         # Charger la carte (tmx)
@@ -124,6 +127,7 @@ class Game:
         self.player.position[1] = spawn_village_point.y
         self.player.update_walls(self.wall_group)
 
+    # Fonction qui donne les conditions pour switcher de niveau
     def update(self):
         if self.map == "village" and self.player.rect.colliderect(
             self.enter_forest_rect
