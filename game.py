@@ -148,6 +148,8 @@ class Game:
 
         while self.running:
             self.update()
+            if self.player.attacking == True:
+                self.player.attack()
             self.player.move()
             self.group.update()
             # print(self.walls)
@@ -163,6 +165,15 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
                         self.player.jump()
+                    if event.key == pygame.K_a or event.key == pygame.K_RETURN:
+                        if not self.player.attacking:
+                            self.player.attacking = True
+                            self.player.attack()
+                            self.player.attack_counter = 1 # Premiere attaque
+                        else:
+                            if self.player.attack_counter < 4:
+                                self.player.attack_counter += 1
+                            
 
             clock.tick(60)
         pygame.quit()

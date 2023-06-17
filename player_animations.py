@@ -90,7 +90,7 @@ player_attack_anim_R = [
     pygame.image.load("img/player/Player_Attack_R/Player_Attack_R19.png"),
 ]
 
-player_attack_anim_R = [
+player_attack_anim_L = [
     pygame.image.load("img/player/Player_Attack_L/Player_Attack_L0.png"),
     pygame.image.load("img/player/Player_Attack_L/Player_Attack_L1.png"),
     pygame.image.load("img/player/Player_Attack_L/Player_Attack_L2.png"),

@@ -1,6 +1,16 @@
-from player_animations import player_run_anim_R, player_run_anim_L, player_idle_anim_R, player_idle_anim_L, player_jump_anim_R, player_jump_anim_L
 import pygame
 from pygame.math import Vector2 as vec
+
+from player_animations import (
+    player_run_anim_R,
+    player_run_anim_L,
+    player_idle_anim_R,
+    player_idle_anim_L,
+    player_jump_anim_R,
+    player_jump_anim_L,
+    player_attack_anim_R,
+    player_attack_anim_L,
+)
 
 # Les variables pour bouger
 # On ajoute de la friction pour que les mouvements soient plus agréables
@@ -30,10 +40,10 @@ class NewPlayer(pygame.sprite.Sprite):
         self.running = False
         self.attacking = False
         self.attack_frame = 0
+        self.frame_index = 0
+        self.attack_counter = 0
         self.time_since_last_frame = 0
         self.frame_duration = 80
-        # Time counter for animation
-        self.frame_index = 0
 
     def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
@@ -174,6 +184,26 @@ class NewPlayer(pygame.sprite.Sprite):
                     self.image = player_idle_anim_L[self.frame_index]
                 self.frame_index += 1
 
+    def attack(self):
+        # En fonction du nombre de fois qu'on attaque, il y aura plusieurs animations
+        attack_to_end_frame = {1: 6, 2: 9, 3: 13, 4: 19}
+        end_frame = attack_to_end_frame.get(self.attack_counter, 19)
+        time_passed = (
+            pygame.time.get_ticks() - self.time_since_last_frame
+        )  # Pour que les animations soient plus smooth, elles vont charger moins vite
+        if time_passed > self.frame_duration:
+            self.time_since_last_frame = pygame.time.get_ticks()
+            if self.attack_frame > end_frame:
+                self.attack_frame = 0
+                self.attacking = False
+                
+            if self.direction == "RIGHT":
+                self.image = player_attack_anim_R[self.attack_frame]
+            elif self.direction == "LEFT":
+                self.image = player_attack_anim_L[self.attack_frame]
+                
+            self.attack_frame += 1
+        
     # def get_image(self, x, y):
     # image = pygame.Surface([27, 47])
     # image.blit(self.sprite_sheet, (0, 0), (x, y, 27, 47))
