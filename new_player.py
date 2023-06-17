@@ -1,3 +1,4 @@
+from player_animations import player_run_anim_R, player_run_anim_L, player_idle_anim_R, player_idle_anim_L, player_jump_anim_R, player_jump_anim_L
 import pygame
 from pygame.math import Vector2 as vec
 
@@ -9,51 +10,6 @@ FRIC = -0.2
 # Les variables de l'écran
 HEIGHT = 720
 WIDTH = 1280
-
-# Dictionnaire avec les animations
-player_run_anim_R = [
-    pygame.image.load("img/player/Player_Run_R/Player_Run_R0.png"),
-    pygame.image.load("img/player/Player_Run_R/Player_Run_R1.png"),
-    pygame.image.load("img/player/Player_Run_R/Player_Run_R2.png"),
-    pygame.image.load("img/player/Player_Run_R/Player_Run_R3.png"),
-    pygame.image.load("img/player/Player_Run_R/Player_Run_R4.png"),
-    pygame.image.load("img/player/Player_Run_R/Player_Run_R5.png"),
-    pygame.image.load("img/player/Player_Run_R/Player_Run_R6.png"),
-    pygame.image.load("img/player/Player_Run_R/Player_Run_R7.png"),
-]
-
-player_run_anim_L = [
-    pygame.image.load("img/player/Player_Run_L/Player_Run_L0.png"),
-    pygame.image.load("img/player/Player_Run_L/Player_Run_L1.png"),
-    pygame.image.load("img/player/Player_Run_L/Player_Run_L2.png"),
-    pygame.image.load("img/player/Player_Run_L/Player_Run_L3.png"),
-    pygame.image.load("img/player/Player_Run_L/Player_Run_L4.png"),
-    pygame.image.load("img/player/Player_Run_L/Player_Run_L5.png"),
-    pygame.image.load("img/player/Player_Run_L/Player_Run_L6.png"),
-    pygame.image.load("img/player/Player_Run_L/Player_Run_L7.png"),
-]
-
-player_idle_anim_R = [
-    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R0.png"),
-    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R1.png"),
-    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R2.png"),
-    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R3.png"),
-    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R4.png"),
-    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R5.png"),
-    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R6.png"),
-    pygame.image.load("img/player/Player_Idle_R/Player_Idle_R7.png"),
-]
-
-player_idle_anim_L = [
-    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L0.png"),
-    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L1.png"),
-    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L2.png"),
-    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L3.png"),
-    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L4.png"),
-    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L5.png"),
-    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L6.png"),
-    pygame.image.load("img/player/Player_Idle_L/Player_Idle_L7.png"),
-]
 
 
 class NewPlayer(pygame.sprite.Sprite):
@@ -97,10 +53,12 @@ class NewPlayer(pygame.sprite.Sprite):
             pressed_keys[pygame.K_LEFT] or pressed_keys[pygame.K_q]
         ):  # Q pour aller à gauche
             self.acc.x = -ACC
+            self.direction = "LEFT"
         elif (
             pressed_keys[pygame.K_RIGHT] or pressed_keys[pygame.K_d]
         ):  # D pour aller à droite
             self.acc.x = ACC
+            self.direction = "RIGHT"
 
         # Détermine la vélocité en prenant en compte la friciton
         self.acc.x += self.vel.x * FRIC
@@ -174,6 +132,7 @@ class NewPlayer(pygame.sprite.Sprite):
         if collisions and not self.jumping:
             self.jumping = True
             self.vel.y = -8
+            self.frame_index = 0
 
     # Update la liste des murs sinon on entre en collision avec les murs du premier niveau
     def update_walls(self, new_wall_group):
@@ -192,7 +151,14 @@ class NewPlayer(pygame.sprite.Sprite):
                 self.frame_index = 0
                 return
 
-            if self.jumping is False and self.running is True:
+            if self.jumping:
+                if self.direction == "RIGHT":
+                    self.image = player_jump_anim_R[self.frame_index]
+                elif self.direction == "LEFT":
+                    self.image = player_jump_anim_L[self.frame_index]
+                self.frame_index += 1
+
+            if self.running and not self.jumping:
                 if self.vel.x > 0:
                     self.image = player_run_anim_R[self.frame_index]
                     self.direction = "RIGHT"
@@ -201,7 +167,7 @@ class NewPlayer(pygame.sprite.Sprite):
                     self.direction = "LEFT"
                 self.frame_index += 1
 
-            elif not self.jumping and not self.running and self.vel == vec(0, 0):
+            elif not self.running and self.vel == vec(0, 0):
                 if self.direction == "RIGHT":
                     self.image = player_idle_anim_R[self.frame_index]
                 elif self.direction == "LEFT":
