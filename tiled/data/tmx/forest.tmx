@@ -327,13 +327,13 @@
   </object>
   <object id="11" type="collision" x="6833.5" y="137" width="46.5" height="166.5"/>
   <object id="13" type="collision" x="0" y="159" width="5.5" height="144"/>
-  <object id="14" name="skeleton_spawn" x="455.5" y="245">
+  <object id="14" name="skeleton_spawn" x="455.5" y="244">
    <point/>
   </object>
-  <object id="15" name="skeleton_spawn" x="1048" y="245">
+  <object id="15" name="skeleton_spawn" x="1048" y="244">
    <point/>
   </object>
-  <object id="16" name="skeleton_spawn" x="1769" y="245">
+  <object id="16" name="skeleton_spawn" x="1769" y="244">
    <point/>
   </object>
  </objectgroup>

@@ -3,7 +3,7 @@ from pygame.math import Vector2 as vec
 
 
 ACC = 0.4
-
+FRIC = -0.2
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, walls, image_path):
         super().__init__()
@@ -25,9 +25,24 @@ class Enemy(pygame.sprite.Sprite):
         self.time_since_last_frame = 0
         self.frame_duration = 60
     
-    # IA de monstre
+    # Update l'enemie, sa position et son comportement
     def update_enemy(self, player):
-        print("Updating enemy")  # Debug print statement
+        self.acc = vec(0, 0.5)
+        
+        # Running = faux si on est trop slow
+        if abs(self.vel.x) > 0.1:
+            self.running = True
+        else:
+            self.running = False
+        
+        self.acc.x += self.vel.x * FRIC
+        self.vel += self.acc
+        self.position.y += self.vel.y
+        self.rect.y = self.position.y
+
+        self.collision_check()
+        
+        # Comportement du monstre
         if self.see_player(player):
             self.chase_player(player)
             if self.close_to_player(player):
@@ -58,6 +73,49 @@ class Enemy(pygame.sprite.Sprite):
     # Donne le comportement du monstre si le joueur n'est pas dans le coin
     def patrol(self):
         pass
+    
+    def collision_check(self):
+        move_by = int(self.vel.x)
+        for _ in range(abs(move_by)):
+            # Increment or decrement x position by 1 pixel
+            if move_by > 0:
+                self.position.x += 1
+            else:
+                self.position.x -= 1
+            # Update le rectangle
+            self.rect.x = self.position.x
+            # Check pour les collisions
+            collisions = pygame.sprite.spritecollide(self, self.walls, False)
+            if collisions:
+                # Si je bouge vers la droite ajuste ma position à 1 pixel à gauche du mur
+                if move_by > 0:
+                    self.position.x = collisions[0].rect.left - self.rect.width - 3
+                # Si je bouge vers la gauche ajuste ma position à 1 pixel à droite du mur
+                elif move_by < 0:
+                    self.position.x = collisions[0].rect.right + 3
+                # Stop any horizontal movement
+                self.vel.x = 0
+                break
+            
+        collisions = pygame.sprite.spritecollide(self, self.walls, False)
+        if collisions:
+            # Détecet si le joueur bouge vers le bas
+            if self.vel.y > 0:
+                # Personnage bouge vers le bas
+                for wall in collisions:
+                    # Place le joueur sur le mur
+                    self.position.y = wall.rect.top - self.rect.height
+                    # Stoppe la chute verticale
+                    self.vel.y = 0
+            # Détecte si le personnage saute
+            elif self.vel.y < 0:
+                # Saut
+                for wall in collisions:
+                    # Place le joueur sous le mur
+                    self.position.y = wall.rect.bottom
+                    # Stop mouvement vers le haut
+                    self.vel.y = 0
+
         
         
             

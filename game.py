@@ -78,15 +78,10 @@ class Game:
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
                 
         # Spawn les monstres -------------------------------------------------------------
-        for obj in tmx_data.objects: # debug
-            print(f"Object name: {obj.name}") # debug
-        print("Before adding enemies") # Debug print statement
         for obj in tmx_data.objects:
             if obj.name == "skeleton_spawn":
                 skeleton1 = Skeleton1(obj.x, obj.y, self.wall_group)
-                print(f"Adding enemy at position ({obj.x}, {obj.y})") # Debug print statement
                 self.enemies_group.add(skeleton1)
-        print(f"After adding enemies: {self.enemies_group}") # Debug print statement
                 
 
         # Dessiner le groupe de calque
@@ -172,8 +167,6 @@ class Game:
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
             self.group.update()
-            # print(self.walls)
-            print("Enemies in group:", self.enemies_group.sprites()) # Debug print statement
             self.group.center(self.player.rect.center)
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
