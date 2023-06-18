@@ -25,11 +25,11 @@ WIDTH = 1280
 class NewPlayer(pygame.sprite.Sprite):
     def __init__(self, x, y, walls):
         super().__init__()
+        # Images
         self.image = pygame.image.load("img/player/test.png")
-        # self.image = self.get_image(0, 0)
-        # Enlève la couleur noire du fond de l'image du joueur
         self.image.convert_alpha()
         self.rect = self.image.get_rect()
+        # Physique et collision et mouvement
         self.vx = 0
         self.walls = walls
         self.position = vec(x, y)
@@ -39,6 +39,7 @@ class NewPlayer(pygame.sprite.Sprite):
         self.jumping = False
         self.running = False
         self.attacking = False
+        # Animation
         self.attack_frame = 0
         self.frame_index = 0
         self.attack_counter = 0

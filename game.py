@@ -3,6 +3,7 @@ import pytmx
 import pyscroll
 
 from new_player import NewPlayer
+from enemy import Enemy, Skeleton1
 from wall import Wall
 
 
@@ -20,6 +21,8 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
 
+        self.enemies_group = pygame.sprite.Group()
+        
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/village.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
@@ -73,10 +76,24 @@ class Game:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+                
+        # Spawn les monstres -------------------------------------------------------------
+        for obj in tmx_data.objects: # debug
+            print(f"Object name: {obj.name}") # debug
+        print("Before adding enemies") # Debug print statement
+        for obj in tmx_data.objects:
+            if obj.name == "skeleton_spawn":
+                skeleton1 = Skeleton1(obj.x, obj.y, self.wall_group)
+                print(f"Adding enemy at position ({obj.x}, {obj.y})") # Debug print statement
+                self.enemies_group.add(skeleton1)
+        print(f"After adding enemies: {self.enemies_group}") # Debug print statement
+                
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=9)
         self.group.add(self.player)
+        for enemy in self.enemies_group:
+            self.group.add(enemy)
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("exit_forest_to_village")
@@ -115,6 +132,7 @@ class Game:
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
+        self.enemies_group.empty()
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("enter_forest")
@@ -151,8 +169,11 @@ class Game:
             if self.player.attacking:
                 self.player.attack()
             self.player.move()
+            for enemy in self.enemies_group:
+                enemy.update_enemy(self.player)
             self.group.update()
             # print(self.walls)
+            print("Enemies in group:", self.enemies_group.sprites()) # Debug print statement
             self.group.center(self.player.rect.center)
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
