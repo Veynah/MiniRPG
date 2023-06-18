@@ -1,14 +1,17 @@
 import pygame
 from pygame.math import Vector2 as vec
 
-
+# Le même principe que pour player
 ACC = 0.4
 FRIC = -0.2
+
+
+# Classe enemy dont vont hériter les différents monstres
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, walls, image_path):
         super().__init__()
         self.image = pygame.image.load(image_path)
-        print("Loaded Image:", self.image) # Debug print statement
+        print("Loaded Image:", self.image)  # Debug print statement
         self.rect = self.image.get_rect()
         # Physique et collision et mouvement
         self.vx = 0
@@ -24,24 +27,24 @@ class Enemy(pygame.sprite.Sprite):
         self.frame_index = 0
         self.time_since_last_frame = 0
         self.frame_duration = 60
-    
+
     # Update l'enemie, sa position et son comportement
     def update_enemy(self, player):
         self.acc = vec(0, 0.5)
-        
+
         # Running = faux si on est trop slow
         if abs(self.vel.x) > 0.1:
             self.running = True
         else:
             self.running = False
-        
+        # Donne sa position
         self.acc.x += self.vel.x * FRIC
         self.vel += self.acc
         self.position.y += self.vel.y
         self.rect.y = self.position.y
-
+        # Vérifie s'il entre en collision avec walls
         self.collision_check()
-        
+
         # Comportement du monstre
         if self.see_player(player):
             self.chase_player(player)
@@ -49,31 +52,32 @@ class Enemy(pygame.sprite.Sprite):
                 self.attack_player()
         else:
             self.patrol()
-            
+
         self.rect.topleft = self.position
-    
-    # Donne la distance à laquelle le monstre voit le joueur 
+
+    # Donne la distance à laquelle le monstre voit le joueur
     def see_player(self, player):
         pass
-    
+
     # Le monstre bouge vers le joueur
     def chase_player(self, player):
         if self.position.x < player.position.x:
             self.acc.x = ACC
         else:
             self.acc.x = -ACC
-    
+
     # Donne la distance à laquelle le monstre peut attaquer le joueur
     def close_to_player(self, player):
         pass
-    
+
     def attack_player(self):
         pass
-    
+
     # Donne le comportement du monstre si le joueur n'est pas dans le coin
     def patrol(self):
         pass
-    
+
+    # La meme (presque) fonction que player, on enlève juste le jump
     def collision_check(self):
         move_by = int(self.vel.x)
         for _ in range(abs(move_by)):
@@ -96,7 +100,7 @@ class Enemy(pygame.sprite.Sprite):
                 # Stop any horizontal movement
                 self.vel.x = 0
                 break
-            
+
         collisions = pygame.sprite.spritecollide(self, self.walls, False)
         if collisions:
             # Détecet si le joueur bouge vers le bas
@@ -115,10 +119,6 @@ class Enemy(pygame.sprite.Sprite):
                     self.position.y = wall.rect.bottom
                     # Stop mouvement vers le haut
                     self.vel.y = 0
-
-        
-        
-            
 
 
 class Skeleton1(Enemy):
