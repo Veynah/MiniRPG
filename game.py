@@ -2,6 +2,11 @@ from turtle import Screen
 import pygame
 import pytmx
 import pyscroll
+from Inventory import Inventory
+from pygame.locals import *
+import sys
+import HealthBar
+import InventorySlot
 
 from new_player import NewPlayer
 from wall import Wall
@@ -17,8 +22,13 @@ WIDTH = 1280
 # Classe du jeu avec ses variables
 class Game:
     def __init__(self):
+<<<<<<< Updated upstream
         self.running = True
         self.map = "village"
+=======
+
+        self.inventory = Inventory()
+>>>>>>> Stashed changes
         # Creer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
@@ -33,8 +43,13 @@ class Game:
         map_layer.zoom = 2
 
         self.wall_group = pygame.sprite.Group()
+<<<<<<< Updated upstream
 
         # Définr une liste qui va stocker les rectangles de collision
+=======
+        
+        # Définr une liste q`ui` va stocker les rectangles de collision
+>>>>>>> Stashed changes
         self.walls = []
         for obj in tmx_data.objects:
             if obj.type == "collision":
@@ -174,6 +189,7 @@ class Game:
         clock = pygame.time.Clock()
         self.show_inventory = False
         # Boucle du jeu
+<<<<<<< Updated upstream
 
         while self.running:
             for event in pygame.event.get():
@@ -190,6 +206,12 @@ class Game:
             self.player.move()
             self.group.update()
 
+=======
+        running = True
+        show_inventory = True
+
+        while running:
+>>>>>>> Stashed changes
             
             self.group.center(self.player.rect.center)
 
@@ -234,8 +256,26 @@ class Game:
             self.group.center(self.player.rect.center)
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
+<<<<<<< Updated upstream
             self.all_items.draw(self.screen)
             
             pygame.display.flip()
+=======
+
+            self.inventory.render(self.screen) 
+
+            pygame.display.flip()
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_z or event.key == pygame.K_UP:
+                        self.player.jump()
+                    if event.key == pygame.K_i:  # Toggle inventory visibility on "i" key press
+                        self.inventory.toggleVisibility()
+                    
+>>>>>>> Stashed changes
             clock.tick(60)
         pygame.quit()
