@@ -7,10 +7,13 @@ class Inventory:
 
         self.image = pygame.image.load("img/Inventory.png")
         self.rect = self.image.get_rect()
-        self.rect.topleft = (0, 350)
+        self.rect.midtop = (700, 10)
 
-        self.slots.append(InventorySlot("img/coinIcon.png", (10, 360)))
-        self.slots.append(InventorySlot("img/manapotionIcon.png", (110, 360)))
+        self.slots.append(InventorySlot("img/coinIcon.png", (410, 15)))
+        self.slots.append(InventorySlot("img/manapotionIcon.png", (480, 15)))
+        self.slots.append(InventorySlot("img/shield.ico", (550, 15)))
+        self.slots.append(InventorySlot("img/weapon.png", (630, 5)))
+        self.slots.append(InventorySlot("img/xp2.png", (700, 15)))
         
         self.visible = False 
 
