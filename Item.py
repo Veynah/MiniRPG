@@ -3,6 +3,7 @@ import pygame
 
 vec = pygame.math.Vector2
 
+
 class Item(pygame.sprite.Sprite):
     def __init__(self, x, y, itemtype, name):
         super().__init__()
@@ -14,7 +15,6 @@ class Item(pygame.sprite.Sprite):
         self.rect.topleft = self.pos
 
     def update(self, player):
-
         hits = self.rect.colliderect(player.rect)
 
         if hits:
@@ -25,15 +25,9 @@ class Item(pygame.sprite.Sprite):
 
             self.kill()
 
-
     def render(self, display):
         display.blit(self.image, self.pos)
 
 
-
 # ID -> 0 -> Coin
 # ID -> 1 -> Health
-
-        
-
-        

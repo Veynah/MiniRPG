@@ -164,7 +164,7 @@ class Game:
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
         clock = pygame.time.Clock()
-        
+
         # Boucle du jeu
 
         while self.running:
@@ -190,13 +190,21 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
                         self.player.jump()
-                    if event.key == pygame.K_i:  # Toggle inventory visibility on "i" key press
+                    if (
+                        event.key == pygame.K_i
+                    ):  # Toggle inventory visibility on "i" key press
                         self.inventory.toggleVisibility()
-                    if event.key == pygame.K_SPACE:  # Assuming space key causes damage to the player
-                        damage_amount = 1  # Adjust the damage amount as per your requirements
+                    if (
+                        event.key == pygame.K_SPACE
+                    ):  # Assuming space key causes damage to the player
+                        damage_amount = (
+                            1  # Adjust the damage amount as per your requirements
+                        )
                         self.healthbar.takeDamage(damage_amount)
                     if event.key == pygame.K_h:  # Assuming "h" key triggers healing
-                        healing_amount = 1  # Adjust the healing amount as per your requirements
+                        healing_amount = (
+                            1  # Adjust the healing amount as per your requirements
+                        )
                         self.healthbar.Heal(healing_amount)
                     if event.key == pygame.K_a or event.key == pygame.K_RETURN:
                         if not self.player.attacking:

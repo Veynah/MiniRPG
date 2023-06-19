@@ -2,8 +2,7 @@ import pygame
 
 
 class Level:
-    def __init__(self, enemyCount = 0):
-
+    def __init__(self, enemyCount=0):
         self.data = []
 
         self.groundData = pygame.sprite.Group()
@@ -20,5 +19,3 @@ class Level:
     def addBuilding(self, data):
         self.data.append(data)
         self.buildingData.add(data)
-
-
