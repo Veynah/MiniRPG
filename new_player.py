@@ -20,7 +20,7 @@ FRIC = -0.2
 # Les variables de l'écran
 HEIGHT = 720
 WIDTH = 1280
-
+# Commentaire test
 
 class NewPlayer(pygame.sprite.Sprite):
     def __init__(self, x, y, walls):
