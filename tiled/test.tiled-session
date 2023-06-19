@@ -12,22 +12,28 @@
             "scaleInDock": 1
         },
         "data/tmx/forest.tmx": {
+            "expandedObjectLayers": [
+                6
+            ],
             "scale": 2,
-            "selectedLayer": 6,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 1476,
-                "y": 223.5
+                "x": 3447.5,
+                "y": 262.5
             }
         },
         "data/tmx/forest.tmx#background": {
             "scaleInDock": 1
         },
         "data/tmx/village.tmx": {
+            "expandedObjectLayers": [
+                24
+            ],
             "scale": 2,
-            "selectedLayer": 5,
+            "selectedLayer": 7,
             "viewCenter": {
                 "x": 1920,
-                "y": 207.75
+                "y": 208
             }
         },
         "data/tsx/Blood Mansion Background.tsx": {
@@ -35,12 +41,15 @@
             "scaleInEditor": 1
         },
         "data/tsx/Blood Mansion Props.tsx": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "data/tsx/Blood Mansion Tiles.tsx": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "data/tsx/Castle Prison Tiles.tsx": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "data/tsx/Dusk Woods Background.tsx": {
@@ -106,15 +115,12 @@
     "map.width": 400,
     "openFiles": [
         "data/tmx/forest.tmx",
-        "data/tsx/Dusk Woods tiles.tsx",
-        "data/tsx/Duskwood Trees.tsx",
-        "data/tsx/Lost Glades Tiles.tsx",
-        "data/tsx/Lost Glades sky.tsx",
-        "data/tsx/Lost Glades Backtress.tsx",
-        "data/tsx/Duskwood darktiles.tsx"
+        "data/tmx/village.tmx"
     ],
     "project": "test.tiled-project",
     "recentFiles": [
+        "data/tmx/village.tmx",
+        "data/tmx/forest.tmx",
         "data/tsx/Castle Prison Tiles.tsx",
         "data/tsx/Dusk Woods Background.tsx",
         "data/tsx/Blood Mansion Props.tsx",
@@ -124,9 +130,7 @@
         "data/tsx/Lost Glades Backtress.tsx",
         "data/tsx/Lost Glades sky.tsx",
         "data/tsx/Lost Glades Tiles.tsx",
-        "data/tsx/Duskwood Trees.tsx",
-        "data/tsx/Dusk Woods tiles.tsx",
-        "data/tmx/forest.tmx"
+        "data/tsx/Duskwood Trees.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

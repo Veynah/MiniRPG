@@ -9,7 +9,7 @@ class InventorySlot:
         self.rect.topleft = pos
         self.count = 0
 
-        self.font = pygame.font.Font("Fonts/Frostbite.ttf", 25)
+        self.font = pygame.font.Font("img/Fonts/Frostbite.ttf", 25)
 
     def render(self, display):
         text = self.font.render(str(self.count), True, (0, 0, 0))
