@@ -263,7 +263,10 @@
  </objectgroup>
  <objectgroup id="25" name="NPCs">
   <object id="23" name="NPC_Maire" x="1585.33" y="237.333">
-   <point/>
+    <properties>
+      <property name="image_path" value="img/NPCs/NPC_Maire1.png"/>
+    </properties>
+    <point/>
   </object>
- </objectgroup>
+</objectgroup>
 </map>
