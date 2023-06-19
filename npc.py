@@ -35,7 +35,7 @@ class NPC(pygame.sprite.Sprite):
 # Sous-classe pour le NPC Maire
 class Maire(NPC):
     def __init__(self, x, y,walls):
-        super().__init__(x, y, walls, img/NPCs/NPC_Maire1.png)
+        super().__init__(x, y, walls, "img/NPCs/NPC_Maire1.png")
 
     def update(self):
         # Implémentez ici le comportement spécifique du Maire
@@ -45,7 +45,7 @@ class Maire(NPC):
 # Sous-classe pour le NPC Forgeron
 class Forgeron(NPC):
     def __init__(self, x, y,walls):
--
+
         super().__init__(x, y, walls,"img/NPCs/NPC_forgeron1.png")
 
 
@@ -63,7 +63,7 @@ class Explorer(NPC):
         super().__init__(x, y, walls, "img/NPCs/NPC_Explorer1.png")
 
 
-def update_NPC(self)
+def update_NPC(self):
         self.acc = vec(0, 0.5)
 
         # Running = faux si on est trop slow
@@ -77,8 +77,8 @@ def update_NPC(self)
         self.position.y += self.vel.y
         self.rect.y = self.position.y
         # Vérifie s'il entre en collision avec walls
-        self.collision_check()
-self.rect.topleft = self.position
+        self.collision_check()  
+        self.rect.topleft = self.position
 
 def collision_check(self):
         move_by = int(self.vel.x)
