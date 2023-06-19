@@ -3,6 +3,7 @@ import pytmx
 import pyscroll
 
 from new_player import NewPlayer
+from npc import NPC
 from wall import Wall
 
 
@@ -19,10 +20,42 @@ class Game:
         # Creer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
-
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/village.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
+        self.NPC_image_path="img/NPCs/NPC_Mairie1.png"
+        self.npc1=None
+        # Trouver le groupe d'objets qui contient les NPCs
+        npc_group = None
+        for obj_group in tmx_data.objectgroups:
+            if obj_group.name == "NPCs":
+                npc_group = obj_group
+                break
+
+        npc_x = None
+        npc_y = None
+        npc_image_path = None
+        # Vérifier si le groupe d'objets NPCs a été trouvé
+        if npc_group is not None:
+         # Parcourir les objets du groupe NPCs pour trouver le NPC "NPC_Maire"
+            for obj in npc_group:
+                if obj.name == "NPC_Maire":
+                    npc_x = obj.x
+                    npc_y = obj.y
+                    npc_image_path = obj.properties.get("image_path", "")
+                    break
+         # Initialiser l'objet NPC
+        if npc_x is not None and npc_y is not None and npc_image_path is not None:
+            self.npc1 = NPC(npc_x, npc_y, npc_image_path)
+        else:
+            self.npc1 = None
+          #déclaration de la variable npc1
+       
+        NPC_image_path = "img/NPCs/NPC_Maire1.png"
+        self.NPC_image_path = NPC_image_path
+
+       
+       
         # map_layer va contenir tous les calques
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size()
@@ -41,7 +74,7 @@ class Game:
 
         player_position = tmx_data.get_object_by_name("player_spawn1")
         self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
-
+     
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
@@ -51,7 +84,8 @@ class Game:
         self.enter_forest_rect = pygame.Rect(
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
-
+    
+   
     # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
         self.map = "forest"
@@ -144,14 +178,21 @@ class Game:
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
         clock = pygame.time.Clock()
-        # Boucle du jeu
-
+            # Boucle du jeu
         while self.running:
             self.update()
             self.player.move()
             self.group.update()
+             #assignation de la variable npc1
+           # Vérifier si l'objet NPC existe
+            if self.npc1 is not None:
+                self.npc1.update()
+            self.npc1 = NPC(1585.33, 237.333, self.NPC_image_path)
             # print(self.walls)
             self.group.center(self.player.rect.center)
+            # dessiné le pnc
+            self.screen.blit(self.npc1.image, self.npc1.rect)
+            self.npc1.draw(self.screen)
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
             pygame.display.flip()
