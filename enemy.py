@@ -9,13 +9,13 @@ from monster_animations import (
 )
 
 # Le même principe que pour player
-ACC = 0.06
+ACC = 0.07
 FRIC = -0.1
 
 
 # Classe enemy dont vont hériter les différents monstres
 class Enemy(pygame.sprite.Sprite):
-    ATTACK_COOLDOWN = 3000
+    ATTACK_COOLDOWN = 4200
 
     def __init__(self, x, y, walls, image_path):
         super().__init__()
