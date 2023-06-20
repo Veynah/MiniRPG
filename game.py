@@ -20,7 +20,8 @@ class Game:
     def __init__(self):
         self.running = True
         self.map = "village"
-         
+        #intégration de bulle dialogue
+        self.dialogb_box=Dialogbox()
         # Creer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")

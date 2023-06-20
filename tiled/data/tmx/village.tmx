@@ -262,19 +262,19 @@
   </object>
  </objectgroup>
  <objectgroup id="25" name="NPCs">
-  <object id="23" name="NPC_Maire" x="1585.33" y="237.333">
+  <object id="23" name="NPC_Maire" x="1622.66" y="268">
    <properties>
     <property name="image_path" value="img/NPCs/NPC_Maire1.png"/>
    </properties>
    <point/>
   </object>
-  <object id="24" name="NPC_Forgeron" x="2228" y="245.333">
+  <object id="24" name="NPC_Forgeron" x="2168" y="270.666">
    <point/>
   </object>
-  <object id="25" name="NPC_Tavernier" x="2968" y="250.667">
+  <object id="25" name="NPC_Tavernier" x="2896" y="269.334">
    <point/>
   </object>
-  <object id="26" name="NPC_Explorer" x="3568" y="262.667">
+  <object id="26" name="NPC_Explorer" x="3566.67" y="270.667">
    <point/>
   </object>
  </objectgroup>
