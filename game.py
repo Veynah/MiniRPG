@@ -220,12 +220,12 @@ class Game:
             self.player.move()
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
-            self.group.update()
-            self.group.center(self.player.rect.center)
             #NPC
             for npc in self.npc_group:
                 npc.update_NPC()
-
+            self.group.update()
+            self.group.center(self.player.rect.center)
+            
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
             self.inventory.render(self.screen)

@@ -40,9 +40,10 @@ class NPC(pygame.sprite.Sprite):
         self.collision_check()  
         
         self.rect.topleft = self.position
-        print(self.position)
-        print(self.acc)
-        print(self.vel)
+        # Pour debug
+        #print(self.position)
+        #print(self.acc)
+        #print(self.vel)
     def collision_check(self):
         move_by = int(self.vel.x)
         for _ in range(abs(move_by)):
