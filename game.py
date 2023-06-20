@@ -50,6 +50,13 @@ class Game:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+                
+        player_position = tmx_data.get_object_by_name("player_spawn1")
+        self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
+
+        # Dessiner le groupe de calque
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
+        self.group.add(self.player)
               
        # Spawn les NPCs -------------------------------------------------------------
         for obj in tmx_data.objects:
@@ -70,12 +77,7 @@ class Game:
         for npc in self.npc_group:
             self.group.add(npc)    
         
-        player_position = tmx_data.get_object_by_name("player_spawn1")
-        self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
 
-        # Dessiner le groupe de calque
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
-        self.group.add(self.player)
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("enter_forest")
@@ -86,11 +88,13 @@ class Game:
     # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
         self.map = "forest"
-          # Vider le groupe de PNJ
+        # Vider le groupe de PNJ
         self.npc_group.empty()
+        
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/forest.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
+        
         # map_layer va contenir tous les calques
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size()
@@ -127,7 +131,7 @@ class Game:
 
         # Au niveau de la forêt
         spawn_village_point = tmx_data.get_object_by_name("spawn_forest")
-        self.player.position[0] = spawn_village_point.x + 50
+        self.player.position[0] = spawn_village_point.x + 30
         self.player.position[1] = spawn_village_point.y
         self.player.update_walls(self.wall_group)
 
@@ -137,29 +141,13 @@ class Game:
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/village.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
-      
-        # Creer les NPCs
-        self.npc_group = pygame.sprite.Group()
-        for obj in tmx_data.objects:
-            if obj.name == "NPC_Maire":
-                maire = Maire(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(maire)
-            elif obj.name == "NPC_Forgeron":
-                forgeron = Forgeron(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(forgeron)
-            elif obj.name == "NPC_Tavernier":
-                tavernier = Tavernier(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(tavernier)
-            elif obj.name == "NPC_Explorer":
-                explorer = Explorer(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(explorer)
         
         # map_layer va contenir tous les calques
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size()
         )
         map_layer.zoom = 2
-
+      
         self.wall_group = pygame.sprite.Group()
 
         # Définr une liste qui va stocker les rectangles de collision
@@ -170,10 +158,29 @@ class Game:
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
+        # Spawn les NPCs -------------------------------------------------------------
+        for obj in tmx_data.objects:
+            if obj.name == "NPC_Maire":
+                npc_maire = Maire(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_maire)
+            elif obj.name == "NPC_Tavernier":
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_tavernier)
+            elif obj.name == "NPC_Forgeron":
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_forgeron)
+            elif obj.name == "NPC_Explorer":
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_explorer)
+        
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
+        # Ajouter les NPCs au groupe Pyscroll
+        for npc in self.npc_group:
+            self.group.add(npc)    
         self.enemies_group.empty()
+        
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("enter_forest")
