@@ -14,7 +14,7 @@ from player_animations import (
 
 # Les variables pour bouger
 # On ajoute de la friction pour que les mouvements soient plus agréables
-ACC = 4
+ACC = 0.8
 FRIC = -0.2
 
 # Les variables de l'écran
