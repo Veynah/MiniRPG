@@ -1,9 +1,6 @@
 import pygame
 from pygame.math import Vector2 as vec
-from monster_animations import (
-    skeleton1_walking_L,
-    skeleton1_walking_R
-)
+from monster_animations import skeleton1_walking_L, skeleton1_walking_R
 
 # Le même principe que pour player
 ACC = 0.1
@@ -44,8 +41,8 @@ class Enemy(pygame.sprite.Sprite):
         # Comportement du monstre
         if self.see_player(player):
             self.chase_player(player)
-            #print(self.running) debug
-            #print(self.direction)
+            # print(self.running) debug
+            # print(self.direction)
             if self.close_to_player(player):
                 self.attack_player()
         else:
@@ -64,6 +61,7 @@ class Enemy(pygame.sprite.Sprite):
         self.collision_check()
 
         self.rect.topleft = self.position
+
     # Donne la distance à laquelle le monstre voit le joueur
     def see_player(self, player):
         sight_range = 300
@@ -145,19 +143,27 @@ class Skeleton1(Enemy):
         self.running_animation_R = skeleton1_walking_R
         self.frame_index = 0
         self.time_since_last_frame = 0
-        self.frame_duration = 70
+        self.frame_duration = 100
 
     def update_enemy(self, player):
         super().update_enemy(player)
         self.update_animation()
-        
+
     def update_animation(self):
-        time_passed = pygame.time.get_ticks() - self.time_since_last_frame
+        time_passed = (
+            pygame.time.get_ticks() - self.time_since_last_frame
+        )  # Pour que les animations soient plus smooth, elles vont charger moins vite
         if time_passed > self.frame_duration:
-            self.frame_index = (self.frame_index + 1) % len(self.running_animation_L)  # Cycle through the animation frames
             self.time_since_last_frame = pygame.time.get_ticks()
-            
+
+            if (
+                self.frame_index > 5
+            ):  # Comme nous avons 8 images pour les animations, ceci nous permet de revenir à l'image 0
+                self.frame_index = 0
+                return
+
             if self.running and self.direction == "LEFT":
                 self.image = self.running_animation_L[self.frame_index]
             elif self.running and self.direction == "RIGHT":
                 self.image = self.running_animation_R[self.frame_index]
+            self.frame_index += 1
