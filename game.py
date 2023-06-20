@@ -7,10 +7,6 @@ from npc import NPC, Maire, Tavernier, Forgeron, Explorer
 from new_player import NewPlayer
 from enemy import Enemy, Skeleton1
 from wall import Wall
-from npc import NPC, Maire
-from npc import NPC, Tavernier
-from npc import NPC, Forgeron
-from npc import NPC, Explorer
 
 from Inventory import Inventory
 from HealthBar import HealthBar
@@ -24,8 +20,7 @@ class Game:
     def __init__(self):
         self.running = True
         self.map = "village"
-         # Initialisation du groupe des NPCs
-        self.npc_group = pygame.sprite.Group()
+         
         # Creer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
@@ -33,7 +28,9 @@ class Game:
         # Initialize other game components
         self.inventory = Inventory()
         self.healthbar = HealthBar(x=10, y=10)
-
+        
+        # Initialisation des groupes
+        self.npc_group = pygame.sprite.Group()
         self.enemies_group = pygame.sprite.Group()
 
         # Charger la carte (tmx)
@@ -68,6 +65,10 @@ class Game:
             elif obj.name == "NPC_Explorer":
                 npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
                 self.npc_group.add(npc_explorer)
+        
+        # Ajouter les NPCs au groupe Pyscroll
+        for npc in self.npc_group:
+            self.group.add(npc)    
         
         player_position = tmx_data.get_object_by_name("player_spawn1")
         self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
@@ -117,10 +118,6 @@ class Game:
         self.group.add(self.player)
         for enemy in self.enemies_group:
             self.group.add(enemy)
-
-        # Ajouter les NPCs au groupe Pyscroll
-        for npc in self.npc_group:
-            self.group.add(npc)    
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("exit_forest_to_village")
@@ -221,7 +218,6 @@ class Game:
             #NPC
             for npc in self.npc_group:
                 npc.update_NPC()
-            self.group.add(self.npc_group)
 
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
