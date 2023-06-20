@@ -3,7 +3,6 @@ import pytmx
 import pyscroll
 
 from npc import NPC, Maire, Tavernier, Forgeron, Explorer
-
 from new_player import NewPlayer
 from enemy import Enemy, Skeleton1
 from wall import Wall
@@ -225,6 +224,15 @@ class Game:
                 npc.update_NPC()
             self.group.update()
             self.group.center(self.player.rect.center)
+            
+            # System de combat basic, supprime le monstre s'il est attqué
+            if self.player.attacking:
+                collided_enemies = pygame.sprite.spritecollide(self.player, self.enemies_group, False)
+                
+                if self.player.attack_frame in range(1, 19):
+                    for enemy in collided_enemies:
+                        self.enemies_group.remove(enemy)
+                        self.group.remove(enemy)
             
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)

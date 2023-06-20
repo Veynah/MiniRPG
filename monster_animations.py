@@ -17,3 +17,47 @@ skeleton1_walking_R = [
     pygame.image.load("img/enemies/skeleton1/Skeleton1_Walk_R/Skeleton1_Walk_R4.png"),
     pygame.image.load("img/enemies/skeleton1/Skeleton1_Walk_R/Skeleton1_Walk_R5.png")
 ]
+
+skeleton1_attacking_L = [
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-A1.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-A2.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-A3.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-A4.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-A5.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-A6.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-A7.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-A8.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B1.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B2.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B3.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B4.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B5.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B6.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B7.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B8.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B9.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B10.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_L/attack-B11.png"),
+]
+
+skeleton1_attacking_R = [
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-A1.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-A2.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-A3.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-A4.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-A5.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-A6.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-A7.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-A8.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B1.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B2.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B3.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B4.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B5.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B6.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B7.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B8.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B9.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B10.png"),
+    pygame.image.load("img/enemies/skeleton1/Skeleton1_Attack_R/attack-B11.png"),
+]

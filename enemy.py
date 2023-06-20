@@ -1,6 +1,11 @@
 import pygame
 from pygame.math import Vector2 as vec
-from monster_animations import skeleton1_walking_L, skeleton1_walking_R
+from monster_animations import (
+    skeleton1_walking_L,
+    skeleton1_walking_R,
+    skeleton1_attacking_L,
+    skeleton1_attacking_R
+)
 
 # Le même principe que pour player
 ACC = 0.1
