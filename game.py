@@ -2,6 +2,8 @@ import pygame
 import pytmx
 import pyscroll
 
+from npc import NPC, Maire, Tavernier, Forgeron, Explorer
+
 from new_player import NewPlayer
 from enemy import Enemy, Skeleton1
 from wall import Wall
@@ -58,14 +60,14 @@ class Game:
                 npc_maire = Maire(obj.x, obj.y, self.wall_group)
                 self.npc_group.add(npc_maire)
             elif obj.name == "NPC_Tavernier":
-                npc_tavernier = NPC_Tavernier(obj.x, obj.y, self.wall_group)
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group)
                 self.npc_group.add(npc_tavernier)
             elif obj.name == "NPC_Forgeron":
-                npc_forgeron = NPC_Forgeron(obj.x, obj.y, self.wall_group)
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group)
                 self.npc_group.add(npc_forgeron)
             elif obj.name == "NPC_Explorer":
-                npc_explorer = NPC_Explorer(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(npc_explorer)    
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_explorer)
         
         player_position = tmx_data.get_object_by_name("player_spawn1")
         self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
@@ -218,7 +220,7 @@ class Game:
             self.group.center(self.player.rect.center)
             #NPC
             for npc in self.npc_group:
-                npc.update_npc(self.player)
+                npc.update_NPC()
             self.group.add(self.npc_group)
 
             # On va dessiner les calques sur le screen
