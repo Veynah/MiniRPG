@@ -240,6 +240,9 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
+                        self.dialogb_box.next_text()
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
