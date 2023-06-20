@@ -14,12 +14,13 @@ from HealthBar import HealthBar
 HEIGHT = 720
 WIDTH = 1280
 
+
 # Classe du jeu avec ses variables
 class Game:
     def __init__(self):
         self.running = True
         self.map = "village"
-         
+
         # Creer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
@@ -27,7 +28,7 @@ class Game:
         # Initialize other game components
         self.inventory = Inventory()
         self.healthbar = HealthBar(x=10, y=10)
-        
+
         # Initialisation des groupes
         self.npc_group = pygame.sprite.Group()
         self.enemies_group = pygame.sprite.Group()
@@ -49,15 +50,15 @@ class Game:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
-                
+
         player_position = tmx_data.get_object_by_name("player_spawn1")
         self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
-              
-       # Spawn les NPCs -------------------------------------------------------------
+
+        # Spawn les NPCs -------------------------------------------------------------
         for obj in tmx_data.objects:
             if obj.name == "NPC_Maire":
                 npc_maire = Maire(obj.x, obj.y, self.wall_group)
@@ -71,12 +72,10 @@ class Game:
             elif obj.name == "NPC_Explorer":
                 npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
                 self.npc_group.add(npc_explorer)
-        
+
         # Ajouter les NPCs au groupe Pyscroll
         for npc in self.npc_group:
-            self.group.add(npc)    
-        
-
+            self.group.add(npc)
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("enter_forest")
@@ -89,11 +88,11 @@ class Game:
         self.map = "forest"
         # Vider le groupe de PNJ
         self.npc_group.empty()
-        
+
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/forest.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
-        
+
         # map_layer va contenir tous les calques
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size()
@@ -140,13 +139,13 @@ class Game:
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/village.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
-        
+
         # map_layer va contenir tous les calques
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size()
         )
         map_layer.zoom = 2
-      
+
         self.wall_group = pygame.sprite.Group()
 
         # Définr une liste qui va stocker les rectangles de collision
@@ -171,15 +170,14 @@ class Game:
             elif obj.name == "NPC_Explorer":
                 npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
                 self.npc_group.add(npc_explorer)
-        
+
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
         # Ajouter les NPCs au groupe Pyscroll
         for npc in self.npc_group:
-            self.group.add(npc)    
+            self.group.add(npc)
         self.enemies_group.empty()
-        
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("enter_forest")
@@ -219,18 +217,18 @@ class Game:
             self.player.move()
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
-            #NPC
+            # NPC
             for npc in self.npc_group:
                 npc.update_NPC()
             self.group.update()
             self.group.center(self.player.rect.center)
-            
+
             # System de combat basic, inflige 1 de dégâts à l'ennemie par attack counter
             if self.player.attacking:
                 for enemy in self.enemies_group:
                     if pygame.sprite.collide_mask(self.player, enemy):
                         enemy.take_damage(1, self.player.attack_counter)
-            
+
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
             self.inventory.render(self.screen)

@@ -42,10 +42,10 @@ class NewPlayer(pygame.sprite.Sprite):
         self.jumping = False
         self.running = False
         self.attacking = False
-        
+
         # Stats
         self.health = 5
-        
+
         # Animation
         self.attack_frame = 0
         self.frame_index = 0
