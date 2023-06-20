@@ -1,8 +1,9 @@
 import pygame
 from pygame.math import Vector2 as vec
+from monster_animations import skeleton1_walking_L, skeleton1_walking_R
 
 # Le même principe que pour player
-ACC = 0.4
+ACC = 0.1
 FRIC = -0.2
 
 
@@ -37,13 +38,6 @@ class Enemy(pygame.sprite.Sprite):
             self.running = True
         else:
             self.running = False
-        # Donne sa position
-        self.acc.x += self.vel.x * FRIC
-        self.vel += self.acc
-        self.position.y += self.vel.y
-        self.rect.y = self.position.y
-        # Vérifie s'il entre en collision avec walls
-        self.collision_check()
 
         # Comportement du monstre
         if self.see_player(player):
@@ -53,11 +47,28 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.patrol()
 
+        # Donne sa position
+        self.acc.x += self.vel.x * FRIC
+        self.vel += self.acc
+
+        self.position.x += self.vel.x
+        self.position.y += self.vel.y
+        self.rect.y = self.position.y
+        self.rect.x = self.position.x
+
+        # Vérifie s'il entre en collision avec walls
+        self.collision_check()
+
         self.rect.topleft = self.position
 
     # Donne la distance à laquelle le monstre voit le joueur
     def see_player(self, player):
-        pass
+        sight_range = 200
+
+        dx = self.position.x - player.position.x
+        dy = self.position.y - player.position.y
+        distance = (dx**2 + dy**2) ** 0.5
+        return distance <= sight_range
 
     # Le monstre bouge vers le joueur
     def chase_player(self, player):
@@ -124,3 +135,6 @@ class Enemy(pygame.sprite.Sprite):
 class Skeleton1(Enemy):
     def __init__(self, x, y, walls):
         super().__init__(x, y, walls, "img/enemies/skeleton1/attack-A1.png")
+        self.frame_index = 0
+        self.time_since_last_frame = 0
+        self.frame_duration = 50
