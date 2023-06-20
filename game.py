@@ -2,6 +2,7 @@ import pygame
 import pytmx
 import pyscroll
 
+from dialog import DialogBox
 from npc import NPC, Maire, Tavernier, Forgeron, Explorer
 
 from new_player import NewPlayer
@@ -21,7 +22,7 @@ class Game:
         self.running = True
         self.map = "village"
         #intégration de bulle dialogue
-        self.dialogb_box=Dialogbox()
+        self.dialogb_box = DialogBox()
         # Creer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
@@ -231,6 +232,8 @@ class Game:
             self.group.draw(self.screen)
             self.inventory.render(self.screen)
             self.healthbar.render(self.screen)
+            #dessiner la box de dialog
+            self.dialogb_box.render(self.screen)
 
             pygame.display.flip()
 
