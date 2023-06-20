@@ -204,6 +204,9 @@ class NewPlayer(pygame.sprite.Sprite):
             elif self.direction == "LEFT":
                 self.image = player_attack_anim_L[self.attack_frame]
 
+                
+                
+
             self.attack_frame += 1
 
     # def get_image(self, x, y):
