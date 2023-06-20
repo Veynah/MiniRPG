@@ -1,5 +1,6 @@
 import pygame
 from pygame.math import Vector2 as vec
+import random
 from monster_animations import (
     skeleton1_walking_L,
     skeleton1_walking_R,
@@ -18,6 +19,7 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(image_path)
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         # Physique et collision et mouvement
         self.vx = 0
         self.walls = walls
@@ -27,11 +29,21 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = "LEFT"
         self.running = False
         self.attacking = False
+        self.enemy_take_damage = False
+        
+        # Stats
+        self.health = 4
+        
         # Animation
         self.attack_frame = 0
         self.frame_index = 0
         self.time_since_last_frame = 0
         self.frame_duration = 40
+        
+        # Cooldown pour recevoir des dégâts
+        self.last_attack_counter = -1
+        self.last_damage_time = 0
+        self.damage_cooldown = 100
 
     # Update l'enemie, sa position et son comportement
     def update_enemy(self, player):
@@ -49,7 +61,7 @@ class Enemy(pygame.sprite.Sprite):
             # print(self.running) debug
             # print(self.direction)
             if self.close_to_player(player):
-                self.attack_player()
+                self.attack_player(self.player)
         else:
             self.patrol()
 
@@ -88,10 +100,11 @@ class Enemy(pygame.sprite.Sprite):
 
     # Donne la distance à laquelle le monstre peut attaquer le joueur
     def close_to_player(self, player):
-        pass
+        distance = ((self.rect.x - player.rect.x) ** 2 + (self.rect.y - player.rect.y) ** 2) ** 0.5
+        return distance <= 10
 
-    def attack_player(self):
-        pass
+    def attack_player(self, player):
+        self.attacking = True
 
     # Donne le comportement du monstre si le joueur n'est pas dans le coin
     def patrol(self):
@@ -139,6 +152,20 @@ class Enemy(pygame.sprite.Sprite):
                     self.position.y = wall.rect.bottom
                     # Stop mouvement vers le haut
                     self.vel.y = 0
+    
+    def take_damage(self, damage_amount, attack_counter):
+        if attack_counter != self.last_attack_counter:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.last_damage_time > self.damage_cooldown:
+                self.health -= damage_amount
+                self.last_damage_time = current_time
+                print(self.health)
+                self.last_attack_counter = attack_counter
+                if self.health <= 0:
+                    self.die()
+        
+    def die(self):
+        self.kill()
 
 
 class Skeleton1(Enemy):
@@ -171,4 +198,6 @@ class Skeleton1(Enemy):
                 self.image = self.running_animation_L[self.frame_index]
             elif self.running and self.direction == "RIGHT":
                 self.image = self.running_animation_R[self.frame_index]
+            self.mask = pygame.mask.from_surface(self.image)
             self.frame_index += 1
+            

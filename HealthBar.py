@@ -1,3 +1,4 @@
+import sys
 import pygame
 
 
@@ -18,8 +19,9 @@ class HealthBar(pygame.sprite.Sprite):
 
     def takeDamage(self, damage):
         self.health -= damage
-        if self.health < 0:
-            self.health = 0
+        if self.health == 0:
+            pygame.quit()
+            sys.exit()
 
         self.image = self.health_animations[self.health]
 

@@ -225,14 +225,11 @@ class Game:
             self.group.update()
             self.group.center(self.player.rect.center)
             
-            # System de combat basic, supprime le monstre s'il est attqué
+            # System de combat basic, inflige 1 de dégâts à l'ennemie par attack counter
             if self.player.attacking:
-                collided_enemies = pygame.sprite.spritecollide(self.player, self.enemies_group, False)
-                
-                if self.player.attack_frame in range(1, 19):
-                    for enemy in collided_enemies:
-                        self.enemies_group.remove(enemy)
-                        self.group.remove(enemy)
+                for enemy in self.enemies_group:
+                    if pygame.sprite.collide_mask(self.player, enemy):
+                        enemy.take_damage(1, self.player.attack_counter)
             
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
