@@ -15,6 +15,8 @@ FRIC = -0.1
 
 # Classe enemy dont vont hériter les différents monstres
 class Enemy(pygame.sprite.Sprite):
+    ATTACK_COOLDOWN = 4000
+    
     def __init__(self, x, y, walls, image_path):
         super().__init__()
         self.image = pygame.image.load(image_path)
@@ -39,11 +41,18 @@ class Enemy(pygame.sprite.Sprite):
         self.frame_index = 0
         self.time_since_last_frame = 0
         self.frame_duration = 40
+        self.player_in_attack_range = False
         
+        # Cooldown pour les attaques sur le joueur
+        self.last_attack_time = 0
         # Cooldown pour recevoir des dégâts
         self.last_attack_counter = -1
         self.last_damage_time = 0
         self.damage_cooldown = 100
+        
+        self.patrol_direction = random.choice([-1, 1])
+        self.patrol_time = pygame.time.get_ticks()
+        self.patrol_duration = random.randint(2000, 5000)
 
     # Update l'enemie, sa position et son comportement
     def update_enemy(self, player):
@@ -61,7 +70,7 @@ class Enemy(pygame.sprite.Sprite):
             # print(self.running) debug
             # print(self.direction)
             if self.close_to_player(player):
-                self.attack_player(self.player)
+                self.attack_player(player)
         else:
             self.patrol()
 
@@ -100,15 +109,37 @@ class Enemy(pygame.sprite.Sprite):
 
     # Donne la distance à laquelle le monstre peut attaquer le joueur
     def close_to_player(self, player):
-        distance = ((self.rect.x - player.rect.x) ** 2 + (self.rect.y - player.rect.y) ** 2) ** 0.5
-        return distance <= 10
+        distance_x = abs(self.rect.x - player.rect.x)
+        attack_range = 70
+        if distance_x <= attack_range:
+            self.player_in_attack_range = True
+        return self.player_in_attack_range
 
     def attack_player(self, player):
-        self.attacking = True
+        current_time = pygame.time.get_ticks()
+        if self.close_to_player(player) and current_time - self.last_attack_time > self.ATTACK_COOLDOWN:
+            self.attacking = True
+            print("Im attacking you")
+            self.last_attack_time = current_time
+        else:
+            self.attacking = False
+            self.player_in_attack_range = False
 
     # Donne le comportement du monstre si le joueur n'est pas dans le coin
     def patrol(self):
-        pass
+        current_time = pygame.time.get_ticks()
+        if current_time - self.patrol_time > self.patrol_duration:
+            self.patrol_direction *= -1
+            self.patrol_time = current_time
+            self.patrol_duration = random.randint(2000, 5000)
+            
+        self.acc.x = ACC * self.patrol_direction
+        self.running = True
+        
+        if self.patrol_direction > 0:
+            self.direction = "RIGHT"
+        else:
+            self.direction = "LEFT"
 
     # La meme (presque) fonction que player, on enlève juste le jump
     def collision_check(self):
@@ -170,13 +201,24 @@ class Enemy(pygame.sprite.Sprite):
 
 class Skeleton1(Enemy):
     def __init__(self, x, y, walls):
-        super().__init__(x, y, walls, "img/enemies/skeleton1/attack-A1.png")
+        super().__init__(x, y, walls, "img/enemies/skeleton1/Skeleton1_Walk_L/Skeleton1_Walk_L0.png")
         self.running_animation_L = skeleton1_walking_L
         self.running_animation_R = skeleton1_walking_R
+        self.attacking_animation_L = skeleton1_attacking_L
+        self.attacking_animation_R = skeleton1_attacking_R
         self.frame_index = 0
+        self.attack_frame = 0
         self.time_since_last_frame = 0
         self.frame_duration = 100
-
+        
+    def attack_player(self, player):
+        current_time = pygame.time.get_ticks()
+        if self.close_to_player(player) and current_time - self.last_attack_time > self.ATTACK_COOLDOWN and not self.attacking:
+            self.attacking = True
+            self.attack_frame = 0
+            print("Im attacking you")
+            self.last_attack_time = current_time
+          
     def update_enemy(self, player):
         super().update_enemy(player)
         self.update_animation()
@@ -194,10 +236,20 @@ class Skeleton1(Enemy):
                 self.frame_index = 0
                 return
 
-            if self.running and self.direction == "LEFT":
-                self.image = self.running_animation_L[self.frame_index]
-            elif self.running and self.direction == "RIGHT":
-                self.image = self.running_animation_R[self.frame_index]
+            if self.attacking:
+                if self.direction == "LEFT":
+                    self.image = self.attacking_animation_L[self.attack_frame]
+                elif self.direction == "RIGHT":
+                    self.image = pygame.transform.flip(self.attacking_animation_L[self.attack_frame], True, False)
+                self.attack_frame += 1
+                if self.attack_frame > 18:
+                    self.attack_frame = 0
+                    self.attacking = False
+            else:
+                if self.running and self.direction == "LEFT":
+                    self.image = self.running_animation_L[self.frame_index]
+                elif self.running and self.direction == "RIGHT":
+                    self.image = pygame.transform.flip(self.running_animation_L[self.frame_index], True, False)
+                self.frame_index += 1
             self.mask = pygame.mask.from_surface(self.image)
-            self.frame_index += 1
             
