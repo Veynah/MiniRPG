@@ -2,6 +2,8 @@ import pygame
 import pytmx
 import pyscroll
 
+from npc import NPC, Maire, Tavernier, Forgeron, Explorer
+
 from new_player import NewPlayer
 from enemy import Enemy, Skeleton1
 from wall import Wall
@@ -9,18 +11,16 @@ from wall import Wall
 from Inventory import Inventory
 from HealthBar import HealthBar
 
-pygame.init()
-
 # Les variables de la taille de la fenêtre du jeu
 HEIGHT = 720
 WIDTH = 1280
-
 
 # Classe du jeu avec ses variables
 class Game:
     def __init__(self):
         self.running = True
         self.map = "village"
+         
         # Creer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
@@ -28,7 +28,9 @@ class Game:
         # Initialize other game components
         self.inventory = Inventory()
         self.healthbar = HealthBar(x=10, y=10)
-
+        
+        # Initialisation des groupes
+        self.npc_group = pygame.sprite.Group()
         self.enemies_group = pygame.sprite.Group()
 
         # Charger la carte (tmx)
@@ -39,7 +41,6 @@ class Game:
             map_data, self.screen.get_size()
         )
         map_layer.zoom = 2
-
         self.wall_group = pygame.sprite.Group()
 
         # Définr une liste qui va stocker les rectangles de collision
@@ -49,7 +50,26 @@ class Game:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
-
+              
+       # Spawn les NPCs -------------------------------------------------------------
+        for obj in tmx_data.objects:
+            if obj.name == "NPC_Maire":
+                npc_maire = Maire(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_maire)
+            elif obj.name == "NPC_Tavernier":
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_tavernier)
+            elif obj.name == "NPC_Forgeron":
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_forgeron)
+            elif obj.name == "NPC_Explorer":
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_explorer)
+        
+        # Ajouter les NPCs au groupe Pyscroll
+        for npc in self.npc_group:
+            self.group.add(npc)    
+        
         player_position = tmx_data.get_object_by_name("player_spawn1")
         self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
 
@@ -66,6 +86,8 @@ class Game:
     # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
         self.map = "forest"
+          # Vider le groupe de PNJ
+        self.npc_group.empty()
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/forest.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
@@ -115,6 +137,23 @@ class Game:
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/village.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
+      
+        # Creer les NPCs
+        self.npc_group = pygame.sprite.Group()
+        for obj in tmx_data.objects:
+            if obj.name == "NPC_Maire":
+                maire = Maire(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(maire)
+            elif obj.name == "NPC_Forgeron":
+                forgeron = Forgeron(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(forgeron)
+            elif obj.name == "NPC_Tavernier":
+                tavernier = Tavernier(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(tavernier)
+            elif obj.name == "NPC_Explorer":
+                explorer = Explorer(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(explorer)
+        
         # map_layer va contenir tous les calques
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size()
@@ -176,6 +215,10 @@ class Game:
                 enemy.update_enemy(self.player)
             self.group.update()
             self.group.center(self.player.rect.center)
+            #NPC
+            for npc in self.npc_group:
+                npc.update_NPC()
+
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
             self.inventory.render(self.screen)
