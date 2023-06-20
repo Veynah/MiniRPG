@@ -2,7 +2,7 @@ import pygame
 import pytmx
 import pyscroll
 
-from npc import NPC, Maire, Tavernier, Forgeron, Explorer
+from pygame import mixer
 
 from new_player import NewPlayer
 from enemy import Enemy, Skeleton1
@@ -14,6 +14,8 @@ from npc import NPC, Explorer
 
 from Inventory import Inventory
 from HealthBar import HealthBar
+
+pygame.mixer.init()
 
 # Les variables de la taille de la fenêtre du jeu
 HEIGHT = 720
@@ -45,6 +47,10 @@ class Game:
         )
         map_layer.zoom = 2
         self.wall_group = pygame.sprite.Group()
+
+        pygame.mixer.music.load("music/The_Witcher_3 _Wild_Hunt.mp3")
+        pygame.mixer.music.set_volume(0.5)  # Adjust the volume as desired (0.0 to 1.0)
+        pygame.mixer.music.play(-1)  # Start playing the music (-1 loops the music indefinitely)
 
         # Définr une liste qui va stocker les rectangles de collision
         self.walls = []
@@ -202,6 +208,23 @@ class Game:
         ):
             self.switch_back()
             self.map = "village"
+    
+    def pause_music(self):
+        pygame.mixer.music.pause()
+
+    def resume_music(self):
+        pygame.mixer.music.unpause()
+
+    def stop_music(self):
+        pygame.mixer.music.stop()
+
+    def handle_keypress(self, key):
+        if key == pygame.K_F3:  # Press 'F3' to pause the music
+            self.pause_music()
+        elif key == pygame.K_F2:  # Press 'F2' to resume the music
+            self.resume_music()
+        elif key == pygame.K_F1:  # Press 'F1' to stop the music
+            self.stop_music()
 
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
@@ -235,6 +258,7 @@ class Game:
                     self.running = False
 
                 if event.type == pygame.KEYDOWN:
+                    self.handle_keypress(event.key)
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
                         self.player.jump()
                     if event.key == pygame.K_i:  # Toggle inventory visibility on "i" key press
