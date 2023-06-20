@@ -52,6 +52,8 @@ class NewPlayer(pygame.sprite.Sprite):
         self.attack_counter = 0
         self.time_since_last_frame = 0
         self.frame_duration = 60
+        
+        
 
     def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité

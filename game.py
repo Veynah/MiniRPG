@@ -207,6 +207,8 @@ class Game:
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
         clock = pygame.time.Clock()
+        player_last_damage_time = 0
+        player_damage_cooldown = 1500
 
         # Boucle du jeu
 
@@ -215,8 +217,20 @@ class Game:
             if self.player.attacking:
                 self.player.attack()
             self.player.move()
+            current_time = pygame.time.get_ticks()
+
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
+                
+                # Check if the enemy collides with the player and if so, reduce health
+                if pygame.sprite.collide_mask(self.player, enemy) and enemy.attacking:
+                    # Check if enough time has passed since the last damage
+                    if current_time - player_last_damage_time > player_damage_cooldown:
+                        damage_amount = 1  # adjust this as needed
+                        self.healthbar.takeDamage(damage_amount)
+                        # Update the last damage time
+                        player_last_damage_time = current_time
+            
             # NPC
             for npc in self.npc_group:
                 npc.update_NPC()

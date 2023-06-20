@@ -9,7 +9,7 @@ from monster_animations import (
 )
 
 # Le même principe que pour player
-ACC = 0.1
+ACC = 0.06
 FRIC = -0.1
 
 
@@ -34,7 +34,7 @@ class Enemy(pygame.sprite.Sprite):
         self.enemy_take_damage = False
 
         # Stats
-        self.health = 4
+        self.health = 5
 
         # Animation
         self.attack_frame = 0
@@ -45,6 +45,7 @@ class Enemy(pygame.sprite.Sprite):
 
         # Cooldown pour les attaques sur le joueur
         self.last_attack_time = 0
+        
         # Cooldown pour recevoir des dégâts
         self.last_attack_counter = -1
         self.last_damage_time = 0
@@ -115,6 +116,7 @@ class Enemy(pygame.sprite.Sprite):
             self.player_in_attack_range = True
         return self.player_in_attack_range
 
+    # Attaque le joueur avec un cooldown pour ne pas spamme
     def attack_player(self, player):
         current_time = pygame.time.get_ticks()
         if (
