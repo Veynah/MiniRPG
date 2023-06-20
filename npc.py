@@ -1,8 +1,10 @@
 import pygame
 from pygame.math import Vector2 as vec
-ACC = 0.
+ACC = 0.2
 FRIC = -0.1
-#Classe NPC
+
+
+#Classe NPC dont vont etre les different npc
 
 class NPC(pygame.sprite.Sprite):
     def __init__(self, x, y, walls, image_path):
@@ -31,39 +33,8 @@ class NPC(pygame.sprite.Sprite):
         self.rect.y = self.position.y
         # Vérifie s'il entre en collision avec walls
         self.collision_check()
-
-# Sous-classe pour le NPC Maire
-class Maire(NPC):
-    def __init__(self, x, y,walls):
-        super().__init__(x, y, walls, "img/NPCs/NPC_Maire1.png")
-
-    def update(self):
-        # Implémentez ici le comportement spécifique du Maire
-        pass
-
-
-# Sous-classe pour le NPC Forgeron
-class Forgeron(NPC):
-    def __init__(self, x, y,walls):
-
-        super().__init__(x, y, walls,"img/NPCs/NPC_forgeron1.png")
-
-
-# Sous-classe pour le NPC Tavernier
-class Tavernier(NPC):
-    def __init__(self, x, y, walls):
-     
-        super().__init__(x, y, walls,"img/NPCs/NPC_Tavernier1.png")
-
-
-# Sous-classe pour le NPC Explorer
-class Explorer(NPC):
-    def __init__(self, x, y,walls):
-       
-        super().__init__(x, y, walls, "img/NPCs/NPC_Explorer1.png")
-
-
-def update_NPC(self):
+    
+    def update_NPC(self):
         self.acc = vec(0, 0.5)
 
         # Running = faux si on est trop slow
@@ -80,7 +51,7 @@ def update_NPC(self):
         self.collision_check()  
         self.rect.topleft = self.position
 
-def collision_check(self):
+    def collision_check(self):
         move_by = int(self.vel.x)
         for _ in range(abs(move_by)):
             # Increment or decrement x position by 1 pixel
@@ -121,3 +92,31 @@ def collision_check(self):
                     self.position.y = wall.rect.bottom
                     # Stop mouvement vers le haut
                     self.vel.y = 0
+
+# Sous-classe pour le NPC Maire
+class Maire(NPC):
+    def __init__(self, x, y,walls):
+        super().__init__(x, y, walls, "img/NPCs/NPC_Maire1.png")
+
+
+# Sous-classe pour le NPC Forgeron
+class Forgeron(NPC):
+    def __init__(self, x, y,walls):
+
+        super().__init__(x, y, walls,"img/NPCs/NPC_forgeron1.png")
+
+
+# Sous-classe pour le NPC Tavernier
+class Tavernier(NPC):
+    def __init__(self, x, y, walls):
+     
+        super().__init__(x, y, walls,"img/NPCs/NPC_Tavernier1.png")
+
+
+# Sous-classe pour le NPC Explorer
+class Explorer(NPC):
+    def __init__(self, x, y,walls):
+       
+        super().__init__(x, y, walls, "img/NPCs/NPC_Explorer1.png")
+
+
