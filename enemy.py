@@ -1,6 +1,6 @@
+import random
 import pygame
 from pygame.math import Vector2 as vec
-import random
 from monster_animations import (
     skeleton1_walking_L,
     skeleton1_walking_R,
@@ -124,7 +124,7 @@ class Enemy(pygame.sprite.Sprite):
             and current_time - self.last_attack_time > self.ATTACK_COOLDOWN
         ):
             self.attacking = True
-            print("Im attacking you")
+            print("Give me your dark soul")
             self.last_attack_time = current_time
         else:
             self.attacking = False
