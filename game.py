@@ -21,9 +21,9 @@ class Game:
     def __init__(self):
         self.running = True
         self.map = "village"
-        #self.map_manager = Mapmanager(self)
+
         #intégration de bulle dialogue
-        self.dialogb_box = DialogBox()
+        self.dialog_box = DialogBox()
         # Creer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
@@ -89,12 +89,6 @@ class Game:
         self.enter_forest_rect = pygame.Rect(
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
-    #gerer la collision avec les npc pour le dialogue
-    def check_npc_collisions(self, dialog_box):
-        for sprite in self.npc_group.sprites():
-            if sprite.feet.colliderect(self.player.rect) and type(sprite) is NPC:
-                dialog_box.execute(sprite.dialog)
-
 
 
     # Fonction qui permet de passer du village à la forêt
@@ -221,18 +215,17 @@ class Game:
             #NPC
             for npc in self.npc_group:
                 npc.update_NPC()
+
             self.group.update()
             self.group.center(self.player.rect.center)
-            # Vérifiez les collisions avec les NPC
-
-          #  self.map_manager.check_npc_collisions(self.dialog_box)
 
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
             self.inventory.render(self.screen)
             self.healthbar.render(self.screen)
+
             #dessiner la box de dialog
-            self.dialogb_box.render(self.screen)
+            self.dialog_box.render(self.screen)
 
             pygame.display.flip()
 
@@ -241,9 +234,10 @@ class Game:
                     self.running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_e:
-                        self.check_npc_collisions(self.dialogb_box)
-
-                if event.type == pygame.KEYDOWN:
+                       if self.dialog_box.reading:
+                           self.dialog_box.next_text()
+                       else:
+                           self.dialog_box.execute(["Chevalier Anakin à l'aide !", "La princesse Rolande a été kidnappée !", "Voulez-vous la sauver ?"])
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
                         self.player.jump()
                     if (
