@@ -117,7 +117,6 @@ class NewPlayer(pygame.sprite.Sprite):
         # print(f"Acceleration: {self.acc}, Velocity: {self.vel}, Position: {self.position}")
 
         self.rect.topleft = self.position
-
     # Fonction qui faire un check de la gravité pour voir si on peut sauter ou pas
     # Et gère les collisions verticales
     def gravity_check(self):
@@ -193,6 +192,8 @@ class NewPlayer(pygame.sprite.Sprite):
                 elif self.direction == "LEFT":
                     self.image = player_idle_anim_L[self.frame_index]
                 self.frame_index += 1
+
+
 
     def attack(self):
         # En fonction du nombre de fois qu'on attaque, il y aura plusieurs animations
