@@ -21,6 +21,7 @@ class Game:
     def __init__(self):
         self.running = True
         self.map = "village"
+        #self.map_manager = Mapmanager(self)
         #intégration de bulle dialogue
         self.dialogb_box = DialogBox()
         # Creer la fenêtre du jeu
@@ -59,20 +60,22 @@ class Game:
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
-              
-       # Spawn les NPCs -------------------------------------------------------------
+
+        # Spawn les NPCs -------------------------------------------------------------
         for obj in tmx_data.objects:
             if obj.name == "NPC_Maire":
-                npc_maire = Maire(obj.x, obj.y, self.wall_group)
+                npc_maire = Maire(obj.x, obj.y, self.wall_group,
+                                  "Bonjour Chevalier Anakin, je suis le maire du village.")
                 self.npc_group.add(npc_maire)
             elif obj.name == "NPC_Tavernier":
-                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group)
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group, "Besoin d'une bonne bière?")
                 self.npc_group.add(npc_tavernier)
             elif obj.name == "NPC_Forgeron":
-                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group)
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group,
+                                        "Bienvenue dans ma forge, Oh Chevalier Anakin, que puis-je faire pour vous?")
                 self.npc_group.add(npc_forgeron)
             elif obj.name == "NPC_Explorer":
-                npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group, "Oh vaillant Chevalier je suis Chris")
                 self.npc_group.add(npc_explorer)
         
         # Ajouter les NPCs au groupe Pyscroll
@@ -86,6 +89,13 @@ class Game:
         self.enter_forest_rect = pygame.Rect(
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
+    #gerer la collision avec les npc pour le dialogue
+    def check_npc_collisions(self, dialog_box):
+        for sprite in self.npc_group.sprites():
+            if sprite.feet.colliderect(self.player.rect) and type(sprite) is NPC:
+                dialog_box.execute(sprite.dialog)
+
+
 
     # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
@@ -160,21 +170,7 @@ class Game:
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
-        # Spawn les NPCs -------------------------------------------------------------
-        for obj in tmx_data.objects:
-            if obj.name == "NPC_Maire":
-                npc_maire = Maire(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(npc_maire)
-            elif obj.name == "NPC_Tavernier":
-                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(npc_tavernier)
-            elif obj.name == "NPC_Forgeron":
-                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(npc_forgeron)
-            elif obj.name == "NPC_Explorer":
-                npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
-                self.npc_group.add(npc_explorer)
-        
+
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
@@ -227,7 +223,10 @@ class Game:
                 npc.update_NPC()
             self.group.update()
             self.group.center(self.player.rect.center)
-            
+            # Vérifiez les collisions avec les NPC
+
+          #  self.map_manager.check_npc_collisions(self.dialog_box)
+
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
             self.inventory.render(self.screen)
@@ -242,7 +241,7 @@ class Game:
                     self.running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_e:
-                        self.dialogb_box.next_text()
+                        self.check_npc_collisions(self.dialogb_box)
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
