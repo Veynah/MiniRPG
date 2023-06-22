@@ -17,14 +17,9 @@ class Inventory:
         self.slots.append(InventorySlot("img/item/shield.ico", (550, 15)))
         self.slots.append(InventorySlot("img/item/weapon.png", (630, 5)))
         self.slots.append(InventorySlot("img/item/xp2.png", (700, 15)))
-<<<<<<< Updated upstream
-        
-        self.visible = False 
-=======
         self.slots.append(InventorySlot("img/item/money_bag.png", (770, 15)))
 
         self.visible = False
->>>>>>> Stashed changes
 
         self.font = pygame.font.SysFont(None, 24)  # Define the font for rendering
     
@@ -33,16 +28,13 @@ class Inventory:
 
     def toggleVisibility(self):
         self.visible = not self.visible
-        
+
     def render(self, display):
         if self.visible:
             display.blit(self.image, self.rect)
             for slot in self.slots:
                 slot.render(display)
 
-<<<<<<< Updated upstream
-        
-=======
     def get_coin_quantity(self):
         coin_count = 0
         for slot in self.slots:
@@ -104,4 +96,3 @@ class Maire(Inventory):
 
 
 # Rest of the code...
->>>>>>> Stashed changes

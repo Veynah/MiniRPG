@@ -1,10 +1,7 @@
 import pygame
 from pygame.math import Vector2 as vec
-<<<<<<< Updated upstream
-=======
 from HealthBar import HealthBar
 from Inventory import Inventory 
->>>>>>> Stashed changes
 
 from player_animations import (
     player_run_anim_R,
@@ -25,6 +22,7 @@ FRIC = -0.2
 # Les variables de l'écran
 HEIGHT = 720
 WIDTH = 1280
+# Commentaire test
 
 
 class NewPlayer(pygame.sprite.Sprite):
@@ -35,6 +33,7 @@ class NewPlayer(pygame.sprite.Sprite):
         self.image = pygame.image.load("img/player/test.png")
         self.image.convert_alpha()
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         # Physique et collision et mouvement
         self.vx = 0
         self.walls = walls
@@ -45,12 +44,18 @@ class NewPlayer(pygame.sprite.Sprite):
         self.jumping = False
         self.running = False
         self.attacking = False
+
+        # Stats
+        self.health = 5
+
         # Animation
         self.attack_frame = 0
         self.frame_index = 0
         self.attack_counter = 0
         self.time_since_last_frame = 0
         self.frame_duration = 60
+        
+        
 
     def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
@@ -209,7 +214,7 @@ class NewPlayer(pygame.sprite.Sprite):
                 self.image = player_attack_anim_R[self.attack_frame]
             elif self.direction == "LEFT":
                 self.image = player_attack_anim_L[self.attack_frame]
-
+            self.mask = pygame.mask.from_surface(self.image)
             self.attack_frame += 1
 
     # def get_image(self, x, y):

@@ -1,7 +1,6 @@
 import pygame
 
 
-
 class InventorySlot:
     def __init__(self, name, pos, quantity=0):
         self.image = pygame.image.load(name)

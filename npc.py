@@ -2,7 +2,7 @@ import pygame
 from Inventory import Inventory
 from InventorySlot import InventorySlot 
 from pygame.math import Vector2 as vec
-ACC = 0.2
+ACC = 0.05
 FRIC = -0.1
 
 
@@ -27,32 +27,25 @@ class NPC(pygame.sprite.Sprite):
         self.frame_index = 0
         self.time_since_last_frame = 0
         self.frame_duration = 60
-
-        # Donne sa position
-        self.acc.x += self.vel.x * FRIC
-        self.vel += self.acc
-        self.position.y += self.vel.y
-        self.rect.y = self.position.y
-        # Vérifie s'il entre en collision avec walls
-        self.collision_check()
-    
+        
     def update_NPC(self):
         self.acc = vec(0, 0.5)
-
-        # Running = faux si on est trop slow
-        if abs(self.vel.x) > 0.1:
-            self.running = True
-        else:
-            self.running = False
         # Donne sa position
         self.acc.x += self.vel.x * FRIC
         self.vel += self.acc
+
+        self.position.x += self.vel.x
         self.position.y += self.vel.y
         self.rect.y = self.position.y
+        self.rect.x = self.position.x
         # Vérifie s'il entre en collision avec walls
         self.collision_check()  
+        
         self.rect.topleft = self.position
-
+        # Pour debug
+        #print(self.position)
+        #print(self.acc)
+        #print(self.vel)
     def collision_check(self):
         move_by = int(self.vel.x)
         for _ in range(abs(move_by)):
