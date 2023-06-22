@@ -4,7 +4,7 @@ import pyscroll
 
 from npc import NPC, Maire, Tavernier, Forgeron, Explorer
 from new_player import NewPlayer
-from enemy import Enemy, Skeleton1
+from enemy import Enemy, Skeleton1, Skeleton2
 from wall import Wall
 
 from Inventory import Inventory
@@ -84,6 +84,13 @@ class Game:
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
 
+        # FONT pour le game over
+        self.game_over_font = pygame.font.Font(None, 75)
+        self.game_over_message = self.game_over_font.render(
+            "GAME OVER", True, (255, 0, 0)
+        )  # Red color
+        self.show_game_over = False
+
     # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
         self.map = "forest"
@@ -114,13 +121,18 @@ class Game:
         self.lava_blocks = []
         for obj in tmx_data.objects:
             if obj.type == "lava":
-                self.lava_blocks.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+                self.lava_blocks.append(
+                    pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+                )
 
         # Spawn les monstres -------------------------------------------------------------
         for obj in tmx_data.objects:
             if obj.name == "skeleton_spawn":
                 skeleton1 = Skeleton1(obj.x, obj.y, self.wall_group)
                 self.enemies_group.add(skeleton1)
+            elif obj.name == "skeletonshield_spawn":
+                skeleton2 = Skeleton2(obj.x, obj.y, self.wall_group)
+                self.enemies_group.add(skeleton2)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=9)
@@ -211,15 +223,29 @@ class Game:
             self.switch_back()
             self.map = "village"
 
+        if self.show_game_over:
+            self.screen.fill((0, 0, 0))
+            self.screen.blit(
+                self.game_over_message,
+                (
+                    WIDTH / 2 - self.game_over_message.get_width() / 2,
+                    HEIGHT / 2 - self.game_over_message.get_height() / 2,
+                ),
+            )
+            pygame.display.flip()
+            pygame.time.delay(3500)
+            self.show_game_over = False
+
     def player_death(self):
         self.healthbar.health = 0
+        self.show_game_over = True
         self.switch_back()
-        
+
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/village.tmx")
         player_spawn_point = tmx_data.get_object_by_name("player_spawn1")
         self.player.position[0] = player_spawn_point.x
         self.player.position[1] = player_spawn_point.y
-        
+
         self.healthbar.health = self.healthbar.max_health
 
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
@@ -229,7 +255,6 @@ class Game:
         player_damage_cooldown = 1500
 
         # Boucle du jeu
-
         while self.running:
             self.update()
             if self.player.attacking:
@@ -241,7 +266,7 @@ class Game:
 
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
-                
+
                 # Check si le joueur rentre en collision avec les enemies ET si l'enemie attaque
                 if pygame.sprite.collide_mask(self.player, enemy) and enemy.attacking:
                     # Check si la fênetre de réception de dégâts pour le joueur
@@ -249,7 +274,7 @@ class Game:
                         damage_amount = 1  # adjust this as needed
                         self.healthbar.takeDamage(damage_amount)
                         player_last_damage_time = current_time
-            
+
             # NPC
             for npc in self.npc_group:
                 npc.update_NPC()
@@ -261,7 +286,7 @@ class Game:
                 for enemy in self.enemies_group:
                     if pygame.sprite.collide_mask(self.player, enemy):
                         enemy.take_damage(1, self.player.attack_counter)
-                        
+
             # Bloc qui va vérifier si on entre en collision avec la lave, si oui, game over
             for lava_block in self.lava_blocks:
                 if self.player.rect.colliderect(lava_block):

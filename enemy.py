@@ -6,6 +6,8 @@ from monster_animations import (
     skeleton1_walking_R,
     skeleton1_attacking_L,
     skeleton1_attacking_R,
+    skeleton2_walking_R,
+    skeleton2_attacking,
 )
 
 # Le même principe que pour player
@@ -45,7 +47,7 @@ class Enemy(pygame.sprite.Sprite):
 
         # Cooldown pour les attaques sur le joueur
         self.last_attack_time = 0
-        
+
         # Cooldown pour recevoir des dégâts
         self.last_attack_counter = -1
         self.last_damage_time = 0
@@ -264,6 +266,67 @@ class Skeleton1(Enemy):
                 elif self.running and self.direction == "RIGHT":
                     self.image = pygame.transform.flip(
                         self.running_animation_L[self.frame_index], True, False
+                    )
+                self.frame_index += 1
+            self.mask = pygame.mask.from_surface(self.image)
+
+
+class Skeleton2(Enemy):
+    def __init__(self, x, y, walls):
+        super().__init__(x, y, walls, "img/enemies/skeleton2/attack-A1.png")
+        self.running_animation_R = skeleton2_walking_R
+        self.attacking_animation_R = skeleton2_attacking
+        self.frame_index = 0
+        self.attack_frame = 0
+        self.time_since_last_frame = 0
+        self.frame_duration = 100
+
+    def attack_player(self, player):
+        current_time = pygame.time.get_ticks()
+        if (
+            self.close_to_player(player)
+            and current_time - self.last_attack_time > self.ATTACK_COOLDOWN
+            and not self.attacking
+        ):
+            self.attacking = True
+            self.attack_frame = 0
+            print("Give me your dark soul")
+            self.last_attack_time = current_time
+
+    def update_enemy(self, player):
+        super().update_enemy(player)
+        self.update_animation()
+
+    def update_animation(self):
+        time_passed = (
+            pygame.time.get_ticks() - self.time_since_last_frame
+        )  # Pour que les animations soient plus smooth, elles vont charger moins vite
+        if time_passed > self.frame_duration:
+            self.time_since_last_frame = pygame.time.get_ticks()
+
+            if (
+                self.frame_index > 5
+            ):  # Comme nous avons 6 images pour les animations, ceci nous permet de revenir à l'image 0
+                self.frame_index = 0
+                return
+
+            if self.attacking:
+                if self.direction == "RIGHT":
+                    self.image = self.attacking_animation_R[self.attack_frame]
+                elif self.direction == "LEFT":
+                    self.image = pygame.transform.flip(
+                        self.attacking_animation_R[self.attack_frame], True, False
+                    )
+                self.attack_frame += 1
+                if self.attack_frame > 18:
+                    self.attack_frame = 0
+                    self.attacking = False
+            else:
+                if self.running and self.direction == "RIGHT":
+                    self.image = self.running_animation_R[self.frame_index]
+                elif self.running and self.direction == "LEFT":
+                    self.image = pygame.transform.flip(
+                        self.running_animation_R[self.frame_index], True, False
                     )
                 self.frame_index += 1
             self.mask = pygame.mask.from_surface(self.image)
