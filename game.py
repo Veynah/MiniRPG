@@ -27,7 +27,7 @@ class Game:
 
         # Initialize other game components
         self.inventory = Inventory()
-        self.healthbar = HealthBar(x=10, y=10)
+        self.healthbar = HealthBar(self, 10, 10)
 
         # Initialisation des groupes
         self.npc_group = pygame.sprite.Group()
@@ -43,6 +43,7 @@ class Game:
         map_layer.zoom = 2
         self.wall_group = pygame.sprite.Group()
 
+        self.lava_blocks = []
         # Définr une liste qui va stocker les rectangles de collision
         self.walls = []
         for obj in tmx_data.objects:
@@ -108,6 +109,12 @@ class Game:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+
+        # ce sont les blocs de lave qui vont nous tuer
+        self.lava_blocks = []
+        for obj in tmx_data.objects:
+            if obj.type == "lava":
+                self.lava_blocks.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         # Spawn les monstres -------------------------------------------------------------
         for obj in tmx_data.objects:
@@ -204,6 +211,17 @@ class Game:
             self.switch_back()
             self.map = "village"
 
+    def player_death(self):
+        self.healthbar.health = 0
+        self.switch_back()
+        
+        tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/village.tmx")
+        player_spawn_point = tmx_data.get_object_by_name("player_spawn1")
+        self.player.position[0] = player_spawn_point.x
+        self.player.position[1] = player_spawn_point.y
+        
+        self.healthbar.health = self.healthbar.max_health
+
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
         clock = pygame.time.Clock()
@@ -218,17 +236,18 @@ class Game:
                 self.player.attack()
             self.player.move()
             current_time = pygame.time.get_ticks()
+            if self.healthbar.health <= 0:
+                self.player_death()
 
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
                 
-                # Check if the enemy collides with the player and if so, reduce health
+                # Check si le joueur rentre en collision avec les enemies ET si l'enemie attaque
                 if pygame.sprite.collide_mask(self.player, enemy) and enemy.attacking:
-                    # Check if enough time has passed since the last damage
+                    # Check si la fênetre de réception de dégâts pour le joueur
                     if current_time - player_last_damage_time > player_damage_cooldown:
                         damage_amount = 1  # adjust this as needed
                         self.healthbar.takeDamage(damage_amount)
-                        # Update the last damage time
                         player_last_damage_time = current_time
             
             # NPC
@@ -242,6 +261,11 @@ class Game:
                 for enemy in self.enemies_group:
                     if pygame.sprite.collide_mask(self.player, enemy):
                         enemy.take_damage(1, self.player.attack_counter)
+                        
+            # Bloc qui va vérifier si on entre en collision avec la lave, si oui, game over
+            for lava_block in self.lava_blocks:
+                if self.player.rect.colliderect(lava_block):
+                    self.player_death()
 
             # On va dessiner les calques sur le screen
             self.group.draw(self.screen)
