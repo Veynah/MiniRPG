@@ -1,16 +1,17 @@
 import sys
 import pygame
 
-
 vec = pygame.math.Vector2
 
 
 class HealthBar(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, game, x, y):
         super().__init__()
+        self.game = game
         self.load_animations()
 
-        self.health = 5
+        self.max_health = 5
+        self.health = self.max_health
         self.image = self.health_animations[self.health]
         self.pos = vec(x, y)
 
@@ -19,16 +20,16 @@ class HealthBar(pygame.sprite.Sprite):
 
     def takeDamage(self, damage):
         self.health -= damage
-        if self.health == 0:
-            pygame.quit()
-            sys.exit()
+        if self.health <= 0:
+            self.health = 0
+            self.game.player_death()
 
         self.image = self.health_animations[self.health]
 
     def Heal(self, heal):
         self.health += heal
-        if self.health > 5:
-            self.health = 5
+        if self.health > self.max_health:
+            self.health = self.max_health
 
         self.image = self.health_animations[self.health]
 
