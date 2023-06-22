@@ -4,7 +4,7 @@ import pyscroll
 
 from npc import NPC, Maire, Tavernier, Forgeron, Explorer
 from new_player import NewPlayer
-from enemy import Enemy, Skeleton1, Skeleton2
+from enemy import Enemy, Skeleton1, Skeleton2, Skeleton3
 from wall import Wall
 
 from Inventory import Inventory
@@ -133,6 +133,9 @@ class Game:
             elif obj.name == "skeletonshield_spawn":
                 skeleton2 = Skeleton2(obj.x, obj.y, self.wall_group)
                 self.enemies_group.add(skeleton2)
+            elif obj.name == "skeletonlancer_spawn":
+                skeleton3 = Skeleton3(obj.x, obj.y, self.wall_group)
+                self.enemies_group.add(skeleton3)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=9)
