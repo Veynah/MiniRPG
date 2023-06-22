@@ -59,11 +59,25 @@ class Game:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+<<<<<<< Updated upstream
               
        # Spawn les NPCs -------------------------------------------------------------
+=======
+
+        player_position = tmx_data.get_object_by_name("player_spawn1")
+        self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
+
+        # Dessiner le groupe de calque
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
+        self.group.add(self.player)
+
+        # Spawn les NPCs -------------------------------------------------------------
+        coin_img = pygame.image.load("img/item/money_bag.png")
+>>>>>>> Stashed changes
         for obj in tmx_data.objects:
             if obj.name == "NPC_Maire":
-                npc_maire = Maire(obj.x, obj.y, self.wall_group)
+                npc_maire = Maire(obj.x, obj.y, self.wall_group, self.inventory)
+                npc_maire.inventory.add_coins(30000)  # Add this line to fill the Maire's inventory
                 self.npc_group.add(npc_maire)
             elif obj.name == "NPC_Tavernier":
                 npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group)
@@ -179,6 +193,24 @@ class Game:
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
+<<<<<<< Updated upstream
+=======
+        # Spawn les NPCs -------------------------------------------------------------
+        for obj in tmx_data.objects:
+            if obj.name == "NPC_Maire":
+                npc_maire = Maire(obj.x, obj.y, self.wall_group, self.inventory)
+                self.npc_group.add(npc_maire)
+            elif obj.name == "NPC_Tavernier":
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_tavernier)
+            elif obj.name == "NPC_Forgeron":
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_forgeron)
+            elif obj.name == "NPC_Explorer":
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group)
+                self.npc_group.add(npc_explorer)
+
+>>>>>>> Stashed changes
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
@@ -197,6 +229,14 @@ class Game:
 
     # Fonction qui donne les conditions pour switcher de niveau
     def update(self):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_m]:
+            maire = pygame.sprite.spritecollide(self.player, self.npc_group, False)
+            if maire:
+               maire = maire[0]
+               maire.give_coins_to_player(self.player.inventory, 100)
+
         if self.map == "village" and self.player.rect.colliderect(
             self.enter_forest_rect
         ):

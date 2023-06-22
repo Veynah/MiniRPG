@@ -1,5 +1,10 @@
 import pygame
 from pygame.math import Vector2 as vec
+<<<<<<< Updated upstream
+=======
+from HealthBar import HealthBar
+from Inventory import Inventory 
+>>>>>>> Stashed changes
 
 from player_animations import (
     player_run_anim_R,
@@ -25,6 +30,7 @@ WIDTH = 1280
 class NewPlayer(pygame.sprite.Sprite):
     def __init__(self, x, y, walls):
         super().__init__()
+        self.inventory = Inventory() # Store the reference to the inventory
         # Images
         self.image = pygame.image.load("img/player/test.png")
         self.image.convert_alpha()
@@ -184,6 +190,7 @@ class NewPlayer(pygame.sprite.Sprite):
                 elif self.direction == "LEFT":
                     self.image = player_idle_anim_L[self.frame_index]
                 self.frame_index += 1
+    
 
     def attack(self):
         # En fonction du nombre de fois qu'on attaque, il y aura plusieurs animations
