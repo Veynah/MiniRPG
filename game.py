@@ -88,20 +88,19 @@ class Game:
         self.enter_forest_rect = pygame.Rect(
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
-    #gerer la collision avec les npc pour le dialogue
-    def check_npc_collisions(self, dialog_box):
-        for sprite in self.npc_group.sprites():
-            if sprite.feet.colliderect(self.player.rect) and type(sprite) is NPC:
-                dialog_box.execute(sprite.dialog)
-
-
-
         # FONT pour le game over
         self.game_over_font = pygame.font.Font(None, 75)
         self.game_over_message = self.game_over_font.render(
             "GAME OVER", True, (255, 0, 0)
         )  # Red color
         self.show_game_over = False
+    
+    #gerer la collision avec les npc pour le dialogue
+    def check_npc_collisions(self, dialog_box):
+        for sprite in self.npc_group.sprites():
+            if sprite.feet.colliderect(self.player.rect) and type(sprite) is NPC:
+                dialog_box.execute(sprite.dialog)
+
 
     # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
