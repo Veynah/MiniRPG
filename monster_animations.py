@@ -1,5 +1,10 @@
 import pygame
 
+
+'''
+Listes de sprites(images) pour les squelettes.
+'''
+
 skeleton1_walking_L = [
     pygame.image.load("img/enemies/skeleton1/Skeleton1_Walk_L/Skeleton1_Walk_L0.png"),
     pygame.image.load("img/enemies/skeleton1/Skeleton1_Walk_L/Skeleton1_Walk_L1.png"),
