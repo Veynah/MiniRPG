@@ -23,9 +23,11 @@ class DialogBox:
             self.dialogue_index = 0
             self.dialogues = dialogues
 
-    def execute_options(self, options):
-        self.options = options
-        self.display_options = True
+    def terminate(self):
+        self.reading = False
+        self.dialogue_index = 0
+        self.letter_index = 0
+        self.dialogues = []
 
     def render(self, screen):
         if self.reading and self.dialogues and self.dialogue_index < len(self.dialogues):
