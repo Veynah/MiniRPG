@@ -129,7 +129,7 @@ class Game:
             if sprite.feet.colliderect(self.player.rect) and type(sprite) is NPC:
                 dialog_box.execute(sprite.dialog)
     def Newplayer_nearby(self):
-        interaction_distance = 50 #la distance maximal à laquelle le joeuru peut agir
+        interaction_distance = 50 #la distance maximal à laquelle le joeur peut agir
 
         for npc in self.npc_group:
             #calcule la distance
@@ -228,6 +228,22 @@ class Game:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+
+        # Spawn les NPCs -------------------------------------------------------------
+        for obj in tmx_data.objects:
+            if obj.name == "NPC_Maire":
+                if obj.name == "NPC_Maire":
+                    npc_maire = Maire(obj.x, obj.y, self.wall_group, self.npc_dialogues["Maire"])
+                    self.npc_group.add(npc_maire)
+            elif obj.name == "NPC_Tavernier":
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group,self.npc_dialogues["Tavernier"])
+                self.npc_group.add(npc_tavernier)
+            elif obj.name == "NPC_Forgeron":
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group,self.npc_dialogues["Forgeron"])
+                self.npc_group.add(npc_forgeron)
+            elif obj.name == "NPC_Explorer":
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group, self.npc_dialogues["Explorer"])
+                self.npc_group.add(npc_explorer)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
