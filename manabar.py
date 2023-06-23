@@ -81,7 +81,7 @@ class ManaBar(pygame.sprite.Sprite):
         """
               Charge les images nécessaires pour l'animation de la barre de mana.
         """
-            self.mana_animations = [
+        self.mana_animations = [
             pygame.image.load("img/item/mana0.png").convert_alpha(),
             pygame.image.load("img/item/mana1.png").convert_alpha(),
             pygame.image.load("img/item/mana2.png").convert_alpha(),
