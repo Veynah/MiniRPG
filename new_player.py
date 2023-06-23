@@ -2,7 +2,6 @@ import pygame
 from pygame.math import Vector2 as vec
 from HealthBar import HealthBar
 from Inventory import Inventory 
-
 from player_animations import (
     player_run_anim_R,
     player_run_anim_L,
@@ -26,17 +25,17 @@ WIDTH = 1280
 
 
 class NewPlayer(pygame.sprite.Sprite):
-    def __init__(self, x, y, walls):
+    def __init__(self, x, y, wall_group):
         super().__init__()
-        self.inventory = Inventory() # Store the reference to the inventory
         # Images
+
         self.image = pygame.image.load("img/player/test.png")
         self.image.convert_alpha()
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         # Physique et collision et mouvement
         self.vx = 0
-        self.walls = walls
+        self.walls = wall_group
         self.position = vec(x, y)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
@@ -45,6 +44,7 @@ class NewPlayer(pygame.sprite.Sprite):
         self.running = False
         self.attacking = False
 
+         
         # Stats
         self.health = 5
 
@@ -54,6 +54,18 @@ class NewPlayer(pygame.sprite.Sprite):
         self.attack_counter = 0
         self.time_since_last_frame = 0
         self.frame_duration = 60
+
+        self.coins = 20
+        self.manaPotions = 50
+        self.shield = 30
+        self.weapon = 1
+        self.xp = 2
+        self.moneyBag = None
+        
+        self.inventory = Inventory()
+        self.inventory.update(self.coins, self.manaPotions, self.shield, self.weapon, self.xp, self.moneyBag)
+        self.healthBar = HealthBar(self, 10, 10)
+
         
         
 
@@ -119,7 +131,6 @@ class NewPlayer(pygame.sprite.Sprite):
         # print(f"Acceleration: {self.acc}, Velocity: {self.vel}, Position: {self.position}")
 
         self.rect.topleft = self.position
-
     # Fonction qui faire un check de la gravité pour voir si on peut sauter ou pas
     # Et gère les collisions verticales
     def gravity_check(self):
@@ -195,7 +206,10 @@ class NewPlayer(pygame.sprite.Sprite):
                 elif self.direction == "LEFT":
                     self.image = player_idle_anim_L[self.frame_index]
                 self.frame_index += 1
-    
+            
+        self.inventory.update(self.coins, self.manaPotions, self.shield, self.weapon, self.xp, self.moneyBag)  # Update inventory values
+        self.healthBar.update(self.health)
+
 
     def attack(self):
         # En fonction du nombre de fois qu'on attaque, il y aura plusieurs animations

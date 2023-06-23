@@ -1,6 +1,5 @@
 import pygame
 from Inventory import Inventory
-from InventorySlot import InventorySlot 
 from pygame.math import Vector2 as vec
 ACC = 0.05
 FRIC = -0.1
@@ -9,27 +8,38 @@ FRIC = -0.1
 #Classe NPC dont vont etre les different npc
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, x, y, walls, image_path):
+    def __init__(self, x, y, walls, image_path,dialog):
         super().__init__()
-        self.image = pygame.image.load(image_path)
+        self.images = [pygame.image.load(path) for path in image_path]
+        self.image_index = 0
+        self.images_delay=10 #pour ralentir
+        self.counter=0
+        self.image = self.images[self.image_index]
         self.rect = self.image.get_rect()
 
+        self.dialog = dialog
+
         #physique et collision
-      
         self.vx = 0
         self.walls = walls
         self.position = vec(x, y)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
         self.direction = "LEFT"
-        
+
         #animation des npc
-        self.frame_index = 0
-        self.time_since_last_frame = 0
-        self.frame_duration = 60
+    def update(self):
+        self.counter += 1
+        if self.counter >= self.images_delay:
+            self.counter = 0
+            self.image_index = (self.image_index + 1) % len(self.images)
+            self.image = self.images[self.image_index]
+        
+        self.update_NPC() 
         
     def update_NPC(self):
         self.acc = vec(0, 0.5)
+
         # Donne sa position
         self.acc.x += self.vel.x * FRIC
         self.vel += self.acc
@@ -40,8 +50,8 @@ class NPC(pygame.sprite.Sprite):
         self.rect.x = self.position.x
         # Vérifie s'il entre en collision avec walls
         self.collision_check()  
-        
-        self.rect.topleft = self.position
+
+
         # Pour debug
         #print(self.position)
         #print(self.acc)
@@ -89,67 +99,64 @@ class NPC(pygame.sprite.Sprite):
                     self.vel.y = 0
 
 # Sous-classe pour le NPC Maire
+# Sous-classe pour le NPC Maire
 class Maire(NPC):
-    def __init__(self, x, y,walls, inventory):
-        super().__init__(x, y, walls, "img/NPCs/NPC_Maire1.png")
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.walls = walls
-        self.inventory = inventory
-        coin_slot = next(
-            (slot for slot in inventory.slots if slot.image == pygame.image.load("img/item/money_bag.png")),
-            None
-        )
-        if coin_slot:
-            coin_slot.count = 30000  # Initialize with 30000 coins
-
+    def __init__(self, x, y, walls, dialog):
+        image_paths = [
+            "img/NPCs/NPC_Maire1.png",
+            "img/NPCs/NPC_Maire2.png",
+            "img/NPCs/NPC_Maire3.png",
+            "img/NPCs/NPC_Maire4.png"
+        ]
+        super().__init__(x, y, walls, image_paths, dialog)
+        self.feet = self.rect.inflate(-10, -10)  # Définition de l'attribut feet
+        
+        self.dialog = dialog
+        
+        
+        self.moneyBag = 3000
+        self.inventory = Inventory()
+        self.inventory.update(0, 0, 0, 0, 0, self.moneyBag)
+        
     def update_NPC(self):
-        # NPC logic goes here
-        pass
+        super().update_NPC()
+        self.moneyBag = self.inventory.slots[5].count  # Update the moneyBag attribute
+        
 
-    def add_coins(self, coins):
-        coin_slot = next(
-            (slot for slot in self.slots if slot.image == pygame.image.load("img/item/money_bag.png", (770, 15))),
-             None
-        )
-        if coin_slot:
-            coin_slot.count += coins
-
-
-    def give_coins_to_player(self, player_inventory, amount):
-        coin_slot = next(
-            (slot for slot in self.inventory.slots if slot.image == pygame.image.load("img/item/coinIcon.png")),
-            None
-        )
-        if coin_slot:
-            if coin_slot.count >= amount:
-                coin_slot.count -= amount
-                player_inventory.add_coins(amount)
-            else:
-                print("Maire does not have enough coins in the inventory.")
-        else:
-            print("Maire does not have coins in the inventory.")
-
-
-# Sous-classe pour le NPC Forgeron
+    def update(self):
+        self.update_NPC()  # Call update_NPC method
+        super().update() 
+        
+# Sous-classe pour les NPC
 class Forgeron(NPC):
-    def __init__(self, x, y,walls):
-
-        super().__init__(x, y, walls,"img/NPCs/NPC_forgeron1.png")
-
-
+    def __init__(self, x, y, walls, dialog):
+        image_paths = [
+            "img/NPCs/NPC_forgeron1.png",
+            "img/NPCs/NPC_forgeron2.png",
+            "img/NPCs/NPC_forgeron3.png",
+            "img/NPCs/NPC_forgeron4.png"
+        ]
+        super().__init__(x, y, walls, image_paths, dialog)
+        self.feet = self.rect.inflate(-10, -10)  # Définition de l'attribut feet
 # Sous-classe pour le NPC Tavernier
 class Tavernier(NPC):
-    def __init__(self, x, y, walls):
-     
-        super().__init__(x, y, walls,"img/NPCs/NPC_Tavernier1.png")
-
-
+    def __init__(self, x, y, walls, dialog):
+        image_paths = [
+            "img/NPCs/NPC_Tavernier1.png",
+            "img/NPCs/NPC_Tavernier2.png",
+            "img/NPCs/NPC_Tavernier3.png",
+            "img/NPCs/NPC_Tavernier4.png"
+        ]
+        super().__init__(x, y, walls, image_paths, dialog)
+        self.feet = self.rect.inflate(-10, -10)  # Définition de l'attribut feet
 # Sous-classe pour le NPC Explorer
 class Explorer(NPC):
-    def __init__(self, x, y,walls):
-       
-        super().__init__(x, y, walls, "img/NPCs/NPC_Explorer1.png")
-
-
+    def __init__(self, x, y, walls, dialog):
+        image_paths = [
+            "img/NPCs/NPC_Explorer1.png",
+            "img/NPCs/NPC_Explorer2.png",
+            "img/NPCs/NPC_Explorer3.png",
+            "img/NPCs/NPC_Explorer4.png"
+        ]
+        super().__init__(x, y, walls, image_paths, dialog)
+        self.feet = self.rect.inflate(-10, -10)  # Définition de l'attribut feet

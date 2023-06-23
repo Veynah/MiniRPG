@@ -16,10 +16,10 @@
                 6
             ],
             "scale": 2,
-            "selectedLayer": 9,
+            "selectedLayer": 10,
             "viewCenter": {
-                "x": 3447.5,
-                "y": 262.5
+                "x": 4989,
+                "y": 207
             }
         },
         "data/tmx/forest.tmx#background": {
@@ -32,8 +32,8 @@
             "scale": 2,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 1920,
-                "y": 208
+                "x": 1916.5,
+                "y": 204.5
             }
         },
         "data/tsx/Blood Mansion Background.tsx": {
