@@ -3,7 +3,7 @@ import pytmx
 import pyscroll
 
 from dialog import DialogBox
-from npc import NPC, Maire, Tavernier, Forgeron, Explorer
+from npc import Maire, Tavernier, Forgeron, Explorer
 
 from new_player import NewPlayer
 from enemy import Enemy, Skeleton1
@@ -16,22 +16,30 @@ from HealthBar import HealthBar
 HEIGHT = 720
 WIDTH = 1280
 
-# Classe du jeu avec ses variables
+
 class Game:
     def __init__(self):
         self.running = True
         self.map = "village"
 
-        #intégration de bulle dialogue
+        # Intégration de la boîte de dialogue
+        self.npc_dialogues = {
+            "Maire": ["Bonjour Chevalier Anakin, que la Force soit avec toi !","Une sombre nouvelle m'est parvenue. "
+                                                                               "La princesse Leia a été enlevée par l'impitoyable Seigneur Sith.",],
+            "Tavernier": ["Besoin d'une bonne bière?"],
+            "Forgeron": ["Bienvenue dans ma forge, Oh Chevalier Anakin, que puis-je faire pour vous?"],
+            "Explorer": ["Oh vaillant Chevalier je suis Chris"]
+        }
         self.dialog_box = DialogBox()
-        # Creer la fenêtre du jeu
+
+        # Créer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
 
         # Initialize other game components
         self.inventory = Inventory()
         self.healthbar = HealthBar(x=10, y=10)
-        
+
         # Initialisation des groupes
         self.npc_group = pygame.sprite.Group()
         self.enemies_group = pygame.sprite.Group()
@@ -53,7 +61,7 @@ class Game:
                 wall = Wall(obj.x, obj.y, obj.width, obj.height)
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
-                
+
         player_position = tmx_data.get_object_by_name("player_spawn1")
         self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
 
@@ -64,43 +72,51 @@ class Game:
         # Spawn les NPCs -------------------------------------------------------------
         for obj in tmx_data.objects:
             if obj.name == "NPC_Maire":
-                npc_maire = Maire(obj.x, obj.y, self.wall_group,
-                                  "Bonjour Chevalier Anakin, je suis le maire du village.")
-                self.npc_group.add(npc_maire)
+                if obj.name == "NPC_Maire":
+                    npc_maire = Maire(obj.x, obj.y, self.wall_group, self.npc_dialogues["Maire"])
+                    self.npc_group.add(npc_maire)
             elif obj.name == "NPC_Tavernier":
-                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group, "Besoin d'une bonne bière?")
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group,self.npc_dialogues["Tavernier"])
                 self.npc_group.add(npc_tavernier)
             elif obj.name == "NPC_Forgeron":
-                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group,
-                                        "Bienvenue dans ma forge, Oh Chevalier Anakin, que puis-je faire pour vous?")
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group,self.npc_dialogues["Forgeron"])
                 self.npc_group.add(npc_forgeron)
             elif obj.name == "NPC_Explorer":
-                npc_explorer = Explorer(obj.x, obj.y, self.wall_group, "Oh vaillant Chevalier je suis Chris")
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group, self.npc_dialogues["Explorer"])
                 self.npc_group.add(npc_explorer)
-        
+
         # Ajouter les NPCs au groupe Pyscroll
         for npc in self.npc_group:
-            self.group.add(npc)    
-        
-
+            self.group.add(npc)
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("enter_forest")
         self.enter_forest_rect = pygame.Rect(
             enter_forest.x, enter_forest.y, enter_forest.width, enter_forest.height
         )
+    def Newplayer_nearby(self):
+        interaction_distance = 50 #la distance maximal à laquelle le joeuru peut agir
 
+        for npc in self.npc_group:
+            #calcule la distance
+            distance=abs(self.player.rect.x - npc.rect.x) + abs(self.player.rect.y - npc.rect.y)
+
+            #si le npc est a - de interaction
+            if distance<= interaction_distance:
+                return npc #retourner le npc
+
+        return None
 
     # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
         self.map = "forest"
         # Vider le groupe de PNJ
         self.npc_group.empty()
-        
+
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/forest.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
-        
+
         # map_layer va contenir tous les calques
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size()
@@ -147,13 +163,13 @@ class Game:
         # Charger la carte (tmx)
         tmx_data = pytmx.util_pygame.load_pygame("tiled/data/tmx/village.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
-        
+
         # map_layer va contenir tous les calques
         map_layer = pyscroll.orthographic.BufferedRenderer(
             map_data, self.screen.get_size()
         )
         map_layer.zoom = 2
-      
+
         self.wall_group = pygame.sprite.Group()
 
         # Définr une liste qui va stocker les rectangles de collision
@@ -164,15 +180,13 @@ class Game:
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
-
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
         # Ajouter les NPCs au groupe Pyscroll
         for npc in self.npc_group:
-            self.group.add(npc)    
+            self.group.add(npc)
         self.enemies_group.empty()
-        
 
         # On va définir le rectangle de collision pour entrer dans la forêt
         enter_forest = tmx_data.get_object_by_name("enter_forest")
@@ -204,7 +218,6 @@ class Game:
         clock = pygame.time.Clock()
 
         # Boucle du jeu
-
         while self.running:
             self.update()
             if self.player.attacking:
@@ -212,7 +225,7 @@ class Game:
             self.player.move()
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
-            #NPC
+            # NPC
             for npc in self.npc_group:
                 npc.update_NPC()
 
@@ -224,7 +237,7 @@ class Game:
             self.inventory.render(self.screen)
             self.healthbar.render(self.screen)
 
-            #dessiner la box de dialog
+            # Dessiner la boîte de dialogue
             self.dialog_box.render(self.screen)
 
             pygame.display.flip()
@@ -232,12 +245,13 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-                elif event.type == pygame.KEYDOWN:
+
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_e:
-                       if self.dialog_box.reading:
-                           self.dialog_box.next_text()
-                       else:
-                           self.dialog_box.execute([self.texts])
+                       npc = self.Newplayer_nearby()
+                       if npc is not None:
+                           self.dialog_box.execute(npc.dialog)
+
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
                         self.player.jump()
                     if (
