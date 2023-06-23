@@ -397,7 +397,7 @@ class Game:
 
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
-
+                
                 # Check si le joueur rentre en collision avec les enemies ET si l'enemie attaque
                 if pygame.sprite.collide_mask(self.player, enemy) and enemy.attacking:
                     # Check si la fênetre de réception de dégâts pour le joueur
