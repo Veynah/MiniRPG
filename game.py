@@ -17,12 +17,18 @@ from manabar import ManaBar
 HEIGHT = 720
 WIDTH = 1280
 
+pygame.init()
+pygame.mixer.init()
 
 # Classe du jeu avec ses variables
 class Game:
     def __init__(self):
         self.running = True
         self.map = "village"
+
+        # Load and play the music
+        pygame.mixer.music.load("music/The_Witcher3_OST.mp3")
+        pygame.mixer.music.play(-1)  # -1 for infinite looping
 
         # Intégration de la boîte de dialogue
         self.npc_dialogues = npc_dialogues
@@ -376,6 +382,11 @@ class Game:
                                 self.player.attack_counter += 1
                     if event.key == pygame.K_f:
                         self.player.fireball(3, 4)
+                        # Handle events
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                 running = False
 
             clock.tick(60)
+        pygame.mixer.music.stop()
         pygame.quit()

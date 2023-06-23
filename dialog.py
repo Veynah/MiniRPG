@@ -5,6 +5,26 @@ class DialogBox:
     Y_POSITION = 500
 
     def __init__(self):
+        """
+        Représente une boîte de dialogue dans le jeu.
+
+        Attributs :
+            box (pygame.Surface) : L'image de la boîte de dialogue.
+            dialogues (list) : Liste des dialogues à afficher.
+            dialogue_index (int) : L'index du dialogue actuel.
+            letter_index (int) : L'index de la lettre en cours d'affichage.
+            font (pygame.font.Font) : La police d'écriture pour les dialogues.
+            reading (bool) : Indique si le joueur est en train de lire le dialogue.
+            display_options (bool) : Indique si des options sont affichées.
+            dialogue_colors (list) : Liste des couleurs des dialogues.
+            used_dialogues (set) : Ensemble des dialogues déjà utilisés.
+
+        Méthodes :
+            execute(self, dialogues=[]) : Exécute les dialogues donnés.
+            terminate(self) : Termine le dialogue en cours.
+            render(self, screen) : Affiche le dialogue à l'écran.
+            next_dialogue(self) : Affiche le prochain dialogue.
+        """
         self.box = pygame.image.load('dialog/dialog_box.png')
         self.box = pygame.transform.scale(self.box, (750, 125))
         self.dialogues = []
@@ -17,6 +37,12 @@ class DialogBox:
         self.used_dialogues = set()
 
     def execute(self, dialogues=[]):
+        """
+        Exécute les dialogues donnés.
+
+        Args:
+            dialogues (list) : Liste des dialogues à afficher.
+        """
         if self.reading:
             self.next_dialogue()
         else:
@@ -25,12 +51,21 @@ class DialogBox:
             self.dialogues = [dialogue for dialogue in dialogues if dialogue not in self.used_dialogues]
 
     def terminate(self):
+        """
+        Termine le dialogue en cours.
+        """
         self.reading = False
         self.dialogue_index = 0
         self.letter_index = 0
         self.dialogues = []
 
     def render(self, screen):
+        """
+        Affiche le dialogue à l'écran.
+
+        Args:
+            screen (pygame.Surface) : La surface sur laquelle afficher le dialogue.
+        """
         if self.reading and self.dialogues and self.dialogue_index < len(self.dialogues):
             self.letter_index += 1
 
@@ -56,6 +91,9 @@ class DialogBox:
                 y_position += self.font.get_height() + 5
 
     def next_dialogue(self):
+        """
+        Affiche le prochain dialogue.
+        """
         if self.dialogue_index < len(self.dialogues):
             self.used_dialogues.add(self.dialogues[self.dialogue_index])
         self.dialogue_index += 1
