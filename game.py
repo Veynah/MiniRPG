@@ -33,6 +33,7 @@ class Game:
         self.inventory = Inventory()
         self.healthbar = HealthBar(self, 10, 10)
         self.manabar = ManaBar(self, 10, 31)
+        self.fireballs = pygame.sprite.Group()
 
         # Initialisation des groupes
         self.npc_group = pygame.sprite.Group()
@@ -58,11 +59,12 @@ class Game:
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         player_position = tmx_data.get_object_by_name("player_spawn1")
-        self.player = NewPlayer(player_position.x, player_position.y, self.wall_group, self)
+        self.player = NewPlayer(self, player_position.x, player_position.y, self.wall_group)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
+        self.group.add(self.fireballs)
 
         # Spawn les NPCs -------------------------------------------------------------
         for obj in tmx_data.objects:
@@ -153,6 +155,7 @@ class Game:
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=9)
         self.group.add(self.player)
+        self.group.add(self.fireballs)
         for enemy in self.enemies_group:
             self.group.add(enemy)
 
@@ -258,10 +261,14 @@ class Game:
         # Boucle du jeu
         while self.running:
             self.update()
+            for fireball in self.fireballs:
+                fireball.update()
+            
             if self.player.attacking:
                 self.player.attack()
             self.player.move()
             current_time = pygame.time.get_ticks()
+            
             if self.healthbar.health <= 0:
                 self.player_death()
 
@@ -287,6 +294,13 @@ class Game:
                 for enemy in self.enemies_group:
                     if pygame.sprite.collide_mask(self.player, enemy):
                         enemy.take_damage(1, self.player.attack_counter)
+                        
+            if self.player.magic_attacking:
+                for fireball in self.fireballs:
+                    for enemy in self.enemies_group:
+                        if pygame.sprite.collide_mask(fireball, enemy):
+                            enemy.take_magic_damage(fireball.damage)
+                            fireball.kill()
 
             # Bloc qui va vérifier si on entre en collision avec la lave, si oui, game over
             for lava_block in self.lava_blocks:
@@ -329,6 +343,8 @@ class Game:
                         else:
                             if self.player.attack_counter < 4:
                                 self.player.attack_counter += 1
+                    if event.key == pygame.K_f:
+                        self.player.fireball(3, 4)
 
             clock.tick(60)
         pygame.quit()

@@ -1,5 +1,6 @@
 import pygame
 from pygame.math import Vector2 as vec
+from fireball import FireBall
 
 from player_animations import (
     player_run_anim_R,
@@ -25,7 +26,7 @@ WIDTH = 1280
 
 
 class NewPlayer(pygame.sprite.Sprite):
-    def __init__(self, x, y, walls, game):
+    def __init__(self, game, x, y, walls):
         super().__init__()
         # Images
         self.image = pygame.image.load("img/player/test.png")
@@ -44,7 +45,9 @@ class NewPlayer(pygame.sprite.Sprite):
         self.running = False
         self.attacking = False
         self.healing = False
+        self.magic_attacking = False
         self.player_mana = self.game.manabar.mana # On accède à l'attribut mana de manabar via game
+        self.fireballs = pygame.sprite.Group()
 
         # Animation
         self.attack_frame = 0
@@ -55,9 +58,10 @@ class NewPlayer(pygame.sprite.Sprite):
         # Je rajoute ceci pour pénaliser le joueur qui décide de se heal en combat
         self.healing_frame_duration = 120
         self.heal_frame_index = 0 # Pour séparer le frame index des autres animations de celle du heal, sinon c'est partagé
+        self.fire_rate = 5000
+        self.last_fire = pygame.time.get_ticks()
+        self.state = 'idle'
         
-        
-
     def move(self):
         # Constante qui va accélérer vers le bas ce qui va simuler la gravité
         self.acc = vec(0, 0.5)
@@ -118,7 +122,7 @@ class NewPlayer(pygame.sprite.Sprite):
             self.gravity_check()
 
             # Outil de debug
-            # print(f"Acceleration: {self.acc}, Velocity: {self.vel}, Position: {self.position}")
+            #print(f"Acceleration: {self.acc}, Velocity: {self.vel}, Position: {self.position}")
 
             self.rect.topleft = self.position
 
@@ -177,6 +181,7 @@ class NewPlayer(pygame.sprite.Sprite):
             if time_passed > self.healing_frame_duration:
                 self.time_since_last_frame = pygame.time.get_ticks()
                 if self.player_mana > 1 and not self.jumping:
+                    self.state = 'healing'
                     if self.direction == "RIGHT":
                         self.image = player_heal[self.heal_frame_index]
                     elif self.direction == "LEFT":
@@ -185,10 +190,12 @@ class NewPlayer(pygame.sprite.Sprite):
                     if self.heal_frame_index >= len(player_heal):
                         self.healing = False
                         self.heal_frame_index = 0
+                        self.state ='idle'
 
                 else: # Si le joueur n'a pas au moins 1 de mana, pas de heal et d'animation de heal
                     self.healing = False
                     self.heal_frame_index = 0
+                    self.state = 'idle'
                 return
         elif time_passed > self.frame_duration:
             self.time_since_last_frame = pygame.time.get_ticks()
@@ -215,8 +222,6 @@ class NewPlayer(pygame.sprite.Sprite):
                     self.image = player_idle_anim_L[self.frame_index]
                 self.frame_index += 1
 
-
-
     def attack(self):
         # En fonction du nombre de fois qu'on attaque, il y aura plusieurs animations
         attack_to_end_frame = {1: 6, 2: 9, 3: 13, 4: 19}
@@ -240,3 +245,19 @@ class NewPlayer(pygame.sprite.Sprite):
     # Méthode qui va appeler la fonction Heal de healthbar pour redonner 1 hp pour 1 mana
     def heal(self):
         self.game.healthbar.Heal(1, 1)
+        self.state = 'healing'
+        
+    def fireball(self, manacost, damage):
+        now = pygame.time.get_ticks()
+        if now - self.last_fire > self.fire_rate:
+            if self.game.manabar.manaCost(manacost)and self.state != 'healing':
+                self.state = 'casting'
+                self.player_mana -= manacost
+                fireball = FireBall(self.game, self.position.x, self.position.y - 30, self.direction, damage)
+                fireball.damage = damage
+                self.game.fireballs.add(fireball)
+                self.magic_attacking = True
+                self.state = 'idle'
+            else:
+                print("Not enough mana")
+                self.state = 'idle'

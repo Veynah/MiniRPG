@@ -203,6 +203,15 @@ class Enemy(pygame.sprite.Sprite):
                 self.last_attack_counter = attack_counter
                 if self.health <= 0:
                     self.die()
+                    
+    def take_magic_damage(self, damage_amount):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_damage_time > self.damage_cooldown:
+            self.health -= damage_amount
+            self.last_damage_time = current_time
+            print("HP: " + str(self.health))
+            if self.health <= 0:
+                self.die()
 
     def die(self):
         self.kill()
