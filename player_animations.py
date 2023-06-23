@@ -1,5 +1,20 @@
 import pygame
 
+"""
+Ce module charge les animations d'un personnage de jeu.
+
+Variables:
+    player_run_anim_R: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en train de courir vers la droite.
+    player_run_anim_L: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en train de courir vers la gauche.
+    player_idle_anim_R: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en repos (idle) orienté vers la droite.
+    player_idle_anim_L: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en repos (idle) orienté vers la gauche.
+    player_jump_anim_R: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en train de sauter vers la droite.
+    player_jump_anim_L: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en train de sauter vers la gauche.
+    player_attack_anim_R: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en train d'attaquer vers la droite.
+    player_attack_anim_L: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en train d'attaquer vers la gauche.
+    player_heal: List[pygame.Surface] -- Liste d'images pour l'animation du personnage en train de récupérer de la vie (heal).
+"""
+
 # Dictionnaire avec les animations
 player_run_anim_R = [
     pygame.image.load("img/player/Player_Run_R/Player_Run_R0.png"),

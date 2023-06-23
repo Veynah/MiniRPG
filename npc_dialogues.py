@@ -1,6 +1,6 @@
 npc_dialogues = {
             "Maire": ["MAIRE : Bonjour Chevalier Anakin ,\nque la Force soit avec toi !","ANAKIN : La Force m'accompagne !","MAIRE : Une sombre nouvelle m'est parvenue,\n La princesse Leia a été enlevée par l'impitoyable \n Seigneur Sith.","ANAKIN : Comment!!","MAIRE : Seul un chevalier aussi courageux que vous\npeut la sauver.","ANAKIN : Je ferai tout ce qui est en mon pouvoir\npour sauver la princesse Leia des griffes \ndu Seigneur Sith."
-                      ,"MAIRE : Si vous acceptez cette quête,le village vous\nrécompensera avec de l'or pour acheter des armes.","ANAKIN :Je suis prêt à relever cette quête périlleuse.\nLa princesse Leia peut compter sur moi, et \nje ne laisserai pas l'obscurité triompher.","MAIRE : Mais si vous refusez, vous pouvez toujours\naller prendre une bonne bière fraîche\nchez le tavernier du coin.","ANAKIN : La bière fraîche du tavernier peut attendre. \nMon devoir envers la galaxie et mon sens \ndu devoir me guident vers cette quête cruciale"],
+                      ,"MAIRE : Si vous acceptez cette quête,le village vous\nrécompensera avec de l'or pour acheter des armes.","ANAKIN :Je suis prêt à relever cette quête périlleuse.\nLa princesse Leia peut compter sur moi, et \nje ne laisserai pas l'obscurité triompher.","MAIRE : Mais si vous refusez, vous pouvez toujours\naller prendre une bonne bière fraîche\nchez le tavernier du coin.","ANAKIN : La bière fraîche du tavernier peut attendre. \nMon devoir envers la galaxie et mon sens \ndu devoir me guident vers cette quête cruciale","MAIRE: Bonne chance."],
             "Tavernier": ["Tavernier: Salutations, chevalier Anakin !\nUne bonne bière fraîche pour étancher votre soif ?",
                           "Anakin: Volontiers, tavernier.",
                           "Tavernier: Ah, quand j'étais jeune, j'ai vécu des\naventures aussi folles que les vôtres, Jedi.\nDes clients impatients, des verres renversés, \nc'était du vrai combat !",
@@ -11,7 +11,7 @@ npc_dialogues = {
                           "Tavernier: À la vôtre, chevalier Anakin ! Si vous avez\nbesoin de conseils pour vaincre les ténèbres\nou la soif,revenez me voir.",
                           "Anakin: Je n'y manquerai pas.\nQue la Force soit avec vous, tavernier !",
                           "Tavernier: Et que la bière fraîche coule à flots,\ncher chevalier !"],
-            "Forgeron": ["FORGERON : Bienvenue dans ma forge, Oh Chevalier \nAnakin, que puis-je faire pour vous?","ANAKIN : As-tu reçu les toutes dernières\narmes sur le marché galactique?","FORGERON : Bien sûr, j'ai justement été livré ce matin,\ntout droit sorti de l'atelier galactique !"],
+            "Forgeron": ["FORGERON: Bienvenue dans ma forge, Oh Chevalier \nAnakin, que puis-je faire pour vous?","ANAKIN : As-tu reçu les toutes dernières\narmes sur le marché galactique?","FORGERON : Bien sûr, j'ai justement été livré ce matin,\ntout droit sorti de l'atelier galactique !","FORGERON: Revenez me voir avec\nde l'argent "],
             "Explorer": ["Chris: Anakin, devine quoi ? Des monstres m'ont \nattaqué et m'ont chassé de la forêt !"
                             ,"Anakin: Vraiment ? Ils ont pris tes affaires aussi ?"
                             ,"Chris: Ouais, tous ! Mes trucs, ma tente,\nmême mes figurines Ewok \nj'ai pu prendre que mon sac a dos !"
