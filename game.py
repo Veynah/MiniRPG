@@ -15,10 +15,16 @@ from HealthBar import HealthBar
 HEIGHT = 720
 WIDTH = 1280
 
+pygame.init()
+pygame.mixer.init()
+
 
 # Classe du jeu avec ses variables
 class Game:
     def __init__(self):
+
+        pygame.mixer.music.load("music/The_Witcher_3 _Wild_Hunt.mp3")
+        pygame.mixer.music.play(-1)  # -1 for infinite looping
 
         self.running = True
         self.map = "village"
@@ -336,6 +342,10 @@ class Game:
                         else:
                            if self.player.attack_counter < 4:
                                self.player.attack_counter += 1
+                 
+                for event in pygame.event.get():
+                     if event.type == pygame.QUIT:
+                        running = False
 
             clock.tick(60)
         pygame.quit()
