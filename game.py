@@ -2,14 +2,14 @@ import pygame
 import pytmx
 import pyscroll
 
-from npc import NPC, Maire, Tavernier, Forgeron, Explorer
+from npc import Maire, Tavernier, Forgeron, Explorer
 from new_player import NewPlayer
-from enemy import Enemy, Skeleton1, Skeleton2, Skeleton3
+from enemy import Skeleton1, Skeleton2, Skeleton3
 from wall import Wall
 
 from Inventory import Inventory
 from HealthBar import HealthBar
-
+from manabar import ManaBar
 # Les variables de la taille de la fenêtre du jeu
 HEIGHT = 720
 WIDTH = 1280
@@ -28,6 +28,7 @@ class Game:
         # Initialize other game components
         self.inventory = Inventory()
         self.healthbar = HealthBar(self, 10, 10)
+        self.manabar = ManaBar(self, 10, 31)
 
         # Initialisation des groupes
         self.npc_group = pygame.sprite.Group()
@@ -53,7 +54,7 @@ class Game:
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         player_position = tmx_data.get_object_by_name("player_spawn1")
-        self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
+        self.player = NewPlayer(player_position.x, player_position.y, self.wall_group, self)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
@@ -241,6 +242,7 @@ class Game:
 
     def player_death(self):
         self.healthbar.health = 0
+        self.healthbar.health = self.healthbar.max_health
         self.show_game_over = True
         self.switch_back()
 
@@ -248,8 +250,6 @@ class Game:
         player_spawn_point = tmx_data.get_object_by_name("player_spawn1")
         self.player.position[0] = player_spawn_point.x
         self.player.position[1] = player_spawn_point.y
-
-        self.healthbar.health = self.healthbar.max_health
 
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
@@ -299,32 +299,25 @@ class Game:
             self.group.draw(self.screen)
             self.inventory.render(self.screen)
             self.healthbar.render(self.screen)
+            self.manabar.render(self.screen)
 
             pygame.display.flip()
 
             for event in pygame.event.get():
+                self.manabar.update(event)
                 if event.type == pygame.QUIT:
                     self.running = False
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
-                        self.player.jump()
+                        self.player.jump()                 
                     if (
                         event.key == pygame.K_i
                     ):  # Toggle inventory visibility on "i" key press
                         self.inventory.toggleVisibility()
-                    if (
-                        event.key == pygame.K_SPACE
-                    ):  # Assuming space key causes damage to the player
-                        damage_amount = (
-                            1  # Adjust the damage amount as per your requirements
-                        )
-                        self.healthbar.takeDamage(damage_amount)
-                    if event.key == pygame.K_h:  # Assuming "h" key triggers healing
-                        healing_amount = (
-                            1  # Adjust the healing amount as per your requirements
-                        )
-                        self.healthbar.Heal(healing_amount)
+                    if event.key == pygame.K_h or event.key == pygame.K_SPACE and not self.player.healing:
+                        self.player.heal()
+                        self.player.healing = True
                     if event.key == pygame.K_a or event.key == pygame.K_RETURN:
                         if not self.player.attacking:
                             self.player.attacking = True
