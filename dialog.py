@@ -14,6 +14,7 @@ class DialogBox:
         self.reading = False
         self.display_options = False
         self.dialogue_colors = [(0, 0, 0), (255, 0, 0)]  # Noir et rouge
+        self.used_dialogues = set()
 
     def execute(self, dialogues=[]):
         if self.reading:
@@ -21,7 +22,7 @@ class DialogBox:
         else:
             self.reading = True
             self.dialogue_index = 0
-            self.dialogues = dialogues
+            self.dialogues = [dialogue for dialogue in dialogues if dialogue not in self.used_dialogues]
 
     def terminate(self):
         self.reading = False
@@ -55,6 +56,8 @@ class DialogBox:
                 y_position += self.font.get_height() + 5
 
     def next_dialogue(self):
+        if self.dialogue_index < len(self.dialogues):
+            self.used_dialogues.add(self.dialogues[self.dialogue_index])
         self.dialogue_index += 1
         self.letter_index = 0
 
