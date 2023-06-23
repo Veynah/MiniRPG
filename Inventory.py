@@ -33,6 +33,7 @@ class Inventory:
         self.slots.append(InventorySlot("img/item/shield.ico", (550, 15)))
         self.slots.append(InventorySlot("img/item/weapon.png", (630, 5)))
         self.slots.append(InventorySlot("img/item/xp2.png", (700, 15)))
+        self.slots.append(InventorySlot("img/item/money_bag.png", (770, 15)))
 
         self.visible = False
 
@@ -52,4 +53,4 @@ class Inventory:
         if self.visible:  # Afficher uniquement si l'inventaire est visible
             display.blit(self.image, self.rect)
             for slot in self.slots:
-                slot.Render(display)
+                slot.render(display)
