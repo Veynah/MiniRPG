@@ -1,3 +1,4 @@
+"Module des ennemies présents dans le jeu qu'on peut faire spawn, qui auront une IA basique, pourront attaquer le joueur et recevoir des dégats"
 import random
 import pygame
 from pygame.math import Vector2 as vec
@@ -19,6 +20,23 @@ FRIC = -0.1
 
 # Classe enemy dont vont hériter les différents monstres
 class Enemy(pygame.sprite.Sprite):
+    """
+    Cette classe est dérivée de la classe `pygame.sprite.Sprite` de Pygame.
+    Classe représentant les ennemis dans le jeu. C'est une classe parente pour différents types d'ennemis.
+    Chaque ennemi a sa propre image, sa position, sa vitesse, son accélération et sa direction. Ils peuvent aussi courir, attaquer,
+    et subir des dégâts. Les ennemis ont des points de vie, peuvent patrouiller et ont des cooldowns pour attaquer et recevoir des dégâts.
+    Attributs
+    ---------
+    x, y : int
+        Coordonnées de l'emplacement initial du monstre sur la grille.
+    walls : Group
+        Groupe de sprites pygame représentant les murs pour la détection de collision.
+    image_path : str
+        Chemin d'accès à l'image qui représente le monstre.
+    ATTACK_COOLDOWN : int
+        Durée du délai de récupération entre les attaques du monstre en millisecondes.
+    """
+
     ATTACK_COOLDOWN = 4200
 
     def __init__(self, x, y, walls, image_path):
@@ -61,6 +79,9 @@ class Enemy(pygame.sprite.Sprite):
 
     # Update l'enemie, sa position et son comportement
     def update_enemy(self, player):
+        """update_enemy(self, player) -> None
+        Met à jour l'état du monstre, sa position et son comportement en fonction du joueur
+        """
         self.acc = vec(0, 0.5)
 
         # Running = faux si on est trop slow
@@ -95,6 +116,9 @@ class Enemy(pygame.sprite.Sprite):
 
     # Donne la distance à laquelle le monstre voit le joueur
     def see_player(self, player):
+        """see_player(self, player) -> bool
+        Retourne vrai si le joueur se trouve à une certaine distance du monstre.
+        """
         sight_range = 300
 
         dx = self.position.x - player.position.x
@@ -104,6 +128,9 @@ class Enemy(pygame.sprite.Sprite):
 
     # Le monstre bouge vers le joueur
     def chase_player(self, player):
+        """chase_player(self, player) -> None
+        Déplace le monstre vers le joueur.
+        """
         if self.position.x < player.position.x:
             self.acc.x = ACC
             self.direction = "RIGHT"
@@ -114,6 +141,9 @@ class Enemy(pygame.sprite.Sprite):
 
     # Donne la distance à laquelle le monstre peut attaquer le joueur
     def close_to_player(self, player):
+        """close_to_player(self, player) -> bool
+        Retourne vrai si le joueur est suffisamment proche pour être attaqué.
+        """
         distance_x = abs(self.rect.x - player.rect.x)
         attack_range = 70
         if distance_x <= attack_range:
@@ -122,6 +152,9 @@ class Enemy(pygame.sprite.Sprite):
 
     # Attaque le joueur avec un cooldown pour ne pas spamme
     def attack_player(self, player):
+        """attack_player(self, player) -> None
+        Fait attaquer le joueur par le monstre si le temps écoulé depuis la dernière attaque est supérieur à la durée du délai de récupération.
+        """
         current_time = pygame.time.get_ticks()
         if (
             self.close_to_player(player)
@@ -136,6 +169,9 @@ class Enemy(pygame.sprite.Sprite):
 
     # Donne le comportement du monstre si le joueur n'est pas dans le coin
     def patrol(self):
+        """patrol(self) -> None
+        Comportement de patrouille du monstre lorsqu'il n'y a pas de joueur à proximité.
+        """
         current_time = pygame.time.get_ticks()
         if current_time - self.patrol_time > self.patrol_duration:
             self.patrol_direction *= -1
@@ -152,6 +188,9 @@ class Enemy(pygame.sprite.Sprite):
 
     # La meme (presque) fonction que player, on enlève juste le jump
     def collision_check(self):
+        """collision_check(self) -> None
+        Vérifie et gère les collisions du monstre avec les murs.
+        """
         move_by = int(self.vel.x)
         for _ in range(abs(move_by)):
             # Increment or decrement x position by 1 pixel
@@ -194,6 +233,12 @@ class Enemy(pygame.sprite.Sprite):
                     self.vel.y = 0
 
     def take_damage(self, damage_amount, attack_counter):
+        """Gère les dégâts reçus par le monstre.
+
+        Args:
+            damage_amount (int): le nombre de dégâts reçu, celui est déterminé quand on appelle cette méthode dans la boucle de la classe Game
+            attack_counter (int): est le counter d'attaque sur lequel se base les dégâts occasionné, qui eux sont en fonction des animations
+        """
         if attack_counter != self.last_attack_counter:
             current_time = pygame.time.get_ticks()
             if current_time - self.last_damage_time > self.damage_cooldown:
@@ -203,8 +248,13 @@ class Enemy(pygame.sprite.Sprite):
                 self.last_attack_counter = attack_counter
                 if self.health <= 0:
                     self.die()
-                    
+
     def take_magic_damage(self, damage_amount):
+        """Gère les dégâts magiques reçus par le monstre.
+
+        Args:
+            damage_amount (int): Gère les dégâts reçu par les monstres mais comme la classe fireball est bugé, cela est inutile
+        """
         current_time = pygame.time.get_ticks()
         if current_time - self.last_damage_time > self.damage_cooldown:
             self.health -= damage_amount
@@ -214,10 +264,17 @@ class Enemy(pygame.sprite.Sprite):
                 self.die()
 
     def die(self):
+        """Supprime le monstre quand il meure"""
         self.kill()
 
 
 class Skeleton1(Enemy):
+    """
+    Classe représentant un type spécifique d'ennemi, Skeleton1.
+    Il hérite de la classe Enemy et possède des animations spécifiques pour courir et attaquer.
+    Il a également une méthode pour mettre à jour l'animation.
+    """
+
     def __init__(self, x, y, walls):
         super().__init__(
             x, y, walls, "img/enemies/skeleton1/Skeleton1_Walk_L/Skeleton1_Walk_L0.png"
@@ -244,10 +301,18 @@ class Skeleton1(Enemy):
             self.last_attack_time = current_time
 
     def update_enemy(self, player):
+        """Va mettre à jour l'état de l'ennemie comme dans la méthode mère mais cette fois ci on va ajouter des animations à ses actions
+
+        Args:
+            player (Player): C'est l'instance du joueur auquel doit réagir le monstre
+        """
         super().update_enemy(player)
         self.update_animation()
 
     def update_animation(self):
+        """Va update les animations de la classe en fonction des actions qu'elle entreprant
+        ainsi que du temps écoulé depuis l'affichage de la dernière image
+        """
         time_passed = (
             pygame.time.get_ticks() - self.time_since_last_frame
         )  # Pour que les animations soient plus smooth, elles vont charger moins vite
@@ -283,6 +348,12 @@ class Skeleton1(Enemy):
 
 
 class Skeleton2(Enemy):
+    """
+    Classe représentant un autre type d'ennemi, Skeleton2.
+    Semblable à Skeleton1, il hérite de la classe Enemy et possède des animations spécifiques pour courir et attaquer.
+    Il a également une méthode pour mettre à jour l'animation.
+    """
+
     def __init__(self, x, y, walls):
         super().__init__(x, y, walls, "img/enemies/skeleton2/attack-A1.png")
         self.running_animation_R = skeleton2_walking_R
@@ -344,6 +415,11 @@ class Skeleton2(Enemy):
 
 
 class Skeleton3(Enemy):
+    """
+    Classe représentant un autre type d'ennemi, Skeleton3.
+    Semblable aux deux autres, il hérite de la classe Enemy et c'est une copie conforme
+    """
+
     def __init__(self, x, y, walls):
         super().__init__(x, y, walls, "img/enemies/skeleton3/attack-A1.png")
         self.running_animation_R = skeleton3_walking_R
