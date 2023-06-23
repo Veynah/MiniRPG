@@ -1,11 +1,10 @@
 import pygame
 from pygame.math import Vector2 as vec
 
-
 class FireBall(pygame.sprite.Sprite):
     def __init__(self, game, x, y, direction, damage):
         """
-        Initialise un objet FireBall.
+        La classe de boule de feu, mais celle-ci n'est pas fonctionnelle 
 
         Args:
             game (Game): L'instance principale du jeu.

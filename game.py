@@ -63,7 +63,7 @@ class Game:
 
         # Load and play the music
         pygame.mixer.music.load("music/The_Witcher3_OST.mp3")
-        pygame.mixer.music.play(-1)  # -1 for infinite looping
+        pygame.mixer.music.play(-1)  # -1 pour loop à l'infini
 
         # Intégration de la boîte de dialogue
         self.npc_dialogues = npc_dialogues
