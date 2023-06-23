@@ -73,6 +73,8 @@ class HealthBar(pygame.sprite.Sprite):
             self.health += heal
             if self.health > self.max_health:
                 self.health = self.max_health
+            
+            self.image = self.health_animations[self.health]
 
     def load_animations(self):
         """
