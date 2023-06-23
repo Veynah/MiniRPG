@@ -4,3 +4,4 @@
 __pycache__/game.cpython-310.pyc
 __pycache__/new_player.cpython-310.pyc
 tiled/test.tiled-session
+*.pyc
