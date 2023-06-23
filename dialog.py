@@ -15,6 +15,7 @@ class DialogBox:
         self.display_options = False
         self.dialogue_colors = [(0, 0, 0), (255, 0, 0)]  # Noir et rouge
         self.used_dialogues = set()
+        self.last_dialogue = None
 
     def execute(self, dialogues=[]):
         if self.reading:
@@ -23,6 +24,11 @@ class DialogBox:
             self.reading = True
             self.dialogue_index = 0
             self.dialogues = [dialogue for dialogue in dialogues if dialogue not in self.used_dialogues]
+            # Va checker si tous les dialogues ont été utilisés
+            if set(dialogues).issubset(self.used_dialogues) and self.last_dialogue:
+                self.dialogues = [self.last_dialogue]  # Use the last dialogue
+            else:
+                self.dialogues = [dialogue for dialogue in dialogues if dialogue not in self.used_dialogues]
 
     def terminate(self):
         self.reading = False
@@ -57,6 +63,8 @@ class DialogBox:
 
     def next_dialogue(self):
         if self.dialogue_index < len(self.dialogues):
+            # Cela va sauvegarder le dialogue actuel comme étant le dernier dialogue
+            self.last_dialogue = self.dialogues[self.dialogue_index]
             self.used_dialogues.add(self.dialogues[self.dialogue_index])
         self.dialogue_index += 1
         self.letter_index = 0
