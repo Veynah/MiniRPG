@@ -176,7 +176,7 @@ class NewPlayer(pygame.sprite.Sprite):
         if self.healing:
             if time_passed > self.healing_frame_duration:
                 self.time_since_last_frame = pygame.time.get_ticks()
-                if self.player_mana > 1:
+                if self.player_mana > 1 and not self.jumping:
                     if self.direction == "RIGHT":
                         self.image = player_heal[self.heal_frame_index]
                     elif self.direction == "LEFT":
