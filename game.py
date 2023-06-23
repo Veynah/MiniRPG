@@ -3,42 +3,40 @@ import pytmx
 import pyscroll
 
 from dialog import DialogBox
-from npc import NPC, Maire, Tavernier, Forgeron, Explorer
+from npc_dialogues import npc_dialogues
+from npc import Maire, Tavernier, Forgeron, Explorer
+
 from new_player import NewPlayer
-from enemy import Enemy, Skeleton1, Skeleton2, Skeleton3
+from enemy import Skeleton1, Skeleton2, Skeleton3
 from wall import Wall
 
 from Inventory import Inventory
 from HealthBar import HealthBar
-
+from manabar import ManaBar
 # Les variables de la taille de la fenêtre du jeu
 HEIGHT = 720
 WIDTH = 1280
-
-pygame.init()
-pygame.mixer.init()
 
 
 # Classe du jeu avec ses variables
 class Game:
     def __init__(self):
-
-        pygame.mixer.music.load("music/The_Witcher_3 _Wild_Hunt.mp3")
-        pygame.mixer.music.play(-1)  # -1 for infinite looping
-
         self.running = True
         self.map = "village"
-        #self.map_manager = Mapmanager(self)
-        #intégration de bulle dialogue
-        self.dialogb_box = DialogBox()
-        # Creer la fenêtre du jeu
+
+        # Intégration de la boîte de dialogue
+        self.npc_dialogues = npc_dialogues
+        self.dialog_box = DialogBox()
+
+        # Créer la fenêtre du jeu
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("MiniRPG")
-        self.wall_group = pygame.sprite.Group()
 
         # Initialize other game components
         self.inventory = Inventory()
         self.healthbar = HealthBar(self, 10, 10)
+        self.manabar = ManaBar(self, 10, 31)
+        self.fireballs = pygame.sprite.Group()
 
         # Initialisation des groupes
         self.npc_group = pygame.sprite.Group()
@@ -64,29 +62,27 @@ class Game:
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         player_position = tmx_data.get_object_by_name("player_spawn1")
-        self.player = NewPlayer(player_position.x, player_position.y, self.wall_group)
-    
-    
+        self.player = NewPlayer(self, player_position.x, player_position.y, self.wall_group)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
         self.group.add(self.player)
+        self.group.add(self.fireballs)
 
         # Spawn les NPCs -------------------------------------------------------------
         for obj in tmx_data.objects:
             if obj.name == "NPC_Maire":
-                npc_maire = Maire(obj.x, obj.y, self.wall_group,
-                                  "Bonjour Chevalier Anakin, je suis le maire du village.")
-                self.npc_group.add(npc_maire)
+                if obj.name == "NPC_Maire":
+                    npc_maire = Maire(obj.x, obj.y, self.wall_group, self.npc_dialogues["Maire"])
+                    self.npc_group.add(npc_maire)
             elif obj.name == "NPC_Tavernier":
-                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group, "Besoin d'une bonne bière?")
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group,self.npc_dialogues["Tavernier"])
                 self.npc_group.add(npc_tavernier)
             elif obj.name == "NPC_Forgeron":
-                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group,
-                                        "Bienvenue dans ma forge, Oh Chevalier Anakin, que puis-je faire pour vous?")
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group,self.npc_dialogues["Forgeron"])
                 self.npc_group.add(npc_forgeron)
             elif obj.name == "NPC_Explorer":
-                npc_explorer = Explorer(obj.x, obj.y, self.wall_group, "Oh vaillant Chevalier je suis Chris")
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group, self.npc_dialogues["Explorer"])
                 self.npc_group.add(npc_explorer)
 
         # Ajouter les NPCs au groupe Pyscroll
@@ -105,16 +101,18 @@ class Game:
         )  # Red color
         self.show_game_over = False
     
-    #gerer la collision avec les npc pour le dialogue
-    def check_npc_collisions(self, dialog_box, player):
-        for sprite in self.npc_group.sprites():
-            if sprite.feet.colliderect(player.rect) and type(sprite) is Maire:
-                dialog_box.execute(sprite.dialog)
-                if player.rect.colliderect(sprite.rect):  # Check if player collides with the Maire
-                    if player.attacking and sprite.moneyBag >= 100:  # Check if player is attacking and Maire has enough money
-                        player.coins += 100  # Add coins to the player's inventory
-                        sprite.moneyBag -= 100  # Subtract coins from the Maire's money bag
+    def Newplayer_nearby(self):
+        interaction_distance = 50 #la distance maximal à laquelle le joeur peut agir
 
+        for npc in self.npc_group:
+            #calcule la distance
+            distance=abs(self.player.rect.x - npc.rect.x) + abs(self.player.rect.y - npc.rect.y)
+
+            #si le npc est a - de interaction
+            if distance<= interaction_distance:
+                return npc #retourner le npc
+
+        return None
 
     # Fonction qui permet de passer du village à la forêt
     def switch_level(self):
@@ -133,7 +131,6 @@ class Game:
         map_layer.zoom = 2
 
         self.wall_group = pygame.sprite.Group()
-
 
         # Définr une liste qui va stocker les rectangles de collision
         self.walls = []
@@ -166,6 +163,7 @@ class Game:
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=9)
         self.group.add(self.player)
+        self.group.add(self.fireballs)
         for enemy in self.enemies_group:
             self.group.add(enemy)
 
@@ -204,6 +202,21 @@ class Game:
                 self.wall_group.add(wall)
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
+        # Spawn les NPCs -------------------------------------------------------------
+        for obj in tmx_data.objects:
+            if obj.name == "NPC_Maire":
+                if obj.name == "NPC_Maire":
+                    npc_maire = Maire(obj.x, obj.y, self.wall_group, self.npc_dialogues["Maire"])
+                    self.npc_group.add(npc_maire)
+            elif obj.name == "NPC_Tavernier":
+                npc_tavernier = Tavernier(obj.x, obj.y, self.wall_group,self.npc_dialogues["Tavernier"])
+                self.npc_group.add(npc_tavernier)
+            elif obj.name == "NPC_Forgeron":
+                npc_forgeron = Forgeron(obj.x, obj.y, self.wall_group,self.npc_dialogues["Forgeron"])
+                self.npc_group.add(npc_forgeron)
+            elif obj.name == "NPC_Explorer":
+                npc_explorer = Explorer(obj.x, obj.y, self.wall_group, self.npc_dialogues["Explorer"])
+                self.npc_group.add(npc_explorer)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=8)
@@ -253,6 +266,7 @@ class Game:
 
     def player_death(self):
         self.healthbar.health = 0
+        self.healthbar.health = self.healthbar.max_health
         self.show_game_over = True
         self.switch_back()
 
@@ -260,8 +274,6 @@ class Game:
         player_spawn_point = tmx_data.get_object_by_name("player_spawn1")
         self.player.position[0] = player_spawn_point.x
         self.player.position[1] = player_spawn_point.y
-
-        self.healthbar.health = self.healthbar.max_health
 
     # Fonction qui run le jeu et dans laquelle se trouve la boucle
     def run(self):
@@ -272,10 +284,14 @@ class Game:
         # Boucle du jeu
         while self.running:
             self.update()
+            for fireball in self.fireballs:
+                fireball.update()
+            
             if self.player.attacking:
                 self.player.attack()
             self.player.move()
             current_time = pygame.time.get_ticks()
+            
             if self.healthbar.health <= 0:
                 self.player_death()
 
@@ -293,6 +309,7 @@ class Game:
             # NPC
             for npc in self.npc_group:
                 npc.update_NPC()
+
             self.group.update()
             self.group.center(self.player.rect.center)
 
@@ -301,6 +318,13 @@ class Game:
                 for enemy in self.enemies_group:
                     if pygame.sprite.collide_mask(self.player, enemy):
                         enemy.take_damage(1, self.player.attack_counter)
+                        
+            if self.player.magic_attacking:
+                for fireball in self.fireballs:
+                    for enemy in self.enemies_group:
+                        if pygame.sprite.collide_mask(fireball, enemy):
+                            enemy.take_magic_damage(fireball.damage)
+                            fireball.kill()
 
             # Bloc qui va vérifier si on entre en collision avec la lave, si oui, game over
             for lava_block in self.lava_blocks:
@@ -312,40 +336,46 @@ class Game:
             self.inventory.render(self.screen)
             self.healthbar.render(self.screen)
             #dessiner la box de dialog
-            self.dialogb_box.render(self.screen)
+            self.dialog_box.render(self.screen)
+            self.manabar.render(self.screen)
+
+            # Dessiner la boîte de dialogue
+            self.dialog_box.render(self.screen)
 
             pygame.display.flip()
 
             for event in pygame.event.get():
+                self.manabar.update(event)
                 if event.type == pygame.QUIT:
                     self.running = False
-                elif event.type == pygame.KEYDOWN:
+
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_e:
-                        self.check_npc_collisions(self.dialogb_box)
-                    if event.key == pygame.K_m:
-                        self.check_npc_collisions(self.dialogb_box, self.player)
+                       npc = self.Newplayer_nearby()
+                       if npc is not None:
+                           self.dialog_box.execute(npc.dialog)
+                    if event.key == pygame.K_t:
+                        self.dialog_box.terminate()
+                    
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
-                        self.player.jump()
-                    if event.key == pygame.K_i:  # Toggle inventory visibility on "i" key press
+                        self.player.jump()                 
+                    if (
+                        event.key == pygame.K_i
+                    ):  # Toggle inventory visibility on "i" key press
                         self.inventory.toggleVisibility()
-                    if event.key == pygame.K_SPACE:  # Assuming space key causes damage to the player
-                       damage_amount = 1  # Adjust the damage amount as per your requirements
-                       self.healthbar.takeDamage(damage_amount)
-                    if event.key == pygame.K_h:  # Assuming "h" key triggers healing
-                       healing_amount = 1  # Adjust the healing amount as per your requirements
-                       self.healthbar.Heal(healing_amount)
+                    if event.key == pygame.K_h or event.key == pygame.K_SPACE and not self.player.healing:
+                        self.player.heal()
+                        self.player.healing = True
                     if event.key == pygame.K_a or event.key == pygame.K_RETURN:
                         if not self.player.attacking:
                             self.player.attacking = True
                             self.player.attack()
                             self.player.attack_counter = 1  # Premiere attaque
                         else:
-                           if self.player.attack_counter < 4:
-                               self.player.attack_counter += 1
-                 
-                for event in pygame.event.get():
-                     if event.type == pygame.QUIT:
-                        running = False
+                            if self.player.attack_counter < 4:
+                                self.player.attack_counter += 1
+                    if event.key == pygame.K_f:
+                        self.player.fireball(3, 4)
 
             clock.tick(60)
         pygame.quit()

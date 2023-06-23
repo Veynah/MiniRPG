@@ -112,3 +112,14 @@ player_attack_anim_L = [
     pygame.image.load("img/player/Player_Attack_L/Player_Attack_L18.png"),
     pygame.image.load("img/player/Player_Attack_L/Player_Attack_L19.png"),
 ]
+
+player_heal = [
+    pygame.image.load("img/player/Player_Health/Health0.png"),
+    pygame.image.load("img/player/Player_Health/Health1.png"),
+    pygame.image.load("img/player/Player_Health/Health2.png"),
+    pygame.image.load("img/player/Player_Health/Health3.png"),
+    pygame.image.load("img/player/Player_Health/Health4.png"),
+    pygame.image.load("img/player/Player_Health/Health5.png"),
+    pygame.image.load("img/player/Player_Health/Health6.png"),
+    pygame.image.load("img/player/Player_Health/Health7.png"),
+]

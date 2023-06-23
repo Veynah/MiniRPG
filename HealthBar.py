@@ -1,7 +1,5 @@
-import sys
 import pygame
-
-vec = pygame.math.Vector2
+from pygame.math import Vector2 as vec
 
 
 class HealthBar(pygame.sprite.Sprite):
@@ -15,8 +13,8 @@ class HealthBar(pygame.sprite.Sprite):
         self.image = self.health_animations[self.health]
         self.pos = vec(x, y)
 
-    def render(self, display):
-        display.blit(self.image, self.pos)
+    def render(self, screen):
+        screen.blit(self.image, self.pos)
 
     def takeDamage(self, damage):
         self.health -= damage
@@ -26,10 +24,12 @@ class HealthBar(pygame.sprite.Sprite):
 
         self.image = self.health_animations[self.health]
 
-    def Heal(self, heal):
-        self.health += heal
-        if self.health > self.max_health:
-            self.health = self.max_health
+    # Méthode qui va permettre de nous guérir tout en consommant de la mana
+    def Heal(self, heal, manacost):
+        if self.game.manabar.manaCost(manacost):
+            self.health += heal
+            if self.health > self.max_health:
+                self.health = self.max_health
 
         self.image = self.health_animations[self.health]
 
