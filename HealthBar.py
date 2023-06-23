@@ -62,18 +62,17 @@ class HealthBar(pygame.sprite.Sprite):
 
         self.image = self.health_animations[self.health]
 
-    def heal(self, heal):
+    def Heal(self, heal, manacost):
         """
         Augmente la santé selon le montant de guérison donné.
 
         Args:
             heal (int) : Le montant de santé à ajouter.
         """
-        self.health += heal
-        if self.health > self.max_health:
-            self.health = self.max_health
-
-        self.image = self.health_animations[self.health]
+        if self.game.manabar.manaCost(manacost):
+            self.health += heal
+            if self.health > self.max_health:
+                self.health = self.max_health
 
     def load_animations(self):
         """
