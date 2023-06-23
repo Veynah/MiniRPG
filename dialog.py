@@ -1,44 +1,61 @@
 import pygame
 
-
 class DialogBox:
-
     X_POSITION = 300
     Y_POSITION = 500
 
     def __init__(self):
         self.box = pygame.image.load('dialog/dialog_box.png')
-        self.box = pygame.transform.scale(self.box,(700,100))
-        self.texts = [" Chevalier Anakin à l'aide !", "la princesse Rolande a été kidnappée !", " Voulez-vous la sauver ?"]
-        self.text_index = 0
-        self.letter_index=0
-        self.font =pygame.font.Font("dialog/dialog_font.ttf",18)
+        self.box = pygame.transform.scale(self.box, (750, 125))
+        self.dialogues = []
+        self.dialogue_index = 0
+        self.letter_index = 0
+        self.font = pygame.font.Font("dialog/dialog_font.ttf", 18)
         self.reading = False
+        self.display_options = False
+        self.dialogue_colors = [(0, 0, 0), (255, 0, 0)]  # Noir et rouge
 
-    def execute(self, dialog=[]):
+    def execute(self, dialogues=[]):
         if self.reading:
-            self.next_text()
+            self.next_dialogue()
         else:
             self.reading = True
-            self.text_index = 0
-            self.texts = dialog
+            self.dialogue_index = 0
+            self.dialogues = dialogues
 
+    def execute_options(self, options):
+        self.options = options
+        self.display_options = True
 
     def render(self, screen):
-        if self.reading:
+        if self.reading and self.dialogues and self.dialogue_index < len(self.dialogues):
             self.letter_index += 1
 
-            if self.letter_index >= len(self.texts[self.text_index]):
-                self.letter_index = self.letter_index
+            if self.letter_index >= len(self.dialogues[self.dialogue_index]):
+                self.letter_index = len(self.dialogues[self.dialogue_index])
 
             screen.blit(self.box, (self.X_POSITION, self.Y_POSITION))
-            text = self.font.render(self.texts[self.text_index][0:self.letter_index], False, (0, 0, 0))
-            screen.blit(text, (self.X_POSITION + 80, self.Y_POSITION + 40))
 
-    def next_text(self):
-        self.text_index +=1
-        self.letter_index=0
+            # Récupérer le dialogue actuel et sa couleur associée
+            current_dialogue = self.dialogues[self.dialogue_index]
+            dialogue_color = self.dialogue_colors[self.dialogue_index % len(self.dialogue_colors)]
 
-        if self.text_index >= len(self.texts):
-            #fermer le dialogue.
-            self.reading= False
+            # Diviser le dialogue en lignes distinctes
+            lines = current_dialogue.splitlines()
+
+            # Position verticale initiale
+            y_position = self.Y_POSITION + 15
+
+            # Rendre chaque ligne du dialogue avec la couleur correspondante
+            for line in lines:
+                text = self.font.render(line[0:self.letter_index], False, dialogue_color)
+                screen.blit(text, (self.X_POSITION + 50, y_position))
+                y_position += self.font.get_height() + 5
+
+    def next_dialogue(self):
+        self.dialogue_index += 1
+        self.letter_index = 0
+
+        if self.dialogue_index >= len(self.dialogues):
+            # Fermer le dialogue.
+            self.reading = False
