@@ -123,11 +123,6 @@ class Game:
         )  # Red color
         self.show_game_over = False
     
-    #gerer la collision avec les npc pour le dialogue
-    def check_npc_collisions(self, dialog_box):
-        for sprite in self.npc_group.sprites():
-            if sprite.feet.colliderect(self.player.rect) and type(sprite) is NPC:
-                dialog_box.execute(sprite.dialog)
     def Newplayer_nearby(self):
         interaction_distance = 50 #la distance maximal à laquelle le joeur peut agir
 
