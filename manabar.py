@@ -35,7 +35,7 @@ class ManaBar(pygame.sprite.Sprite):
         self.pos = vec(x, y)
         
         # REGEN_EVENT va nous rendre de la mana toutes les x secondes
-        pygame.time.set_timer(self.REGEN_EVENT, 5000)
+        pygame.time.set_timer(self.REGEN_EVENT, 10000)
         
     def render(self, screen):
         """

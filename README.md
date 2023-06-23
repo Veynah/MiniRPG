@@ -6,3 +6,11 @@ Pour lancer main.py il faut installer :
 pygame : pip install pygame
 pytmx : pip install pytmx
 pyscroll : pip install pyscroll
+Les controles du jeu
+Q gauche
+D droite
+Z saut
+ESPACE heal
+A attaque
+E intéragir
+I inventaire
