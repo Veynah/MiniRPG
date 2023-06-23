@@ -347,7 +347,7 @@ class Game:
             self.inventory.render(self.screen)
             self.healthbar.render(self.screen)
             #dessiner la box de dialog
-            self.dialogb_box.render(self.screen)
+            self.dialog_box.render(self.screen)
             self.manabar.render(self.screen)
 
             # Dessiner la boîte de dialogue
