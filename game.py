@@ -237,7 +237,7 @@ class Game:
                        if self.dialog_box.reading:
                            self.dialog_box.next_text()
                        else:
-                           self.dialog_box.execute(["Chevalier Anakin à l'aide !", "La princesse Rolande a été kidnappée !", "Voulez-vous la sauver ?"])
+                           self.dialog_box.execute([self.texts])
                     if event.key == pygame.K_z or event.key == pygame.K_UP:
                         self.player.jump()
                     if (
