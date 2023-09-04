@@ -21,3 +21,5 @@ Game controls:
 &emsp;    Attack: A or Enter  
 &emsp;    Interact: E  
 &emsp;    Inventory: I  
+
+python main2.py to launch the game  
