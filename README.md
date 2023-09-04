@@ -1,16 +1,23 @@
-# MiniRPG
-MiniRPG project in Python
-Notre héro va sauver la princesse Rolandine en détresse des mains de son ravisseur, le grand vampire Vlad.
+# MiniRPG made by Vlad, Hussein, Adam
+A simple RPG project written in Python for our OOP class
+The game features:
+    Simple combat system
+    NPCs with dialogs
+    2 custom maps made with Tiled
+    Enemies with basic AI
+    Different animations for each action(even the enemies)
+    Basic system of ressource management(mana)
 
-Pour lancer main.py il faut installer :
-pygame : pip install pygame
-pytmx : pip install pytmx
-pyscroll : pip install pyscroll
-Les controles du jeu
-Q gauche
-D droite
-Z saut
-ESPACE heal
-A attaque
-E intéragir
-I inventaire
+Requirements :
+    pygame : pip install pygame
+    pytmx : pip install pytmx
+    pyscroll : pip install pyscroll
+
+Game controls:
+    Left : Q or Left arrow
+    Right: D or Right arrow
+    Jump : Z or Up arrow
+    Heal : Space
+    Attack: A or Enter
+    Interact: E
+    Inventory: I
