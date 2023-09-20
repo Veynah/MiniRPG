@@ -23,6 +23,6 @@ Game controls:
 &emsp;    Inventory: I  
 
 python main.py to launch the game<br>
-All the code and different classes of the game are in ./code<br>
+All the code and different classes of the game are in [/code](https://github.com/Veynah/MiniRPG/tree/main/code)<br>
 And here is our presentation of our work:<br>
 https://github.com/Veynah/MiniRPG/blob/main/Presentation/Pr%C3%A9sentation%20MiniRPG1.pptx
