@@ -119,16 +119,6 @@ class Game:
                     obj.x, obj.y, self.wall_group, self.npc_dialogues["Tavernier"]
                 )
                 self.npc_group.add(npc_tavernier)
-            elif obj.name == "NPC_Forgeron":
-                npc_forgeron = Forgeron(
-                    obj.x, obj.y, self.wall_group, self.npc_dialogues["Forgeron"]
-                )
-                self.npc_group.add(npc_forgeron)
-            elif obj.name == "NPC_Explorer":
-                npc_explorer = Explorer(
-                    obj.x, obj.y, self.wall_group, self.npc_dialogues["Explorer"]
-                )
-                self.npc_group.add(npc_explorer)
 
         # Ajouter les NPCs au groupe Pyscroll
         for npc in self.npc_group:
@@ -142,7 +132,7 @@ class Game:
         # FONT pour le game over
         self.game_over_font = pygame.font.Font(None, 75)
         self.game_over_message = self.game_over_font.render(
-            "GAME OVER", True, (255, 0, 0)
+            "GAME OVER", True, (255, 255, 0)
         )  # Red color
         self.show_game_over = False
 
@@ -218,9 +208,6 @@ class Game:
             elif obj.name == "skeletonshield_spawn":
                 skeleton2 = Skeleton2(obj.x, obj.y, self.wall_group)
                 self.enemies_group.add(skeleton2)
-            elif obj.name == "skeletonlancer_spawn":
-                skeleton3 = Skeleton3(obj.x, obj.y, self.wall_group)
-                self.enemies_group.add(skeleton3)
 
         # Dessiner le groupe de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=9)
@@ -237,7 +224,6 @@ class Game:
 
         # Au niveau de la forêt
         spawn_village_point = tmx_data.get_object_by_name("spawn_forest")
-        self.player.position[0] = spawn_village_point.x + 30
         self.player.position[1] = spawn_village_point.y
         self.player.update_walls(self.wall_group)
 
@@ -397,7 +383,7 @@ class Game:
 
             for enemy in self.enemies_group:
                 enemy.update_enemy(self.player)
-                
+
                 # Check si le joueur rentre en collision avec les enemies ET si l'enemie attaque
                 if pygame.sprite.collide_mask(self.player, enemy) and enemy.attacking:
                     # Check si la fênetre de réception de dégâts pour le joueur
@@ -411,7 +397,6 @@ class Game:
                 npc.update_NPC()
 
             self.group.update()
-            self.group.center(self.player.rect.center)
 
             # System de combat basic, inflige 1 de dégâts à l'ennemie par attack counter
             if self.player.attacking:
